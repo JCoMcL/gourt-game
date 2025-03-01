@@ -14,6 +14,10 @@ config/name="Guort Game"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.png"
 
+[layer_names]
+
+2d_physics/layer_1="solid"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

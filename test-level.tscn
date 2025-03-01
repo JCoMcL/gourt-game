@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=4 uid="uid://cv5fteaqd88hf"]
+
+[ext_resource type="Texture2D" uid="uid://cve8dgq232s3v" path="res://level/tiles.png" id="1_h53k5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dopu7"]
+texture = ExtResource("1_h53k5")
+texture_region_size = Vector2i(256, 256)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, 25.6, -128, 25.6, 128, -128, 128)
+1:1/0 = 0
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, 128, 128, 25.6, -128, 25.6, -128, 128)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, 128, 128, 25.6, 25.6, 25.6, 25.6, -128, -128, -128, -128, 128)
+
+[sub_resource type="TileSet" id="TileSet_g2cx6"]
+tile_size = Vector2i(256, 256)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_dopu7")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-106, -640)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD9////AAABAAIAAAD+////AAABAAIAAAD/////AAABAAIAAAAAAP//AAABAAIAAAABAP//AAABAAIAAAD7////AAABAAIAAAD8////AAABAAIAAAACAP//AAABAAIAAAADAP//AAABAAIAAAD6////AAAAAAIAAAAEAP//AAAAAAIAABAEAP7/AAAAAAEAABAEAP3/AAAAAAEAABAEAPz/AAAAAAEAABAEAPv/AAAAAAEAABD6//7/AAAAAAEAAAD6//3/AAAAAAEAAAD6//z/AAAAAAEAAAD6//v/AAAAAAEAAAD7//v/AAABAAEAAAD8//v/AAABAAEAAAD9//v/AAABAAEAAAD+//v/AAABAAEAAAD///v/AAABAAEAAAAAAPv/AAABAAEAAAABAPv/AAABAAEAAAACAPv/AAABAAEAAAADAPv/AAABAAEAAAADAPz/AAABAAEAAAADAP3/AAABAAEAAAADAP7/AAABAAEAAAACAP7/AAABAAEAAAABAP7/AAABAAEAAAAAAP7/AAABAAEAAAD///7/AAABAAEAAAD+//7/AAABAAEAAAD9//7/AAABAAEAAAD8//7/AAABAAEAAAD7//7/AAABAAEAAAD7//3/AAABAAEAAAD7//z/AAABAAEAAAD8//z/AAABAAEAAAD9//z/AAABAAEAAAD+//z/AAABAAEAAAD///z/AAABAAEAAAAAAPz/AAABAAEAAAABAPz/AAABAAEAAAACAPz/AAABAAEAAAACAP3/AAABAAEAAAABAP3/AAABAAEAAAAAAP3/AAABAAEAAAD///3/AAABAAEAAAD+//3/AAABAAEAAAD9//3/AAABAAEAAAD8//3/AAABAAEAAAA=")
+tile_set = SubResource("TileSet_g2cx6")

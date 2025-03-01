@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdhee0fbyvgae"]
+
+[ext_resource type="Script" path="res://gourt.gd" id="1_wkvig"]
+[ext_resource type="Texture2D" uid="uid://d0sc5h1qk8w57" path="res://icon.png" id="2_370m6"]
+
+[node name="Gourt" type="CharacterBody2D"]
+script = ExtResource("1_wkvig")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(-2, -11)
+texture = ExtResource("2_370m6")

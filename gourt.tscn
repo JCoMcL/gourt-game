@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bdhee0fbyvgae"]
+[gd_scene load_steps=18 format=3 uid="uid://bdhee0fbyvgae"]
 
 [ext_resource type="Script" path="res://gourt.gd" id="1_wkvig"]
 [ext_resource type="Texture2D" uid="uid://cq1kakogmn7t6" path="res://gourts/bodies/body0006.png" id="2_3k4ux"]
@@ -75,7 +75,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_nsfnc"]
+radius = 127.016
+
 [node name="Gourt" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_wkvig")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -95,5 +99,12 @@ position = Vector2(-26, -2)
 sprite_frames = SubResource("SpriteFrames_lri5v")
 animation = &"penniless"
 autoplay = "penniless"
-frame_progress = 0.50826
+frame_progress = 0.908991
 flip_h = true
+
+[node name="Gaura" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
+shape = SubResource("CircleShape2D_nsfnc")

@@ -31,3 +31,12 @@ tile_set = SubResource("TileSet_g2cx6")
 
 [node name="Gourt" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(4, -644)
+
+[node name="Gourt2" parent="." instance=ExtResource("2_x5dyn")]
+position = Vector2(4, -176)
+
+[node name="Gourt3" parent="." instance=ExtResource("2_x5dyn")]
+position = Vector2(-144, -946)
+
+[node name="Gourt4" parent="." instance=ExtResource("2_x5dyn")]
+position = Vector2(209, -423)

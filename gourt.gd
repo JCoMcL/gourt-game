@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+enum Direction {LEFT, RIGHT}
+var facing = 0
 
 func _physics_process(delta: float) -> void:
 	
@@ -17,10 +19,21 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("go right", "go left")
-	if direction:
-		velocity.x = direction * SPEED
+	var target = Input.get_axis("go left","go right") * 200
+	if target != 0:
+		$Body.play("transportative")
+		var t_facing = Direction.RIGHT if target > 0 else Direction.LEFT
+	
+		if t_facing != facing:
+				flip()
+				facing = t_facing
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		$Body.play("idleative")
+
+	velocity.x = move_toward(velocity.x, target, 20)
 
 	move_and_slide()
+
+
+func flip():
+	transform.x *= -1

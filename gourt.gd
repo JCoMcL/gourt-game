@@ -1,25 +1,37 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+
 enum Direction {UP, DOWN, LEFT, RIGHT}
 @export var facing = Direction.LEFT
+@export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
+
+var disarray = false #Defines if gourts can be assembled in gourtstack
 var foot_friend: CharacterBody2D
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
-	$Gaura.body_entered.connect(gaura_detect)
+	#$Gaura.body_entered.connect(gaura_detect)
 
 func _physics_process(delta: float) -> void:
 	var target : Vector2
+
+	if Input.is_action_just_pressed("break stack"):
+		print("gourt is in a disarray!")
+		disarray = true
+		foot_friend = null
+		var rng = RandomNumberGenerator.new()
+		target.x = rng.randf_range(-10000.0, 10000.0) #TODO implement fall from stack in random directions
+		target.y = rng.randf_range(-10000.0, 10000.0)
+
 	if foot_friend:
+		$Body.play("idleative")
 		target = offset_to(foot_friend) + Vector2.UP * 70
 	else:
 		target.x = Input.get_axis("go left","go right") * 200
 		# Add the gravity.
 		if not is_on_floor():
-			target += get_gravity() * delta
+			target += get_gravity() * delta * 100
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
@@ -38,8 +50,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func gaura_detect(detected_gaura: Node2D):
-	if get_direction(offset_to(detected_gaura)) == Direction.DOWN:
-		foot_friend = detected_gaura.get_parent()
+	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && disarray == false:
+		var detected_gourt = detected_gaura.get_parent()
+		if !foot_friend: foot_friend = detected_gourt
+		print(gourt_name + " feet friended " + detected_gourt.gourt_name)
 
 func pretty_direction(i:int):
 	if(i == Direction.UP):

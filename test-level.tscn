@@ -30,13 +30,17 @@ tile_map_data = PackedByteArray("AAD9////AAABAAIAAAD+////AAABAAIAAAD/////AAABAAI
 tile_set = SubResource("TileSet_g2cx6")
 
 [node name="Gourt" parent="." instance=ExtResource("2_x5dyn")]
-position = Vector2(4, -644)
+position = Vector2(4, -780)
+gourt_name = "boris"
 
 [node name="Gourt2" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(4, -176)
+gourt_name = "den"
 
 [node name="Gourt3" parent="." instance=ExtResource("2_x5dyn")]
-position = Vector2(-144, -946)
+position = Vector2(18, -1057)
+gourt_name = "aaron"
 
 [node name="Gourt4" parent="." instance=ExtResource("2_x5dyn")]
-position = Vector2(209, -423)
+position = Vector2(-9, -499)
+gourt_name = "cevin"

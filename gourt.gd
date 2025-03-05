@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-
-
 enum Direction {UP, DOWN, LEFT, RIGHT}
 @export var facing = Direction.LEFT
 @export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
@@ -11,11 +9,9 @@ var foot_friend: CharacterBody2D
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
-	#$Gaura.body_entered.connect(gaura_detect)
 
 func _physics_process(delta: float) -> void:
 	var target : Vector2
-
 	if Input.is_action_just_pressed("break stack"):
 		print("gourt is in a disarray!")
 		disarray = true
@@ -23,7 +19,6 @@ func _physics_process(delta: float) -> void:
 		var rng = RandomNumberGenerator.new()
 		target.x = rng.randf_range(-10000.0, 10000.0) #TODO implement fall from stack in random directions
 		target.y = rng.randf_range(-10000.0, 10000.0)
-
 	if foot_friend:
 		$Body.play("idleative")
 		target = offset_to(foot_friend) + Vector2.UP * 70
@@ -33,12 +28,10 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			target += get_gravity() * delta * 100
 
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
 		if target.x != 0:
 			$Body.play("transportative")
 			var t_facing = Direction.RIGHT if target.x > 0 else Direction.LEFT
-		
+
 			if t_facing != facing:
 					flip()
 					facing = t_facing
@@ -46,7 +39,6 @@ func _physics_process(delta: float) -> void:
 			$Body.play("idleative")
 			
 	velocity = velocity.move_toward(target, 20)
-	print(target, velocity)
 	move_and_slide()
 
 func gaura_detect(detected_gaura: Node2D):
@@ -64,7 +56,7 @@ func pretty_direction(i:int):
 		return "RIGHT"
 	if(i == Direction.LEFT):
 		return "LEFT"
-		
+
 func offset_to(body: Node2D):
 	return body.global_position - global_position
 

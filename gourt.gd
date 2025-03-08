@@ -73,8 +73,9 @@ func break_stack(impulse_scale: int = 1) -> void:
 	) * impulse_scale
 
 var walk_target: float
-func snap_to(target: Vector2, snappiness: float = 100):
-	velocity = velocity.move_toward(to_local(target), snappiness)
+func snap_to(target:Vector2, delta:float, snappiness:float = 1000):
+	velocity = velocity.move_toward((target - position) * 15, snappiness)
+	debug_print("Snap to %v. Result: %v" % [target, velocity])
 
 func get_move_input() -> float:
 	if foot_friend:
@@ -99,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	if foot_friend:
-		snap_to(foot_friend.position + Vector2.UP * 70) #TODO add snap-point to gourt.tscn instead of guessing
+		snap_to(foot_friend.position + Vector2.UP * 100, delta) #TODO add snap-point to gourt.tscn instead of guessing
 		walk_target = 0
 
 	if walk_target != 0:

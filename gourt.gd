@@ -27,14 +27,7 @@ func get_direction(to: Vector2):
 	print("get_direction returned nothing")
 
 func pretty_direction(i:int):
-	if(i == Direction.UP):
-		return "UP"
-	if(i == Direction.DOWN):
-		return "DOWN"
-	if(i == Direction.RIGHT):
-		return "RIGHT"
-	if(i == Direction.LEFT):
-		return "LEFT"
+	return Direction.keys()[i]
 
 func offset_to(body: Node2D):
 	return body.global_position - global_position
@@ -74,9 +67,9 @@ func _physics_process(delta: float) -> void:
 			if t_facing != facing:
 					flip()
 					facing = t_facing
+					print(pretty_direction(facing))
 		else:
 			$Body.play("idleative")
 			
 	velocity = velocity.move_toward(target, 20)
 	move_and_slide()
-

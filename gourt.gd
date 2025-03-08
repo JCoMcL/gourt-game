@@ -27,7 +27,7 @@ func get_direction(to: Vector2):
 		return Direction.DOWN
 	if test_spread(angle, 20, 340):
 		return Direction.LEFT
-	print("get_direction returned nothing")
+	return Direction.NONE
 
 func pretty_direction(i:int):
 	return Direction.keys()[i]
@@ -72,10 +72,8 @@ func break_stack(impulse_scale: int = 1) -> void:
 		triangular_distribution(-1, -2)
 	) * impulse_scale
 
-var walk_target: float
-func snap_to(target:Vector2, delta:float, snappiness:float = 1000):
-	velocity = velocity.move_toward((target - position) * 15, snappiness)
-	debug_print("Snap to %v. Result: %v" % [target, velocity])
+func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
+	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
 func get_move_input() -> float:
 	if foot_friend:
@@ -85,6 +83,8 @@ func get_move_input() -> float:
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)
+
+var walk_target: float
 
 func _process(delta: float) -> void:
 	set_facing(x_direction( velocity.x if foot_friend else walk_target ))

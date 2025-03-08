@@ -3,9 +3,8 @@ extends CharacterBody2D
 enum Direction {UP, DOWN, LEFT, RIGHT}
 @export var facing = Direction.LEFT
 @export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
-
-var disarray = false #Defines if gourts can be assembled in gourtstack
-var foot_friend: CharacterBody2D
+@export var foot_friend: CharacterBody2D
+@export var disarray = false #Defines if gourts can be assembled in gourtstack
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float, upper: float) -> float:
@@ -35,22 +34,30 @@ func offset_to(body: Node2D):
 func flip():
 	transform.x *= -1
 
+func stack_onto(o: Node2D):
+	foot_friend = o
+
 func gaura_detect(detected_gaura: Node2D):
-	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && disarray == false:
-		var detected_gourt = detected_gaura.get_parent()
-		if !foot_friend: foot_friend = detected_gourt
-		print(gourt_name + " feet friended " + detected_gourt.gourt_name)
+	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
+		stack_onto(detected_gaura.get_parent())
+
+func break_stack(impulse_scale: int = 1) -> void:
+	disarray = true
+	foot_friend = null
+	velocity += Vector2(
+		triangular_distribution(-200.0, 200.0),
+		triangular_distribution(-100, -200)
+	) * impulse_scale
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
 
+func _input(ev: InputEvent) -> void:
+	if ev.is_action_pressed("break stack") && foot_friend:
+		break_stack(2)
+
 func _physics_process(delta: float) -> void:
-	var target : Vector2
-	if Input.is_action_just_pressed("break stack"):
-		print("gourt is in a disarray!")
-		disarray = true
-		foot_friend = null
-		velocity += Vector2(triangular_distribution(-200.0, 200.0), triangular_distribution(-100, -200)) * 2
+	var target: Vector2
 	if foot_friend:
 		$Body.play("idleative")
 		target = offset_to(foot_friend) + Vector2.UP * 70
@@ -63,7 +70,6 @@ func _physics_process(delta: float) -> void:
 		if target.x != 0:
 			$Body.play("transportative")
 			var t_facing = Direction.RIGHT if target.x > 0 else Direction.LEFT
-
 			if t_facing != facing:
 					flip()
 					facing = t_facing

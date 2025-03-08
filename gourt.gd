@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
 		snap_to(foot_friend.position + Vector2.UP * 100, delta) #TODO add snap-point to gourt.tscn instead of guessing
 		walk_target = 0
 
-	if walk_target != 0:
+	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, 20)
 
 	move_and_slide()

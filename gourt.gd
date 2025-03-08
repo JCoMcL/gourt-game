@@ -10,15 +10,17 @@ var foot_friend: CharacterBody2D
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
 
+var rng = RandomNumberGenerator.new()
+func triangular_distribution(lower: float, upper: float) -> float:
+	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
+
 func _physics_process(delta: float) -> void:
 	var target : Vector2
 	if Input.is_action_just_pressed("break stack"):
 		print("gourt is in a disarray!")
 		disarray = true
 		foot_friend = null
-		var rng = RandomNumberGenerator.new()
-		target.x = rng.randf_range(-10000.0, 10000.0) #TODO implement fall from stack in random directions
-		target.y = rng.randf_range(-10000.0, 10000.0)
+		velocity += Vector2(triangular_distribution(-200.0, 200.0), triangular_distribution(-100, -200)) * 2
 	if foot_friend:
 		$Body.play("idleative")
 		target = offset_to(foot_friend) + Vector2.UP * 70

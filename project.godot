@@ -43,3 +43,4 @@ config/icon="res://icon.png"
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.814082, 0.770649, 0.740523, 1)

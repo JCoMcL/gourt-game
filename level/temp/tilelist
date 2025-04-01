@@ -1,9 +1,6 @@
-spikes
+stairs
 floor
 wall-floor junction
-stairs
-stairs front
+solid fill
+spikes
 wall
-stair flat
-balcony floor
-railing

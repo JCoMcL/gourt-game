@@ -14,9 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://dcrjfhksr5epn" path="res://gourts/faces/face0053.png" id="12_7e36x"]
 [ext_resource type="Texture2D" uid="uid://etf1m74kmrmi" path="res://gourts/faces/face0051.png" id="13_qsg7y"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sjxns"]
-radius = 49.0
-height = 178.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q10vy"]
+radius = 47.0
+height = 146.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ny44"]
 animations = [{
@@ -80,12 +80,12 @@ radius = 127.016
 
 [node name="Gourt" type="CharacterBody2D"]
 collision_layer = 2
+floor_max_angle = 1.39626
 script = ExtResource("1_wkvig")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_sjxns")
+shape = SubResource("CapsuleShape2D_q10vy")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ny44")

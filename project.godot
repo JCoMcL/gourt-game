@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Guort Game"
-run/main_scene="res://test-level.tscn"
+run/main_scene="res://level sketch.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.png"
 

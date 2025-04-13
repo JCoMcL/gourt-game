@@ -5,6 +5,7 @@ enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
 @export var foot_friend: CharacterBody2D
 @export var disarray = false #Defines if gourts can be assembled in gourtstack
+@export var is_active = true
 
 @export var debug_mode = false
 func debug_print(s):
@@ -80,6 +81,12 @@ func get_move_input() -> float:
 		return 0
 	return Input.get_axis("go left","go right")
 
+func yeetonate():
+	is_active = false
+	break_stack(200)
+	collision_layer = 0
+	collision_mask = 0
+	
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)

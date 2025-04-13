@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bxuh0j6d1hxai"]
+[gd_scene load_steps=20 format=4 uid="uid://bxuh0j6d1hxai"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/temp/tiles.png" id="1_qtl3e"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourt.tscn" id="2_7oq0t"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://level/temp/elevator.png" id="9_ccxdv"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://level/temp/stroller.png" id="10_hjwuy"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://level/temp/table.png" id="10_kqc03"]
+[ext_resource type="Script" path="res://yeeter.gd" id="12_uq23r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_qtl3e")
@@ -48,6 +49,9 @@ radius = 33.1361
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcc6i"]
+size = Vector2(9.51189, 11.9634)
 
 [node name="Node2D" type="Node2D"]
 
@@ -129,6 +133,25 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 
 [node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
 texture = ExtResource("10_kqc03")
+
+[node name="Spike1" type="Area2D" parent="TileMapLayer"]
+position = Vector2(-96, -172)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("12_uq23r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Spike1"]
+position = Vector2(2526, 372.836)
+scale = Vector2(27.7547, 9.33447)
+shape = SubResource("RectangleShape2D_lcc6i")
+
+[node name="Spike2" type="Area2D" parent="TileMapLayer"]
+position = Vector2(169, -173)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Spike2"]
+position = Vector2(2526, 372.836)
+scale = Vector2(27.7547, 9.33447)
+shape = SubResource("RectangleShape2D_lcc6i")
 
 [node name="Gourt" parent="." instance=ExtResource("2_7oq0t")]
 position = Vector2(-656, 118)

@@ -1,9 +1,13 @@
 extends CharacterBody2D
+class_name Gourt
 
 enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var facing = Direction.LEFT
 @export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
+
+@export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
+
 @export var disarray = false #Defines if gourts can be assembled in gourtstack
 
 @export var debug_mode = false
@@ -54,11 +58,17 @@ func set_facing(d: Direction) -> void:
 		flip()
 		facing = d
 
-func offset_to(body: Node2D):
+func offset_to(body: Node2D) -> Vector2:
 	return body.global_position - global_position
 
-func stack_onto(o: Node2D):
+func stack_onto(o: Gourt):
 	foot_friend = o
+	o.head_friend = self
+
+func stack_onto_now(o: Gourt):
+	stack_onto(o)
+	position = o.position + Vector2.UP * 100 #FIXME: ugly dupe code
+
 
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:

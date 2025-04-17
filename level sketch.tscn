@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=4 uid="uid://bxuh0j6d1hxai"]
+[gd_scene load_steps=20 format=4 uid="uid://bxuh0j6d1hxai"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/temp/tiles.png" id="1_qtl3e"]
-[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourt.tscn" id="2_7oq0t"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://level/temp/janitor.png" id="3_7kuoi"]
 [ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://level/temp/inspectors.png" id="4_bk2vt"]
 [ext_resource type="Texture2D" uid="uid://fnyyvt8lyi50" path="res://level/temp/door.png" id="4_ifabn"]
@@ -12,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://level/temp/elevator.png" id="9_ccxdv"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://level/temp/stroller.png" id="10_hjwuy"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://level/temp/table.png" id="10_kqc03"]
+[ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourt_stack.tscn" id="12_jw83t"]
+[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourt.tscn" id="13_jr0nx"]
+[ext_resource type="Script" uid="uid://d2jc10mybkqtt" path="res://gourt.gd" id="14_gb1tc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_qtl3e")
@@ -130,13 +132,50 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 [node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
 texture = ExtResource("10_kqc03")
 
-[node name="Gourt" parent="." instance=ExtResource("2_7oq0t")]
-position = Vector2(-656, 118)
+[node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_jw83t")]
+position = Vector2(-794, 429)
+root_child = NodePath("Gourt0")
 
-[node name="Gourt2" parent="." instance=ExtResource("2_7oq0t")]
-position = Vector2(-656, -194)
+[node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_jr0nx")]
+head_friend = NodePath("../Gourt1")
 
-[node name="Gourt3" parent="." instance=ExtResource("2_7oq0t")]
-position = Vector2(-664, 349)
+[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -100)
+head_friend = NodePath("../Gourt2")
+foot_friend = NodePath("../Gourt0")
 
-[node name="Camera2D" type="Camera2D" parent="Gourt3"]
+[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -200)
+head_friend = NodePath("../Gourt3")
+foot_friend = NodePath("../Gourt1")
+
+[node name="Gourt3" type="CharacterBody2D" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -300)
+collision_layer = 2
+floor_max_angle = 1.39626
+script = ExtResource("14_gb1tc")
+head_friend = NodePath("../Gourt4")
+foot_friend = NodePath("../Gourt2")
+
+[node name="Gourt4" type="CharacterBody2D" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -400)
+collision_layer = 2
+floor_max_angle = 1.39626
+script = ExtResource("14_gb1tc")
+head_friend = NodePath("../Gourt5")
+foot_friend = NodePath("../Gourt3")
+
+[node name="Gourt5" type="CharacterBody2D" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -500)
+collision_layer = 2
+floor_max_angle = 1.39626
+script = ExtResource("14_gb1tc")
+head_friend = NodePath("../Gourt6")
+foot_friend = NodePath("../Gourt4")
+
+[node name="Gourt6" type="CharacterBody2D" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -600)
+collision_layer = 2
+floor_max_angle = 1.39626
+script = ExtResource("14_gb1tc")
+foot_friend = NodePath("../Gourt5")

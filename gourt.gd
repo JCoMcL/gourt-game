@@ -65,14 +65,9 @@ func stack_onto(o: Gourt):
 	foot_friend = o
 	o.head_friend = self
 
-func stack_onto_now(o: Gourt):
-	stack_onto(o)
-	position = o.position + Vector2.UP * 100 #FIXME: ugly dupe code
-
-
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
-		stack_onto(detected_gaura.get_parent())
+		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
 	disarray = true
@@ -110,7 +105,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	if foot_friend:
-		snap_to(foot_friend.position + Vector2.UP * 100, delta) #TODO add snap-point to gourt.tscn instead of guessing
+		snap_to(Gourtilities.perch_position(foot_friend), delta)
 		walk_target = 0
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts

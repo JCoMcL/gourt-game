@@ -1,9 +1,8 @@
-extends CharacterBody2D
 class_name Gourt
+extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
 enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var facing = Direction.LEFT
-@export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
 
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D

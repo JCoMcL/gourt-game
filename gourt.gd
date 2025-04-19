@@ -79,12 +79,12 @@ func break_stack(impulse_scale: int = 1) -> void:
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
-func get_move_input() -> float:
+func get_move_command() -> float:
 	if foot_friend:
-		return 0
-	return Input.get_axis("go left","go right")
+		foot_friend.commands = commands #FIXME: overwriting commands is not smart
+	return commands.walk
 
-func _input(ev: InputEvent) -> void:
+func command(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)
 
@@ -98,7 +98,7 @@ func _process(delta: float) -> void:
 		$Body.play("idleative")
 
 func _physics_process(delta: float) -> void:
-	walk_target = get_move_input() * 200
+	walk_target = get_move_command() * 200
 
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta

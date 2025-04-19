@@ -4,12 +4,8 @@ extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be rew
 class Commands:
 	var walk: float
 	# and obviously whatever else we end up needing
-	func from_input(inp: Input):
-		walk = inp.get_axis("go left", "go right")
 
-var commands = Commands.new()
-
-func command(ev: InputEvent):
+func command(commands: Commands) -> void:
 	pass
 
 var master: Master

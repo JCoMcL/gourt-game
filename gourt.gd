@@ -70,6 +70,8 @@ func gaura_detect(detected_gaura: Node2D):
 
 func break_stack(impulse_scale: int = 1) -> void:
 	disarray = true
+	if master:
+		master.nominate(foot_friend)
 	foot_friend = null
 	velocity += Vector2(
 		triangular_distribution(-2, 2),
@@ -79,16 +81,16 @@ func break_stack(impulse_scale: int = 1) -> void:
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
-func get_move_command() -> float:
-	if foot_friend:
-		foot_friend.commands = commands #FIXME: overwriting commands is not smart
-	return commands.walk
-
-func command(ev: InputEvent) -> void:
+func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)
 
 var walk_target: float
+func command(c: Commands) -> void:
+	if foot_friend:
+		foot_friend.command(c)
+	else:
+		walk_target = c.walk * 200
 
 func _process(delta: float) -> void:
 	set_facing(x_direction( velocity.x if foot_friend else walk_target ))
@@ -98,8 +100,6 @@ func _process(delta: float) -> void:
 		$Body.play("idleative")
 
 func _physics_process(delta: float) -> void:
-	walk_target = get_move_command() * 200
-
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta
 

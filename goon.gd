@@ -5,6 +5,9 @@ class Commands:
 	var walk: float
 	# and obviously whatever else we end up needing
 
+func _input(ev: InputEvent):
+	pass
+
 func command(commands: Commands) -> void:
 	pass
 

@@ -9,10 +9,10 @@ extends Node2D
 	if not root_child:
 		root_child = child
 	else:
-		Gourtilities.stack_now(child, get_stack_tip(root_child))
-	child.name = "Gourt{0}".format([child_count(root_child)])
+		Gourtilities.stack_now(child, root_child)
+	child.name = "Gourt{0}".format([Gourtilities.head_count(root_child)])
 @export_tool_button("Subtract", "CurveConstant") var fr = func remove_from_stack():
-	rm_gourt(get_stack_tip(root_child))
+	rm_gourt(Gourtilities.get_stack_tip(root_child))
 @export_tool_button("Reset", "Reload") var fre = func refresh_children():
 	root_child = null
 	for c in get_children():
@@ -31,16 +31,6 @@ func rm_gourt(g: Gourt):
 	if g.head_friend:
 		g.head_friend.foot_friend = null
 	g.queue_free()
-
-func get_stack_tip(g: Gourt):
-	if g.head_friend:
-		return get_stack_tip(g.head_friend)
-	return g
-
-func child_count(g: Gourt):
-	if g.head_friend:
-		return 1 + child_count(g.head_friend)
-	return 0
 
 func unleash_children():
 	pass

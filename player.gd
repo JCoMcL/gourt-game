@@ -3,16 +3,22 @@ class_name Master #TODO: this class should be more generic: player and AI should
 
 @export var player_character: Goon:
 	set(g):
-		if player_character:
+		assert(valid_goon(g))
+		if valid_goon(player_character):
 			player_character.under_new_management(null)
 		g.under_new_management(self)
 		player_character = g
 
+func valid_goon(g: Goon) -> bool:
+	return g and is_instance_valid(g)
+
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
 	get_parent().move_child.call_deferred(self, -1)
-	if player_character:
+	if valid_goon(player_character):
 		player_character.under_new_management(self)
+	else:
+		player_character = Goon.new() #easier than constant null-checking
 
 func get_commands(c: Goon.Commands = null) -> Goon.Commands:
 	if not c:
@@ -22,10 +28,11 @@ func get_commands(c: Goon.Commands = null) -> Goon.Commands:
 
 func _process(delta):
 	player_character.command(get_commands())
+	global_position = player_character.global_position
+
 func _input(ev: InputEvent):
 	get_viewport().set_input_as_handled()
-	if player_character:
-		player_character._input(ev)
+	player_character._input(ev)
 
 func nominate(g: Goon):
 	player_character = g

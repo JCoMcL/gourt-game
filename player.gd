@@ -12,6 +12,9 @@ class_name Master #TODO: this class should be more generic: player and AI should
 func valid_goon(g: Goon) -> bool:
 	return g and is_instance_valid(g)
 
+func screen_position(world_position: Vector2):
+	return get_viewport().get_screen_transform() * get_global_transform_with_canvas() * world_position
+
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
 	get_parent().move_child.call_deferred(self, -1)
@@ -19,6 +22,8 @@ func _ready():
 		player_character.under_new_management(self)
 	else:
 		player_character = Goon.new() #easier than constant null-checking
+	var track_bounds = player_character.get_bounds()
+	offset = (track_bounds.get_center() - player_character.global_position)
 
 func get_commands(c: Goon.Commands = null) -> Goon.Commands:
 	if not c:

@@ -104,7 +104,7 @@ position = Vector2(4698, -283)
 texture = ExtResource("9_ccxdv")
 
 [node name="Stroller" type="RigidBody2D" parent="TileMapLayer"]
-position = Vector2(-1625, 107)
+position = Vector2(-1741, -180)
 physics_material_override = SubResource("PhysicsMaterial_j4txm")
 
 [node name="Stroller" type="Sprite2D" parent="TileMapLayer/Stroller"]
@@ -137,39 +137,38 @@ position = Vector2(-794, 429)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_jr0nx")]
-head_friend = NodePath("../Gourt1")
+head_friend = NodePath("../Gourt6")
 
-[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -100)
-head_friend = NodePath("../Gourt2")
-foot_friend = NodePath("../Gourt0")
-
-[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -200)
-head_friend = NodePath("../Gourt3")
-foot_friend = NodePath("../Gourt1")
-
-[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -300)
-head_friend = NodePath("../Gourt4")
+[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -600)
 foot_friend = NodePath("../Gourt2")
 
-[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -400)
-head_friend = NodePath("../Gourt5")
+[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -500)
+head_friend = NodePath("../Gourt1")
 foot_friend = NodePath("../Gourt3")
 
-[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -500)
-head_friend = NodePath("../Gourt6")
+[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -400)
+head_friend = NodePath("../Gourt2")
 foot_friend = NodePath("../Gourt4")
 
-[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_jr0nx")]
-position = Vector2(0, -600)
+[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -300)
+head_friend = NodePath("../Gourt3")
 foot_friend = NodePath("../Gourt5")
 
+[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -200)
+head_friend = NodePath("../Gourt4")
+foot_friend = NodePath("../Gourt6")
+
+[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+position = Vector2(0, -100)
+head_friend = NodePath("../Gourt5")
+foot_friend = NodePath("../Gourt0")
+
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
-zoom = Vector2(0.775, 0.775)
 script = ExtResource("1_jr0nx")
-player_character = NodePath("../Gourt Stack/Gourt6")
+player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"

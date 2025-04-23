@@ -81,6 +81,15 @@ func break_stack(impulse_scale: int = 1) -> void:
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
+# far from perfect but works well enough for now
+func get_bounds() -> Rect2:
+	if head_friend:
+		return head_friend.get_bounds()
+	else:
+		var self_bounds = super()
+		self_bounds.size.y *= Gourtilities.foot_count(self)
+		return self_bounds
+
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)

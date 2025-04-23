@@ -5,6 +5,13 @@ class Commands:
 	var walk: float
 	# and obviously whatever else we end up needing
 
+var bounds_size = 60
+func get_bounds() -> Rect2:
+	return Rect2(
+		global_position - Vector2.ONE * bounds_size,
+		Vector2.ONE * bounds_size * 2
+	)
+
 func _input(ev: InputEvent):
 	pass
 

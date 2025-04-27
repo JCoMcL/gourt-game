@@ -19,7 +19,7 @@ tile_size = Vector2i(256, 256)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dopu7")
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-106, -640)
@@ -30,18 +30,14 @@ tile_set = SubResource("TileSet_g2cx6")
 
 [node name="Gourt" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(-14, -168)
-gourt_name = "boris"
 debug_mode = true
 
 [node name="Gourt2" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(-50, -445)
-gourt_name = "den"
 debug_mode = true
 
 [node name="Gourt3" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(45, -758)
-gourt_name = "aaron"
 
 [node name="Gourt4" parent="." instance=ExtResource("2_x5dyn")]
 position = Vector2(-83, -1222)
-gourt_name = "cevin"

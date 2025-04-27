@@ -108,3 +108,6 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
 shape = SubResource("CircleShape2D_nsfnc")
+
+[node name="Perch" type="Node2D" parent="."]
+position = Vector2(0, -100)

@@ -1,9 +1,12 @@
-extends CharacterBody2D
+class_name Gourt
+extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
 enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var facing = Direction.LEFT
-@export var gourt_name = "gourt" #For debug purposes, serves no gameplay value. TODO revise 
+
+@export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
+
 @export var disarray = false #Defines if gourts can be assembled in gourtstack
 
 @export var debug_mode = false
@@ -54,18 +57,21 @@ func set_facing(d: Direction) -> void:
 		flip()
 		facing = d
 
-func offset_to(body: Node2D):
+func offset_to(body: Node2D) -> Vector2:
 	return body.global_position - global_position
 
-func stack_onto(o: Node2D):
+func stack_onto(o: Gourt):
 	foot_friend = o
+	o.head_friend = self
 
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
-		stack_onto(detected_gaura.get_parent())
+		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
 	disarray = true
+	if master:
+		master.nominate(foot_friend)
 	foot_friend = null
 	velocity += Vector2(
 		triangular_distribution(-2, 2),
@@ -75,16 +81,25 @@ func break_stack(impulse_scale: int = 1) -> void:
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
-func get_move_input() -> float:
-	if foot_friend:
-		return 0
-	return Input.get_axis("go left","go right")
+# far from perfect but works well enough for now
+func get_bounds() -> Rect2:
+	if head_friend:
+		return head_friend.get_bounds()
+	else:
+		var self_bounds = super()
+		self_bounds.size.y *= Gourtilities.foot_count(self)
+		return self_bounds
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
 		break_stack(200)
 
 var walk_target: float
+func command(c: Commands) -> void:
+	if foot_friend:
+		foot_friend.command(c)
+	else:
+		walk_target = c.walk * 200
 
 func _process(delta: float) -> void:
 	set_facing(x_direction( velocity.x if foot_friend else walk_target ))
@@ -94,13 +109,11 @@ func _process(delta: float) -> void:
 		$Body.play("idleative")
 
 func _physics_process(delta: float) -> void:
-	walk_target = get_move_input() * 200
-
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta
 
 	if foot_friend:
-		snap_to(foot_friend.position + Vector2.UP * 100, delta) #TODO add snap-point to gourt.tscn instead of guessing
+		snap_to(Gourtilities.perch_position(foot_friend), delta)
 		walk_target = 0
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts

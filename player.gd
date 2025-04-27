@@ -36,7 +36,8 @@ func _process(delta):
 	global_position = player_character.global_position
 
 func _input(ev: InputEvent):
-	get_viewport().set_input_as_handled()
+	if not ev.is_action_pressed("probe"):
+		get_viewport().set_input_as_handled()
 	player_character._input(ev)
 
 func nominate(g: Goon):

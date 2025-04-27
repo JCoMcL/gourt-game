@@ -47,6 +47,14 @@ func vec_direction(v: Vector2):
 		return x_direction(v.x)
 	return y_direction(v.y)
 
+func identify():
+	print(
+	"
+	I am {0}.
+	My Head Friend: {1}
+	My Foot Friend: {2}
+	".format([name, head_friend.name, foot_friend.name])
+	)
 func flip() -> void:
 	transform.x *= -1
 
@@ -141,4 +149,4 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
-	$Gaura.body_entered.connect(gaura_detect_body)
+	#$Gaura.body_entered.connect(gaura_detect_body)

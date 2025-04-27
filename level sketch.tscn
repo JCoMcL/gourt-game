@@ -51,6 +51,9 @@ radius = 33.1361
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcc6i"]
+size = Vector2(9.51189, 11.9634)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

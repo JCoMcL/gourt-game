@@ -105,7 +105,7 @@ flip_h = true
 
 [node name="Gaura" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 8
+collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
 shape = SubResource("CircleShape2D_nsfnc")

@@ -65,9 +65,11 @@ func stack_onto(o: Gourt):
 	foot_friend = o
 	o.head_friend = self
 
+func gaura_detect_body(detected_gaura: Node2D):
+	yeetonate()
+
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
-		print("gaura_detect")
 		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
@@ -94,13 +96,13 @@ func get_bounds() -> Rect2:
 
 func yeetonate():
 	is_active = false
-	break_stack(200)
+	head_friend.break_stack(200)
 	collision_layer = 0
 	collision_mask = 0
 	
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
-		break_stack(200)
+		break_stack(300)
 
 var walk_target: float
 func command(c: Commands) -> void:
@@ -139,3 +141,4 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
+	$Gaura.body_entered.connect(gaura_detect_body)

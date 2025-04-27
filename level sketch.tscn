@@ -133,7 +133,7 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 texture = ExtResource("10_kqc03")
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_jw83t")]
-position = Vector2(2319, 227)
+position = Vector2(2120, 227)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_jr0nx")]
@@ -174,4 +174,4 @@ player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
 [node name="Gourt" parent="." instance=ExtResource("13_jr0nx")]
-position = Vector2(2325, -1096)
+position = Vector2(2097, -1006)

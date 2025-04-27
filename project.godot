@@ -42,6 +42,7 @@ Gourtilities="*res://gourtilities.gd"
 2d_physics/layer_1="solid"
 2d_physics/layer_2="characters"
 2d_physics/layer_3="special solid"
+2d_physics/layer_4="gaura"
 
 [rendering]
 

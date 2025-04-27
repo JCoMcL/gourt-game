@@ -67,6 +67,7 @@ func stack_onto(o: Gourt):
 
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
+		print("gaura_detect")
 		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
@@ -115,6 +116,13 @@ func _process(delta: float) -> void:
 	else:
 		$Body.play("idleative")
 
+func check_collision():
+	var cc = get_slide_collision_count()
+	for i in range(cc):
+		var col = get_slide_collision(i)
+		var o = col.get_collider_shape()
+		print(o)
+	
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta
@@ -127,6 +135,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, walk_target, 20)
 
 	move_and_slide()
+	#check_collision()
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)

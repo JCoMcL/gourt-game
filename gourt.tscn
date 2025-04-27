@@ -80,6 +80,7 @@ radius = 127.016
 
 [node name="Gourt" type="CharacterBody2D"]
 collision_layer = 2
+collision_mask = 5
 floor_max_angle = 1.39626
 script = ExtResource("1_wkvig")
 
@@ -103,8 +104,8 @@ frame_progress = 0.908991
 flip_h = true
 
 [node name="Gaura" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 8
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
 shape = SubResource("CircleShape2D_nsfnc")

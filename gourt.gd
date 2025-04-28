@@ -7,9 +7,6 @@ enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
 
-@export var disarray = false #Defines if gourts can be assembled in gourtstack
-@export var is_active = true
-
 @export var debug_mode = false
 func debug_print(s):
 	if debug_mode: print(s)
@@ -72,19 +69,16 @@ func set_facing(d: Direction) -> void:
 func offset_to(body: Node2D) -> Vector2:
 	return body.global_position - global_position
 
-func stack_onto(o: Gourt):
-	foot_friend = o
-	o.head_friend = self
-
 func gaura_detect(detected_gaura: Node2D):
-	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
+	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !foot_friend:
 		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
-	disarray = true
 	if master:
 		master.nominate(foot_friend)
-	foot_friend = null
+	if foot_friend:
+		foot_friend.head_friend = null
+		foot_friend = null
 	velocity += Vector2(
 		triangular_distribution(-2, 2),
 		triangular_distribution(-1, -2)
@@ -106,8 +100,8 @@ func get_bounds() -> Rect2:
 		return self_bounds
 
 func yeetonate():
-	is_active = false
-	head_friend.break_stack(200)
+	if head_friend:
+		head_friend.break_stack(200)
 	collision_layer = 0
 	collision_mask = 0
 	
@@ -120,7 +114,7 @@ func command(c: Commands) -> void:
 	if foot_friend:
 		foot_friend.command(c)
 	else:
-		walk_target = c.walk * 200
+		walk_target = c.walk * 600
 
 func _process(delta: float) -> void:
 	set_facing(x_direction( velocity.x if foot_friend else walk_target ))

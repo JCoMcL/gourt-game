@@ -128,14 +128,17 @@ func _process(delta: float) -> void:
 	else:
 		$Body.play("idleative")
 
+#var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid")
+const special_layer = 4
+func is_special_collision(k: KinematicCollision2D) -> bool:
+	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
+
 func check_collision():
 	var cc = get_slide_collision_count()
 	var out = []
 	for i in range(cc):
 		var col = get_slide_collision(i)
-		var rid = col.get_collider_rid()
-		var col_layer = PhysicsServer2D.body_get_collision_layer(rid)
-		out.append("{0} on layer: {1}".format([col, col_layer]))
+		out.append("{0}, special: {1}".format([col, is_special_collision(col)]))
 	return out
 	
 func _physics_process(delta: float) -> void:

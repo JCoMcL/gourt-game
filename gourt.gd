@@ -48,13 +48,15 @@ func vec_direction(v: Vector2):
 	return y_direction(v.y)
 
 func identify():
-	print(
-	"
-	I am {0}.
-	My Head Friend: {1}
-	My Foot Friend: {2}
-	".format([name, head_friend.name, foot_friend.name])
-	)
+	for s in [
+		"\nI am %s" % name,
+		"My Head Friend: %s" % head_friend.name if head_friend else "",
+		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
+		("Recently I have been in contact with: %s" % check_collision()) if check_collision() else ""
+	]:
+		if s:
+			print(s)
+
 func flip() -> void:
 	transform.x *= -1
 
@@ -128,10 +130,13 @@ func _process(delta: float) -> void:
 
 func check_collision():
 	var cc = get_slide_collision_count()
+	var out = []
 	for i in range(cc):
 		var col = get_slide_collision(i)
-		var o = col.get_collider_shape()
-		print(o)
+		var rid = col.get_collider_rid()
+		var col_layer = PhysicsServer2D.body_get_collision_layer(rid)
+		out.append("{0} on layer: {1}".format([col, col_layer]))
+	return out
 	
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:

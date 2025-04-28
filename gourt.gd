@@ -52,7 +52,8 @@ func identify():
 		"\nI am %s" % name,
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
-		("Recently I have been in contact with: %s" % check_collision()) if check_collision() else ""
+		"Am at {0} local, {1} global".format([position, global_position]),
+		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else ""
 	]:
 		if s:
 			print(s)
@@ -75,9 +76,6 @@ func stack_onto(o: Gourt):
 	foot_friend = o
 	o.head_friend = self
 
-func gaura_detect_body(detected_gaura: Node2D):
-	yeetonate()
-
 func gaura_detect(detected_gaura: Node2D):
 	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !disarray && !foot_friend:
 		Gourtilities.stack(self, detected_gaura.get_parent())
@@ -91,6 +89,9 @@ func break_stack(impulse_scale: int = 1) -> void:
 		triangular_distribution(-2, 2),
 		triangular_distribution(-1, -2)
 	) * impulse_scale
+
+func snap_to_global(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
+	velocity = velocity.move_toward((target - global_position) * sharpness / delta, snappiness)
 
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
@@ -134,27 +135,24 @@ func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
 
 func check_collision():
-	var cc = get_slide_collision_count()
-	var out = []
-	for i in range(cc):
+	for i in range(get_slide_collision_count()):
 		var col = get_slide_collision(i)
-		out.append("{0}, special: {1}".format([col, is_special_collision(col)]))
-	return out
+		if is_special_collision(col):
+			yeetonate()
 	
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta
 
 	if foot_friend:
-		snap_to(Gourtilities.perch_position(foot_friend), delta)
+		snap_to_global(Gourtilities.global_perch_position(foot_friend), delta)
 		walk_target = 0
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, 20)
 
 	move_and_slide()
-	#check_collision()
+	check_collision()
 
 func _ready() -> void:
 	$Gaura.area_entered.connect(gaura_detect)
-	#$Gaura.body_entered.connect(gaura_detect_body)

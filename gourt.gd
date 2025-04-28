@@ -12,7 +12,7 @@ func debug_print(s):
 	if debug_mode: print(s)
 
 var rng = RandomNumberGenerator.new()
-func triangular_distribution(lower: float, upper: float) -> float:
+func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
 
 func test_spread(f: float, within: float, of: float) -> bool:
@@ -74,8 +74,6 @@ func gaura_detect(detected_gaura: Node2D):
 		Gourtilities.stack(self, detected_gaura.get_parent())
 
 func break_stack(impulse_scale: int = 1) -> void:
-	if master:
-		master.nominate(foot_friend)
 	if foot_friend:
 		foot_friend.head_friend = null
 		foot_friend = null
@@ -99,11 +97,34 @@ func get_bounds() -> Rect2:
 		self_bounds.size.y *= Gourtilities.foot_count(self)
 		return self_bounds
 
-func yeetonate():
-	if head_friend:
-		head_friend.break_stack(200)
+func abdicate() -> bool:
+	if not master:
+		return false #idk whether it should be true or false, we'll have to see
+	if foot_friend and master.nominate(foot_friend):
+		return true
+	if head_friend and master.nominate(head_friend):
+		return true
+	return master.nominate(null)
+
+func die():
 	collision_layer = 0
 	collision_mask = 0
+	walk_target = 0
+	abdicate()
+	if foot_friend:
+		foot_friend.head_friend = null #BM1
+		foot_friend = null
+	if head_friend:
+		head_friend.foot_friend = null
+		head_friend = null
+
+
+func yeetonate():
+	velocity = Vector2(triangular_distribution() * 320, triangular_distribution(-2,-3) * 20)
+	if head_friend:
+		head_friend.velocity.y = -200
+		head_friend.velocity.x *= 0.6
+	die()
 	
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
@@ -114,7 +135,7 @@ func command(c: Commands) -> void:
 	if foot_friend:
 		foot_friend.command(c)
 	else:
-		walk_target = c.walk * 600
+		walk_target = c.walk * 200
 
 func _process(delta: float) -> void:
 	set_facing(x_direction( velocity.x if foot_friend else walk_target ))

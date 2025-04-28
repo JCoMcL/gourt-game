@@ -15,6 +15,17 @@ func get_bounds() -> Rect2:
 func _input(ev: InputEvent):
 	pass
 
+func identify(lines = []):
+	for s in [
+		"\nI am %s" % name
+	] + lines:
+		if s:
+			print(s)
+
+func _input_event(viewport: Node, ev: InputEvent, shape_idx: int):
+	if ev.is_action_pressed("probe"):
+		identify()
+
 func command(commands: Commands) -> void:
 	pass
 

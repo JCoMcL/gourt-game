@@ -44,16 +44,13 @@ func vec_direction(v: Vector2):
 		return x_direction(v.x)
 	return y_direction(v.y)
 
-func identify():
-	for s in [
-		"\nI am %s" % name,
+func identify(lines = []):
+	super([
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
 		"Am at {0} local, {1} global".format([position, global_position]),
 		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else ""
-	]:
-		if s:
-			print(s)
+	])
 
 func flip() -> void:
 	transform.x *= -1
@@ -125,10 +122,10 @@ func yeetonate():
 		head_friend.velocity.y = -200
 		head_friend.velocity.x *= 0.6
 	die()
-	
+
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("break stack") && foot_friend:
-		break_stack(300)
+		break_stack(200)
 
 var walk_target: float
 func command(c: Commands) -> void:
@@ -154,7 +151,7 @@ func check_collision():
 		var col = get_slide_collision(i)
 		if is_special_collision(col):
 			yeetonate()
-	
+
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:
 		velocity += get_gravity() * delta

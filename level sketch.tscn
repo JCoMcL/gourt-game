@@ -173,5 +173,5 @@ script = ExtResource("1_jr0nx")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
-[node name="Gourt" parent="." instance=ExtResource("13_jr0nx")]
+[node name="Rogue Gourt" parent="." instance=ExtResource("13_jr0nx")]
 position = Vector2(2097, -1006)

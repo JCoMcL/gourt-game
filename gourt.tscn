@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdhee0fbyvgae"]
+[gd_scene load_steps=18 format=3 uid="uid://bdhee0fbyvgae"]
 
 [ext_resource type="Script" uid="uid://d2jc10mybkqtt" path="res://gourt.gd" id="1_wkvig"]
 [ext_resource type="Texture2D" uid="uid://cq1kakogmn7t6" path="res://gourts/bodies/body0006.png" id="2_3k4ux"]
-[ext_resource type="Script" uid="uid://cjupo8pnmsvny" path="res://click_detector.gd" id="2_mf72d"]
 [ext_resource type="Texture2D" uid="uid://cituclbbjentt" path="res://gourts/bodies/body0012.png" id="2_qj5og"]
 [ext_resource type="Texture2D" uid="uid://cm1o8oeffjvgo" path="res://gourts/bodies/body0013.png" id="3_40a1h"]
 [ext_resource type="Texture2D" uid="uid://cupngaqbdpm6h" path="res://gourts/bodies/body0007.png" id="3_pl8a0"]
@@ -14,9 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://bgoq4qhdii5c" path="res://gourts/faces/face0052.png" id="11_1t1hs"]
 [ext_resource type="Texture2D" uid="uid://dcrjfhksr5epn" path="res://gourts/faces/face0053.png" id="12_7e36x"]
 [ext_resource type="Texture2D" uid="uid://etf1m74kmrmi" path="res://gourts/faces/face0051.png" id="13_qsg7y"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_th8ej"]
-radius = 75.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q10vy"]
 radius = 47.0
@@ -88,15 +84,6 @@ collision_mask = 5
 floor_max_angle = 1.39626
 script = ExtResource("1_wkvig")
 
-[node name="ClickDetector" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 0
-priority = 99
-script = ExtResource("2_mf72d")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickDetector"]
-shape = SubResource("CircleShape2D_th8ej")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_q10vy")
@@ -118,7 +105,7 @@ flip_h = true
 
 [node name="Gaura" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 12
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
 shape = SubResource("CircleShape2D_nsfnc")

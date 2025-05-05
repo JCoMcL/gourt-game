@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=4 uid="uid://xfpwui2ygbps"]
 
-[ext_resource type="Texture2D" uid="uid://cve8dgq232s3v" path="res://level/test level/tiles.png" id="1_h53k5"]
-[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="2_x5dyn"]
+[ext_resource type="Texture2D" uid="uid://cve8dgq232s3v" path="res://level/ld-empty/tiles.png" id="1_8oggx"]
+[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="2_sxgyi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dopu7"]
-texture = ExtResource("1_h53k5")
+texture = ExtResource("1_8oggx")
 texture_region_size = Vector2i(256, 256)
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, 76.8, -128, 76.8, 128, -128, 128)
@@ -28,16 +28,16 @@ position = Vector2(-106, -640)
 tile_map_data = PackedByteArray("AAD9////AAABAAIAAAD+////AAABAAIAAAD/////AAABAAIAAAAAAP//AAABAAIAAAABAP//AAABAAIAAAD7////AAABAAIAAAD8////AAABAAIAAAACAP//AAABAAIAAAADAP//AAABAAIAAAD6////AAAAAAIAAAAEAP//AAAAAAIAABAEAP7/AAAAAAEAABAEAP3/AAAAAAEAABAEAPz/AAAAAAEAABAEAPv/AAAAAAEAABD6//7/AAAAAAEAAAD6//3/AAAAAAEAAAD6//z/AAAAAAEAAAD6//v/AAAAAAEAAAD7//v/AAABAAEAAAD8//v/AAABAAEAAAD9//v/AAABAAEAAAD+//v/AAABAAEAAAD///v/AAABAAEAAAAAAPv/AAABAAEAAAABAPv/AAABAAEAAAACAPv/AAABAAEAAAADAPv/AAABAAEAAAADAPz/AAABAAEAAAADAP3/AAABAAEAAAADAP7/AAABAAEAAAACAP7/AAABAAEAAAABAP7/AAABAAEAAAAAAP7/AAABAAEAAAD///7/AAABAAEAAAD+//7/AAABAAEAAAD9//7/AAABAAEAAAD8//7/AAABAAEAAAD7//7/AAABAAEAAAD7//3/AAABAAEAAAD7//z/AAABAAEAAAD8//z/AAABAAEAAAD9//z/AAABAAEAAAD+//z/AAABAAEAAAD///z/AAABAAEAAAAAAPz/AAABAAEAAAABAPz/AAABAAEAAAACAPz/AAABAAEAAAACAP3/AAABAAEAAAABAP3/AAABAAEAAAAAAP3/AAABAAEAAAD///3/AAABAAEAAAD+//3/AAABAAEAAAD9//3/AAABAAEAAAD8//3/AAABAAEAAAA=")
 tile_set = SubResource("TileSet_g2cx6")
 
-[node name="Gourt" parent="." instance=ExtResource("2_x5dyn")]
+[node name="Gourt" parent="." instance=ExtResource("2_sxgyi")]
 position = Vector2(-14, -168)
 debug_mode = true
 
-[node name="Gourt2" parent="." instance=ExtResource("2_x5dyn")]
+[node name="Gourt2" parent="." instance=ExtResource("2_sxgyi")]
 position = Vector2(-50, -445)
 debug_mode = true
 
-[node name="Gourt3" parent="." instance=ExtResource("2_x5dyn")]
+[node name="Gourt3" parent="." instance=ExtResource("2_sxgyi")]
 position = Vector2(45, -758)
 
-[node name="Gourt4" parent="." instance=ExtResource("2_x5dyn")]
+[node name="Gourt4" parent="." instance=ExtResource("2_sxgyi")]
 position = Vector2(-83, -1222)

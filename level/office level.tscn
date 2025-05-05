@@ -1,22 +1,22 @@
 [gd_scene load_steps=20 format=4 uid="uid://b57lobk2dccaj"]
 
-[ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="1_jr0nx"]
-[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/level sketch/tiles.png" id="1_qtl3e"]
-[ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="3_7kuoi"]
-[ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="4_bk2vt"]
-[ext_resource type="Texture2D" uid="uid://fnyyvt8lyi50" path="res://props/door.png" id="4_ifabn"]
-[ext_resource type="Texture2D" uid="uid://c83xr6tgul0ok" path="res://props/arrow.png" id="5_bm7xb"]
-[ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_xaftn"]
-[ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_dsstq"]
-[ext_resource type="Texture2D" uid="uid://bg8514xi46mmo" path="res://props/npc gourtstack.png" id="8_vaerj"]
-[ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_ccxdv"]
-[ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_hjwuy"]
-[ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="10_kqc03"]
-[ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/gourt_stack.tscn" id="12_jw83t"]
-[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_jr0nx"]
+[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office level/tiles.png" id="1_wxgj7"]
+[ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_2lgek"]
+[ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="3_x1oxu"]
+[ext_resource type="Texture2D" uid="uid://fnyyvt8lyi50" path="res://props/door.png" id="4_g41wc"]
+[ext_resource type="Texture2D" uid="uid://c83xr6tgul0ok" path="res://props/arrow.png" id="5_p4wav"]
+[ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_qycbv"]
+[ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_43b34"]
+[ext_resource type="Texture2D" uid="uid://bg8514xi46mmo" path="res://props/npc gourtstack.png" id="8_3k8ca"]
+[ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_2sgh0"]
+[ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
+[ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
+[ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
+[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
+[ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
-texture = ExtResource("1_qtl3e")
+texture = ExtResource("1_wxgj7")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, -25.6, -128, -25.6, 128, -128, 128)
@@ -52,6 +52,7 @@ radius = 33.1361
 radius = 26.0
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(0, -1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
@@ -60,55 +61,55 @@ tile_set = SubResource("TileSet_mdp56")
 
 [node name="Janitor" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(2211, -130)
-texture = ExtResource("3_7kuoi")
+texture = ExtResource("2_2lgek")
 
 [node name="Inspectors" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(1794, -124)
-texture = ExtResource("4_bk2vt")
+texture = ExtResource("3_x1oxu")
 
 [node name="Door" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-64, 71)
-texture = ExtResource("4_ifabn")
+texture = ExtResource("4_g41wc")
 
 [node name="Door2" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-642, -1978)
-texture = ExtResource("4_ifabn")
+texture = ExtResource("4_g41wc")
 
 [node name="Arrow" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-61, -384)
 rotation = 3.05258
-texture = ExtResource("5_bm7xb")
+texture = ExtResource("5_p4wav")
 
 [node name="WaterCooler" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-1126, -1885)
-texture = ExtResource("6_xaftn")
+texture = ExtResource("6_qycbv")
 
 [node name="WaterCoolest" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-2412, -1880)
-texture = ExtResource("6_xaftn")
+texture = ExtResource("6_qycbv")
 
 [node name="Sunglasses" type="Sprite2D" parent="TileMapLayer/WaterCoolest"]
 position = Vector2(30, -141)
-texture = ExtResource("7_dsstq")
+texture = ExtResource("7_43b34")
 
 [node name="Arrow2" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-659, -2431)
-texture = ExtResource("5_bm7xb")
+texture = ExtResource("5_p4wav")
 
 [node name="NpcGourtstack" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(384, 76)
-texture = ExtResource("8_vaerj")
+texture = ExtResource("8_3k8ca")
 
 [node name="Elevator" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(4698, -283)
-texture = ExtResource("9_ccxdv")
+texture = ExtResource("9_2sgh0")
 
 [node name="Stroller" type="RigidBody2D" parent="TileMapLayer"]
 position = Vector2(-1741, -180)
 physics_material_override = SubResource("PhysicsMaterial_j4txm")
 
 [node name="Stroller" type="Sprite2D" parent="TileMapLayer/Stroller"]
-texture = ExtResource("10_hjwuy")
+texture = ExtResource("10_yl1fq")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/Stroller"]
 position = Vector2(146, 139)
@@ -130,48 +131,48 @@ center_of_mass_mode = 1
 polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 102, 136, -76, 131, -14, 101, -5, -113, -225, -109)
 
 [node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
-texture = ExtResource("10_kqc03")
+texture = ExtResource("11_6o0x5")
 
-[node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_jw83t")]
+[node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 position = Vector2(2120, 227)
 root_child = NodePath("Gourt0")
 
-[node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
 head_friend = NodePath("../Gourt6")
 
-[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -600)
 foot_friend = NodePath("../Gourt2")
 
-[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -500)
 head_friend = NodePath("../Gourt1")
 foot_friend = NodePath("../Gourt3")
 
-[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -400)
 head_friend = NodePath("../Gourt2")
 foot_friend = NodePath("../Gourt4")
 
-[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -300)
 head_friend = NodePath("../Gourt3")
 foot_friend = NodePath("../Gourt5")
 
-[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -200)
 head_friend = NodePath("../Gourt4")
 foot_friend = NodePath("../Gourt6")
 
-[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_jr0nx")]
+[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -100)
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
-script = ExtResource("1_jr0nx")
+script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
-[node name="Rogue Gourt" parent="." instance=ExtResource("13_jr0nx")]
+[node name="Rogue Gourt" parent="." instance=ExtResource("13_ax68m")]
 position = Vector2(2097, -1006)

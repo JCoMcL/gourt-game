@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cji7qwgt0f3t8"]
+
+[ext_resource type="Script" uid="uid://c8edpk6ollv0v" path="res://gourts/gourt_stack.gd" id="1_a1661"]
+[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="2_a75bq"]
+
+[node name="Gourt Stack" type="Node2D"]
+script = ExtResource("1_a1661")
+gourt = ExtResource("2_a75bq")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=4 uid="uid://b57lobk2dccaj"]
 
-[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office level/tiles.png" id="1_wxgj7"]
+[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_2lgek"]
 [ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="3_x1oxu"]
 [ext_resource type="Texture2D" uid="uid://fnyyvt8lyi50" path="res://props/door.png" id="4_g41wc"]

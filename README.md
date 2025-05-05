@@ -13,3 +13,17 @@ Gourts keep track of their neighbours in the stack, however there no gaurentee t
 addd gourts looking at things
 twitch integtation
 - chatters control NPCs
+
+# See Also (auto-generated)
+[office level/todo.md](./level/office level/todo.md)
+
+[./gourts/gourtilities.gd:func stack(g: Gourt, onto: Gourt): #BM1](./gourts/gourtilities.gd)
+[./gourts/gourt.gd:extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)](./gourts/gourt.gd)
+[./gourts/gourt.gd:	return Direction.UP if y > 0 else Direction.DOWN #WARN untested](./gourts/gourt.gd)
+[./gourts/gourt.gd:#TODO reimplement to be less guesswork-oriented ](./gourts/gourt.gd)
+[./gourts/gourt.gd:		foot_friend.head_friend = null #BM1](./gourts/gourt.gd)
+[./goon.gd:extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)class_name Goon](./goon.gd)
+[./goon.gd:var bounds_size = 60 #TODO this is the gourt's size, and it's a guess](./goon.gd)
+[./player.gd:class_name Master #TODO: this class should be more generic: player and AI should inheret from it](./player.gd)
+[./player.gd:	#TODO how does input priority work exactly? Does it make this reording unneccesary?](./player.gd)
+[./player.gd:	print("Goodbye World!") #TODO actual game-over](./player.gd)

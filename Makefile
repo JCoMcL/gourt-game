@@ -1,0 +1,6 @@
+.PHONY: README.md
+README.md:
+	sed -i '/# See Also/q' $@
+	find -mindepth 2 -name '*.md' | awk -F '/' '{print "[" $$(NF-1) "/" $$NF"]("$$0")" }' >> $@
+	echo >> $@
+	grep -RIP '#(TODO|WARN|FIX|BM)' . | awk -F: '{print "[" $$0 "](" $$1 ")"}' >> $@

@@ -38,6 +38,3 @@ func unleash_children():
 func _ready() -> void:
 	if not Engine.is_editor_hint:
 		unleash_children()
-
-func _process(delta: float) -> void:
-	pass

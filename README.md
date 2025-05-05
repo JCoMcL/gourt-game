@@ -27,7 +27,7 @@ twitch integtation
 
 [` foot_friend.head_friend = null #BM1`](./gourts/gourt.gd)
 
-[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)class_name Goon`](./goon.gd)
+[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./goon.gd)
 
 [` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./goon.gd)
 

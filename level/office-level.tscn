@@ -52,7 +52,6 @@ radius = 33.1361
 radius = 26.0
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(0, -1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)

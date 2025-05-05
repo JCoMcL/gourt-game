@@ -38,7 +38,7 @@ func x_direction(x: float):
 	return Direction.RIGHT if x > 0 else Direction.LEFT
 func y_direction(y: float):
 	if absf(y) < 10: return Direction.NONE
-	return Direction.UP if y > 0 else Direction.DOWN #WARN: untested
+	return Direction.UP if y > 0 else Direction.DOWN #WARN untested
 func vec_direction(v: Vector2):
 	if absf(v.x) > absf(v.y):
 		return x_direction(v.x)
@@ -85,7 +85,7 @@ func snap_to_global(target:Vector2, delta:float, snappiness:float = 600, sharpne
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
 	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
 
-# far from perfect but works well enough for now
+#TODO reimplement to be less guesswork-oriented 
 func get_bounds() -> Rect2:
 	if head_friend:
 		return head_friend.get_bounds()

@@ -5,7 +5,7 @@ class Commands:
 	var walk: float
 	# and obviously whatever else we end up needing
 
-var bounds_size = 60
+var bounds_size = 60 #TODO this is the gourt's size, and it's a guess
 func get_bounds() -> Rect2:
 	return Rect2(
 		global_position - Vector2.ONE * bounds_size,

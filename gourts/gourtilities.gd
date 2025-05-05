@@ -1,8 +1,6 @@
 @tool
 extends Node
 
-# TODO: this uses local position, which may cause weird behaviour.
-# A more robust implementation would give global position and require the caller to transform it to their local
 func perch_position(o: Node2D) -> Vector2: 
 	var p = o.get_node_or_null("Perch")
 	return o.position + (p.position if p else Vector2.UP * 100)
@@ -11,7 +9,7 @@ func global_perch_position(o: Node2D) -> Vector2:
 	var p = o.get_node_or_null("Perch")
 	return p.global_position
 
-func stack(g: Gourt, onto: Gourt): #BUGMAGNET gourt neighbour
+func stack(g: Gourt, onto: Gourt): #BM1
 	g.foot_friend = onto
 	if onto.head_friend:
 		stack(onto.head_friend, g)

@@ -17,6 +17,7 @@ func screen_position(world_position: Vector2):
 
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
+	#TODO how does input priority work exactly? Does it make this reording unneccesary?
 	get_parent().move_child.call_deferred(self, -1)
 	if valid_goon(player_character):
 		player_character.under_new_management(self)
@@ -43,7 +44,7 @@ func _input(ev: InputEvent):
 		player_character._input(ev)
 
 func game_over():
-	print("Goodbye World!") #TODO
+	print("Goodbye World!") #TODO actual game-over
 
 func nominate(g: Goon) -> bool:
 	if not g:

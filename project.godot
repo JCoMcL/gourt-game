@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Guort Game"
-run/main_scene="res://level sketch.tscn"
+run/main_scene="uid://b57lobk2dccaj"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.png"
 
 [autoload]
 
-Gourtilities="*res://gourtilities.gd"
+Gourtilities="*res://gourts/gourtilities.gd"
 
 [input]
 

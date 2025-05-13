@@ -148,9 +148,11 @@ func is_special_collision(k: KinematicCollision2D) -> bool:
 
 func check_collision():
 	for i in range(get_slide_collision_count()):
-		var col = get_slide_collision(i)
-		if is_special_collision(col):
+		var k = get_slide_collision(i)
+		if is_special_collision(k):
 			yeetonate()
+		if k.get_collider() is RigidBody2D:
+			k.get_collider().apply_impulse(k.get_remainder())
 
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:

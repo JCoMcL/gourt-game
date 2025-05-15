@@ -158,7 +158,14 @@ func check_collision():
 		if is_special_collision(k):
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
-			k.get_collider().apply_force(k.get_remainder() * 10)
+			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position())
+		if foot_friend:
+			foot_friend.apply_force(k.get_remainder() * -20)
+
+var forces = []
+func apply_force(force: Vector2):
+	identify(["%v" % force])
+	forces.append(force)
 
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:
@@ -166,7 +173,7 @@ func _physics_process(delta: float) -> void:
 
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		if target_offset.length() > (120):
+		if target_offset.length() > (60):
 			break_stack()
 		else:
 			snap_towards(target_offset, delta / Engine.time_scale)
@@ -175,6 +182,10 @@ func _physics_process(delta: float) -> void:
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, 20)
+
+	for f in forces:
+		velocity += f
+	forces = []
 
 	move_and_slide()
 	check_collision()

@@ -50,7 +50,7 @@ func identify(lines = []):
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
 		"Am at {0} local, {1} global".format([position, global_position]),
 		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else ""
-	])
+	] + lines)
 
 func flip() -> void:
 	transform.x *= -1
@@ -66,10 +66,6 @@ func set_facing(d: Direction) -> void:
 func offset_to(body: Node2D) -> Vector2:
 	return body.global_position - global_position
 
-func gaura_detect(detected_gaura: Node2D):
-	if get_direction(offset_to(detected_gaura)) == Direction.DOWN && !foot_friend:
-		Gourtilities.stack(self, detected_gaura.get_parent())
-
 func break_stack(impulse_scale: int = 1) -> void:
 	if foot_friend:
 		foot_friend.head_friend = null
@@ -80,10 +76,13 @@ func break_stack(impulse_scale: int = 1) -> void:
 	) * impulse_scale
 
 func snap_to_global(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
-	velocity = velocity.move_toward((target - global_position) * sharpness / delta, snappiness)
+	snap_towards((target - global_position), delta, snappiness, sharpness)
 
 func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
-	velocity = velocity.move_toward((target - position) * sharpness / delta, snappiness)
+	snap_towards((target - position), delta, snappiness, sharpness)
+
+func snap_towards(direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
+	velocity = velocity.move_toward(direction * sharpness / delta, snappiness)
 
 #TODO reimplement to be less guesswork-oriented 
 func get_bounds() -> Rect2:
@@ -94,9 +93,11 @@ func get_bounds() -> Rect2:
 		self_bounds.size.y *= Gourtilities.foot_count(self)
 		return self_bounds
 
-func abdicate() -> bool:
+func abdicate(nominee: Goon = null) -> bool:
 	if not master:
 		return false #idk whether it should be true or false, we'll have to see
+	if nominee:
+		return master.nominate(nominee)
 	if foot_friend and master.nominate(foot_friend):
 		return true
 	if head_friend and master.nominate(head_friend):
@@ -123,10 +124,6 @@ func yeetonate():
 		head_friend.velocity.x *= 0.6
 	die()
 
-func _input(ev: InputEvent) -> void:
-	if ev.is_action_pressed("break stack") && foot_friend:
-		break_stack(200)
-
 var walk_target: float
 func command(c: Commands) -> void:
 	if foot_friend:
@@ -141,6 +138,15 @@ func _process(delta: float) -> void:
 	else:
 		$Body.play("idleative")
 
+func scan_for_perch(distance: float = 120):
+	var result = get_world_2d().direct_space_state.intersect_ray(
+		PhysicsRayQueryParameters2D.create(
+			global_position,
+			global_position + Vector2.DOWN * distance)
+	)
+	if result and result.collider is Gourt:
+		Gourtilities.stack(self, result.collider)
+
 #var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid")
 const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
@@ -152,7 +158,7 @@ func check_collision():
 		if is_special_collision(k):
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
-			k.get_collider().apply_impulse(k.get_remainder())
+			k.get_collider().apply_force(k.get_remainder() * 10)
 
 func _physics_process(delta: float) -> void:
 	if !is_on_floor() && !foot_friend:
@@ -161,12 +167,11 @@ func _physics_process(delta: float) -> void:
 	if foot_friend:
 		snap_to_global(Gourtilities.global_perch_position(foot_friend), delta)
 		walk_target = 0
+	else:
+		scan_for_perch()
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, 20)
 
 	move_and_slide()
 	check_collision()
-
-func _ready() -> void:
-	$Gaura.area_entered.connect(gaura_detect)

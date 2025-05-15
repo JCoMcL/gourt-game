@@ -165,8 +165,11 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	if foot_friend:
-		snap_to_global(Gourtilities.global_perch_position(foot_friend), delta)
-		walk_target = 0
+		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
+		if target_offset.length() > (120):
+			break_stack()
+		else:
+			snap_towards(target_offset, delta / Engine.time_scale)
 	else:
 		scan_for_perch()
 

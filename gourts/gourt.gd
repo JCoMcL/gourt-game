@@ -158,7 +158,7 @@ func check_collision():
 		if is_special_collision(k):
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
-			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position())
+			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position() - k.get_collider().global_position )
 		if foot_friend:
 			foot_friend.apply_force(k.get_remainder() * -20)
 

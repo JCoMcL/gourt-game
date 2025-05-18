@@ -75,14 +75,8 @@ func break_stack(impulse_scale: int = 1) -> void:
 		triangular_distribution(-1, -2)
 	) * impulse_scale
 
-func snap_to_global(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
-	snap_towards((target - global_position), delta, snappiness, sharpness)
-
-func snap_to(target:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
-	snap_towards((target - position), delta, snappiness, sharpness)
-
-func snap_towards(direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3):
-	velocity = velocity.move_toward(direction * sharpness / delta, snappiness)
+func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3) -> Vector2:
+	return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor
 
 #TODO reimplement to be less guesswork-oriented 
 func get_bounds() -> Rect2:
@@ -144,7 +138,7 @@ func scan_for_perch(distance: float = 120):
 			global_position,
 			global_position + Vector2.DOWN * distance)
 	)
-	if result and result.collider is Gourt:
+	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
 		Gourtilities.stack(self, result.collider)
 
 #var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid")
@@ -159,24 +153,26 @@ func check_collision():
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
 			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position() - k.get_collider().global_position )
-		if foot_friend:
-			foot_friend.apply_force(k.get_remainder() * -20)
 
 var forces = []
 func apply_force(force: Vector2):
-	identify(["%v" % force])
 	forces.append(force)
 
-func _physics_process(delta: float) -> void:
-	if !is_on_floor() && !foot_friend:
-		velocity += get_gravity() * delta
+func apply_force_recursive_downwards(force: Vector2, factor:float):
+	force *= factor
+	apply_force(force)
+	if foot_friend:
+		foot_friend.apply_force_recursive_downwards(force, factor)
 
+func _physics_process(delta: float) -> void:
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		if target_offset.length() > (60):
+		if target_offset.length() > (80):
 			break_stack()
 		else:
-			snap_towards(target_offset, delta / Engine.time_scale)
+			var f = snap_force(velocity, target_offset, delta / Engine.time_scale);
+			apply_force(f)
+			foot_friend.apply_force(f * -0.5)
 	else:
 		scan_for_perch()
 
@@ -186,6 +182,9 @@ func _physics_process(delta: float) -> void:
 	for f in forces:
 		velocity += f
 	forces = []
+	if !is_on_floor() && !foot_friend:
+		velocity += get_gravity() * delta
+
 
 	move_and_slide()
 	check_collision()

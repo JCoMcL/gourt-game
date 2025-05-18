@@ -9,6 +9,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export_category("motion")
 @export var walk_speed = 200
 @export var walk_accel = 20
+@export var walk_friction = 0.3 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
 
@@ -23,8 +24,10 @@ func identify(lines = []):
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
 		"Am at {0} local, {1} global".format([position, global_position]),
 		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else "",
-		"Forces:\n%s" % forces.map(func(f): return f._string()).reduce(func(acc, s): return "%s\n%s" % [acc, s]) if forces else ""
+		"My velocity: %.2v" % velocity,
+		"Forces last physics tick:\n%s" % saved_forces.map(func(f): return f._string()).reduce(func(acc, s): return "%s\n%s" % [acc, s]) if saved_forces else ""
 	] + lines)
+	":D"
 
 func flip() -> void:
 	transform.x *= -1
@@ -47,7 +50,7 @@ func break_stack(impulse_scale: int = 1) -> void:
 	) * impulse_scale, "breaksplosion")
 
 func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3) -> Vector2:
-	return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor
+	return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor
 
 #TODO reimplement to be less guesswork-oriented 
 func get_bounds() -> Rect2:
@@ -119,6 +122,8 @@ func check_collision():
 		if k.get_collider() is RigidBody2D:
 			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position() - k.get_collider().global_position )
 
+
+
 class Force:
 	var value: Vector2
 	var name: String
@@ -130,20 +135,34 @@ class Force:
 		return "%s: %.2v" % [name, value]
 
 var forces = []
+var saved_forces=forces
 func apply_force(force: Vector2, label=""):
 	forces.append(Force.new(force, label))
+
+func apply_force_recursive_upwards(force: Vector2, factor=1.0, label=""):
+	force *= factor
+	apply_force(force, label)
+	if head_friend:
+		head_friend.apply_force_recursive_upwards(force, factor, label)
+
+func apply_friction(factor: Vector2, label="friction"):
+	var friction = Vector2.ZERO
+	for f in forces:
+		friction += f.value * -factor
+	apply_force(friction, label)
+
 
 func _physics_process(delta: float) -> void:
 	apply_force(get_gravity() * delta, "gravity")
 
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		var f = snap_force(velocity, target_offset, delta / Engine.time_scale);
+		var f = snap_force(velocity, target_offset, delta);
 		if target_offset.length() > snap_distance:
-			apply_force(-f,"rebound")
-			foot_friend.apply_force(f * stack_elasticity, "snapback")
+			foot_friend.apply_force(f, "snapback")
 			break_stack()
-			identify([f])
+			apply_force_recursive_upwards(-f, 1.0, "rebound")
+			identify()
 		else:
 			apply_force(f, "snap")
 			foot_friend.apply_force(-f * stack_elasticity, "elastic")
@@ -151,11 +170,17 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y > 0:
 		scan_for_perch()
 
+
+	if is_on_floor():
+		apply_friction(Vector2(walk_friction,0))
+
+
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
 	for f in forces:
 		velocity += f.value
+	saved_forces=forces
 	forces = []
 
 	move_and_slide()

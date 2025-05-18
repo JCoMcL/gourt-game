@@ -10,8 +10,9 @@ x:done, -:underway
 -- [ ] use static objects
 -- [ ] inter-gourt-action
 - [-] Unstacking
--- [-] low ceiling
+-- [x] low ceiling
 -- [ ] low wall
+-- [ ] control inheritence logic
 - [ ] NPCs
 -- [ ] Dialogue
 --- [ ] emphasis

@@ -6,9 +6,12 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
 
-@export var debug_mode = false
-func debug_print(s):
-	if debug_mode: print(s)
+@export_category("motion")
+@export var walk_speed = 200
+@export var walk_accel = 20
+@export var snap_distance = 120
+@export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
+
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -19,7 +22,8 @@ func identify(lines = []):
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
 		"Am at {0} local, {1} global".format([position, global_position]),
-		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else ""
+		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else "",
+		"Forces:\n%s" % forces.map(func(f): return f._string()).reduce(func(acc, s): return "%s\n%s" % [acc, s]) if forces else ""
 	] + lines)
 
 func flip() -> void:
@@ -33,17 +37,14 @@ func set_facing(d: int) -> void:
 		flip()
 		facing = d
 
-func offset_to(body: Node2D) -> Vector2:
-	return body.global_position - global_position
-
 func break_stack(impulse_scale: int = 1) -> void:
 	if foot_friend:
 		foot_friend.head_friend = null
 		foot_friend = null
-	velocity += Vector2(
+	apply_force(Vector2(
 		triangular_distribution(-2, 2),
 		triangular_distribution(-1, -2)
-	) * impulse_scale
+	) * impulse_scale, "breaksplosion")
 
 func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3) -> Vector2:
 	return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor
@@ -80,7 +81,6 @@ func die():
 		head_friend.foot_friend = null
 		head_friend = null
 
-
 func yeetonate():
 	velocity = Vector2(triangular_distribution() * 320, triangular_distribution(-2,-3) * 20)
 	if head_friend:
@@ -92,26 +92,21 @@ var walk_target: float
 func command(c: Commands) -> void:
 	if foot_friend:
 		foot_friend.command(c)
+		walk_target = 0
 	else:
-		walk_target = c.walk * 200
+		walk_target = c.walk * walk_speed
 
-func _process(delta: float) -> void:
-	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))
-	if walk_target != 0:
-		$Body.play("transportative")
-	else:
-		$Body.play("idleative")
-
-func scan_for_perch(distance: float = 120):
+func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds one match, so fails with overlapping gourts. Perhaps intersect_point would be better?
 	var result = get_world_2d().direct_space_state.intersect_ray(
 		PhysicsRayQueryParameters2D.create(
 			global_position,
 			global_position + Vector2.DOWN * distance)
 	)
 	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
+		identify(["just stacked to %s" % result.collider.name])
 		Gourtilities.stack(self, result.collider)
 
-#var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid")
+#var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
 const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
@@ -124,37 +119,51 @@ func check_collision():
 		if k.get_collider() is RigidBody2D:
 			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position() - k.get_collider().global_position )
 
-var forces = []
-func apply_force(force: Vector2):
-	forces.append(force)
+class Force:
+	var value: Vector2
+	var name: String
+	func _init(f, s=""):
+		value=f
+		name= s if s else "unknown"
 
-func apply_force_recursive_downwards(force: Vector2, factor:float):
-	force *= factor
-	apply_force(force)
-	if foot_friend:
-		foot_friend.apply_force_recursive_downwards(force, factor)
+	func _string():
+		return "%s: %.2v" % [name, value]
+
+var forces = []
+func apply_force(force: Vector2, label=""):
+	forces.append(Force.new(force, label))
 
 func _physics_process(delta: float) -> void:
+	apply_force(get_gravity() * delta, "gravity")
+
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		if target_offset.length() > (80):
+		var f = snap_force(velocity, target_offset, delta / Engine.time_scale);
+		if target_offset.length() > snap_distance:
+			apply_force(-f,"rebound")
+			foot_friend.apply_force(f * stack_elasticity, "snapback")
 			break_stack()
+			identify([f])
 		else:
-			var f = snap_force(velocity, target_offset, delta / Engine.time_scale);
-			apply_force(f)
-			foot_friend.apply_force(f * -0.5)
-	else:
+			apply_force(f, "snap")
+			foot_friend.apply_force(-f * stack_elasticity, "elastic")
+
+	elif velocity.y > 0:
 		scan_for_perch()
 
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
-		velocity.x = move_toward(velocity.x, walk_target, 20)
+		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
 	for f in forces:
-		velocity += f
+		velocity += f.value
 	forces = []
-	if !is_on_floor() && !foot_friend:
-		velocity += get_gravity() * delta
-
 
 	move_and_slide()
 	check_collision()
+
+func _process(delta: float) -> void:
+	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))
+	if walk_target != 0:
+		$Body.play("transportative")
+	else:
+		$Body.play("idleative")

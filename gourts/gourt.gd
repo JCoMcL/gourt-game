@@ -1,7 +1,6 @@
 class_name Gourt
 extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
-enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 @export var facing = Direction.LEFT
 
 @export var head_friend: CharacterBody2D
@@ -15,35 +14,6 @@ var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
 
-func test_spread(f: float, within: float, of: float) -> bool:
-	return (of - within) < f and f < (of + within)
-
-func get_direction(to: Vector2):
-	var angle = rad_to_deg(to.angle()) + 155
-	if test_spread(angle, 30, 65):
-		return Direction.UP
-	if test_spread(angle, 20, 155):
-		return Direction.RIGHT
-	if test_spread(angle, 30, 245) :
-		return Direction.DOWN
-	if test_spread(angle, 20, 340):
-		return Direction.LEFT
-	return Direction.NONE
-
-func pretty_direction(i:int):
-	return Direction.keys()[i]
-
-func x_direction(x: float):
-	if absf(x) < 10: return Direction.NONE
-	return Direction.RIGHT if x > 0 else Direction.LEFT
-func y_direction(y: float):
-	if absf(y) < 10: return Direction.NONE
-	return Direction.UP if y > 0 else Direction.DOWN #WARN untested
-func vec_direction(v: Vector2):
-	if absf(v.x) > absf(v.y):
-		return x_direction(v.x)
-	return y_direction(v.y)
-
 func identify(lines = []):
 	super([
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
@@ -55,7 +25,7 @@ func identify(lines = []):
 func flip() -> void:
 	transform.x *= -1
 
-func set_facing(d: Direction) -> void:
+func set_facing(d: int) -> void:
 	if d == Direction.NONE:
 		return
 	assert(d == Direction.LEFT || d == Direction.RIGHT)
@@ -126,7 +96,7 @@ func command(c: Commands) -> void:
 		walk_target = c.walk * 200
 
 func _process(delta: float) -> void:
-	set_facing(x_direction( velocity.x if foot_friend else walk_target ))
+	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))
 	if walk_target != 0:
 		$Body.play("transportative")
 	else:

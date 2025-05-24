@@ -21,7 +21,7 @@
 [sub_resource type="Resource" id="Resource_dfgo1"]
 script = ExtResource("2_dfgo1")
 character_path = NodePath("../TileMapLayer/Inspectors")
-dialogue_id = "I am sure that's an OSHA violation..."
+dialogue_id = "[wave amp=50.0 freq=5.0 connected=1]I am sure that's an OSHA violation...[/wave]"
 metadata/_custom_type_script = "uid://ds8q4ho704e6"
 
 [sub_resource type="Resource" id="Resource_mxo3q"]
@@ -93,17 +93,19 @@ shape = SubResource("RectangleShape2D_ug6ph")
 follow_viewport_enabled = true
 script = ExtResource("3_mxo3q")
 
-[node name="Label" type="Label" parent="TileMapLayer/Dialogue Area/Dialogue UI"]
-modulate = Color(1, 0.188235, 1, 1)
-self_modulate = Color(1, 0, 1, 1)
-top_level = true
-visibility_layer = 1023
-offset_left = 1757.0
-offset_top = -284.0
-offset_right = 1797.0
-offset_bottom = -261.0
-scale = Vector2(2.68858, 2.16385)
-text = "111"
+[node name="RichTextLabel" type="RichTextLabel" parent="TileMapLayer/Dialogue Area/Dialogue UI"]
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = -0.229
+anchor_right = 0.27
+anchor_bottom = -0.229
+offset_left = -311.04
+offset_top = -188.608
+offset_right = 311.96
+offset_bottom = 188.392
+bbcode_enabled = true
+fit_content = true
+tab_size = 13
 
 [node name="Janitor" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(2211, -130)
@@ -216,6 +218,7 @@ head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
+position = Vector2(2165, -97)
 script = ExtResource("1_jr0nx")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"

@@ -21,6 +21,6 @@ func show_dialogue():
 	var character: Node = get_node(dialogue_entries[dialogue_counter].character_path)
 	if character:
 		var global_position = character.get_global_position()
-		dialogue_ui.show_text_at(global_position + Vector2(0, -50), dialogue_entries[dialogue_counter].dialogue_id)
+		dialogue_ui.show_text_at(global_position, dialogue_entries[dialogue_counter].dialogue_id)
 		if dialogue_counter < dialogue_entries.size():
 			dialogue_counter+=1

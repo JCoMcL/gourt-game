@@ -12,6 +12,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var walk_friction = 0.5 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
+@export var mass=80
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -47,7 +48,7 @@ func break_stack(impulse_scale: int = 1) -> void:
 		triangular_distribution(-1, -2)
 	) * impulse_scale, "breaksplosion")
 
-func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 600, sharpness:float = 0.3) -> Vector2:
+func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 300, sharpness:float = 0.3) -> Vector2:
 	return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor
 
 #TODO reimplement to be less guesswork-oriented 
@@ -143,14 +144,14 @@ func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn'
 func collide_with_rigidbody(k: KinematicCollision2D, force=1500):
 	var f = k.get_remainder().project( k.get_normal()) * force
 	k.get_collider().apply_force(f , k.get_position() - k.get_collider().global_position )
-	apply_force(-f / 80) 
+	apply_force(-f)
 
 func _physics_process(delta: float) -> void:
-	apply_force(get_gravity() * delta, "gravity")
+	apply_force(get_gravity() * delta * mass, "gravity")
 
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		var f = snap_force(velocity, target_offset, delta);
+		var f = snap_force(velocity, target_offset, delta) * mass;
 		if target_offset.length() > snap_distance:
 			foot_friend.apply_force(f, "snapback")
 			break_stack()
@@ -172,7 +173,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
 	for f in forces:
-		velocity += f.value
+		velocity += f.value / mass
 	saved_forces=forces
 	forces = []
 

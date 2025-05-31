@@ -9,10 +9,9 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export_category("motion")
 @export var walk_speed = 200
 @export var walk_accel = 20
-@export var walk_friction = 0.3 #this could be a puzzle mechanic
+@export var walk_friction = 0.5 #this could be a puzzle mechanic
 @export var snap_distance = 120
-@export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
-
+@export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -27,7 +26,6 @@ func identify(lines = []):
 		"My velocity: %.2v" % velocity,
 		"Forces last physics tick:\n%s" % saved_forces.map(func(f): return f._string()).reduce(func(acc, s): return "%s\n%s" % [acc, s]) if saved_forces else ""
 	] + lines)
-	":D"
 
 func flip() -> void:
 	transform.x *= -1
@@ -114,16 +112,6 @@ const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
 
-func check_collision():
-	for i in range(get_slide_collision_count()):
-		var k = get_slide_collision(i)
-		if is_special_collision(k):
-			yeetonate()
-		if k.get_collider() is RigidBody2D:
-			k.get_collider().apply_force(k.get_remainder() * 100, k.get_position() - k.get_collider().global_position )
-
-
-
 class Force:
 	var value: Vector2
 	var name: String
@@ -145,12 +133,17 @@ func apply_force_recursive_upwards(force: Vector2, factor=1.0, label=""):
 	if head_friend:
 		head_friend.apply_force_recursive_upwards(force, factor, label)
 
-func apply_friction(factor: Vector2, label="friction"):
+func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn't phyiscally accurate
 	var friction = Vector2.ZERO
 	for f in forces:
 		friction += f.value * -factor
 	apply_force(friction, label)
 
+
+func collide_with_rigidbody(k: KinematicCollision2D, force=1500):
+	var f = k.get_remainder().project( k.get_normal()) * force
+	k.get_collider().apply_force(f , k.get_position() - k.get_collider().global_position )
+	apply_force(-f / 80) 
 
 func _physics_process(delta: float) -> void:
 	apply_force(get_gravity() * delta, "gravity")
@@ -184,7 +177,13 @@ func _physics_process(delta: float) -> void:
 	forces = []
 
 	move_and_slide()
-	check_collision()
+
+	for i in range(get_slide_collision_count()):
+		var k = get_slide_collision(i)
+		if is_special_collision(k):
+			yeetonate()
+		if k.get_collider() is RigidBody2D:
+			collide_with_rigidbody(k)
 
 func _process(delta: float) -> void:
 	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))

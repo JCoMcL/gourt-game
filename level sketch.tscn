@@ -76,6 +76,7 @@ script = ExtResource("1_gb1tc")
 dialogue_entries = Array[ExtResource("2_dfgo1")]([SubResource("Resource_dfgo1"), SubResource("Resource_mxo3q")])
 dialogue_area = NodePath("../TileMapLayer/Dialogue Area")
 dialogue_ui = NodePath("../TileMapLayer/Dialogue Area/Dialogue UI")
+camera_focus = NodePath("../Gourt Stack/Gourt1")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
@@ -218,7 +219,6 @@ head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
-position = Vector2(2165, -97)
 script = ExtResource("1_jr0nx")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"

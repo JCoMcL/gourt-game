@@ -12,3 +12,10 @@ func show_text_at(world_position: Vector2, text: String):
 
 func hide_text():
 	label_node.visible = false
+
+func draw_line(start: Vector2, end: Vector2, color: Color):
+	var line = Line2D.new()
+	line.points = [start, end]
+	line.width = 2
+	line.default_color = color
+	add_child(line)

@@ -1,5 +1,5 @@
 x:done, -:underway
-- [-] Rigidbody Interaction
+- [x] Rigidbody Interaction
 - [ ] Doors
 -- [ ] stairwell doors
 -- [ ] inter-level doors

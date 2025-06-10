@@ -17,15 +17,25 @@ twitch integtation
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
 
-[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
-
 [` extends Goon #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./gourts/gourt.gd)
 
-[` return Direction.UP if y > 0 else Direction.DOWN #WARN untested`](./gourts/gourt.gd)
+[` @export var stack_elasticity = 0.8 #FIXME  setting this above 0.5 results in infinte-energy.`](./gourts/gourt.gd)
+
+[` return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor`](./gourts/gourt.gd)
 
 [` #TODO reimplement to be less guesswork-oriented `](./gourts/gourt.gd)
 
 [` foot_friend.head_friend = null #BM1`](./gourts/gourt.gd)
+
+[` func scan_for_perch(distance  float = snap_distance)  #FIXME, this only finds one match, so fails with overlapping gourts. Perhaps intersect_point would be better?`](./gourts/gourt.gd)
+
+[` if result and result.collider is Gourt and not result.collider.head_friend  #BM1`](./gourts/gourt.gd)
+
+[` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't phyiscally accurate`](./gourts/gourt.gd)
+
+[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
+
+[` return UP if y > 0 else DOWN #WARN untested`](./direction.gd)
 
 [` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./goon.gd)
 

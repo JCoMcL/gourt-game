@@ -38,6 +38,9 @@ func foot_count(g: Gourt):
 		return 1 + foot_count(g.foot_friend)
 	return 0
 
+func stack_count(g: Gourt):
+	return head_count(g) + foot_count(g) + 1
+
 func get_stack_tip(g: Gourt):
 	if g.head_friend:
 		return get_stack_tip(g.head_friend)

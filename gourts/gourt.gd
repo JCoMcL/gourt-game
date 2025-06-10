@@ -9,10 +9,10 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export_category("motion")
 @export var walk_speed = 200
 @export var walk_accel = 20
-@export var walk_friction = 0.5 #this could be a puzzle mechanic
+@export var walk_friction = 0.3 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
-@export var mass=80
+@export var mass=20
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -140,11 +140,18 @@ func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn'
 		friction += f.value * -factor
 	apply_force(friction, label)
 
+func collide_with_rigidbody(k: KinematicCollision2D, force=10):
+	var f = (
+		k.get_remainder() * force
+		- k.get_collider_velocity()
+	).project( k.get_normal())
 
-func collide_with_rigidbody(k: KinematicCollision2D, force=1500):
-	var f = k.get_remainder().project( k.get_normal()) * force
-	k.get_collider().apply_force(f , k.get_position() - k.get_collider().global_position )
-	apply_force(-f)
+	var our_mass = mass * Gourtilities.stack_count(self)
+	var their_mass = k.get_collider().mass
+
+	k.get_collider().apply_force(f * our_mass, k.get_position() - k.get_collider().global_position )
+
+	apply_force(-f * their_mass / force, "rigid rebound" )
 
 func _physics_process(delta: float) -> void:
 	apply_force(get_gravity() * delta * mass, "gravity")
@@ -156,7 +163,6 @@ func _physics_process(delta: float) -> void:
 			foot_friend.apply_force(f, "snapback")
 			break_stack()
 			apply_force_recursive_upwards(-f, 1.0, "rebound")
-			identify()
 		else:
 			apply_force(f, "snap")
 			foot_friend.apply_force(-f * stack_elasticity, "elastic")

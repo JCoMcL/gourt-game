@@ -108,6 +108,29 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		identify(["just stacked to %s" % result.collider.name])
 		Gourtilities.stack(self, result.collider)
 
+func try_enter_door():
+	var pq := PhysicsPointQueryParameters2D.new()
+	pq.collide_with_areas = true
+	pq.collide_with_bodies = false
+	pq.collision_mask = 16
+	pq.exclude = []
+	pq.position = global_position
+	
+	var result = get_world_2d().direct_space_state.intersect_point(pq)
+	if result.size() == 0:
+		print("nothing detected")
+		return
+	else:
+		identify(["it workerd!"])
+
+	result[0].collider.interract(self)
+	print(result[0].collider.name)
+
+func try_enter_door_recursive_downwards():
+	if foot_friend:
+		foot_friend.try_enter_door_recursive_downwards()
+	try_enter_door()
+
 #var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
 const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
@@ -198,3 +221,11 @@ func _process(delta: float) -> void:
 		$Body.play("transportative")
 	else:
 		$Body.play("idleative")
+
+func _input(ev: InputEvent) -> void:
+	if ev.is_action_pressed("enter door"):
+		var stack_tip = Gourtilities.get_stack_tip(self)
+		if stack_tip != self:
+			stack_tip._input(ev)
+			return
+		try_enter_door_recursive_downwards()

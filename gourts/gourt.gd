@@ -9,7 +9,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export_category("motion")
 @export var walk_speed = 200
 @export var walk_accel = 20
-@export var walk_friction = 0.3 #this could be a puzzle mechanic
+@export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
 @export var mass=20
@@ -140,18 +140,24 @@ func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn'
 		friction += f.value * -factor
 	apply_force(friction, label)
 
-func collide_with_rigidbody(k: KinematicCollision2D, force=10):
-	var f = (
-		k.get_remainder() * force
-		- k.get_collider_velocity()
-	).project( k.get_normal())
-
+func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=-0.2, force_ratio=1):
 	var our_mass = mass * Gourtilities.stack_count(self)
 	var their_mass = k.get_collider().mass
 
-	k.get_collider().apply_force(f * our_mass, k.get_position() - k.get_collider().global_position )
+	var momentum_1 = our_mass * velocity + their_mass * k.get_collider_velocity()
 
-	apply_force(-f * their_mass / force, "rigid rebound" )
+	var relative_velocity_along_normal = (
+		velocity - k.get_collider_velocity()
+	).dot( k.get_normal())
+
+	if relative_velocity_along_normal > 0:
+		print("no")
+	print("yes")
+
+	var f = (1+restitution) * relative_velocity_along_normal / (1.0/our_mass + 1.0/their_mass) * k.get_normal()
+
+	k.get_collider().apply_force(f * force_ratio, k.get_position() - k.get_collider().global_position )
+	apply_force(-f * delta, "rigid rebound" )
 
 func _physics_process(delta: float) -> void:
 	apply_force(get_gravity() * delta * mass, "gravity")
@@ -190,7 +196,7 @@ func _physics_process(delta: float) -> void:
 		if is_special_collision(k):
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
-			collide_with_rigidbody(k)
+			collide_with_rigidbody(k, delta)
 
 func _process(delta: float) -> void:
 	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))

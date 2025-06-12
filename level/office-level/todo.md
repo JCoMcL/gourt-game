@@ -1,5 +1,5 @@
 x:done, -:underway
-- [ ] Rigidbody Interaction
+- [x] Rigidbody Interaction
 - [ ] Doors
 -- [ ] stairwell doors
 -- [ ] inter-level doors
@@ -9,9 +9,10 @@ x:done, -:underway
 -- [ ] equip items
 -- [ ] use static objects
 -- [ ] inter-gourt-action
-- [ ] Unstacking
--- [ ] low ceiling
+- [-] Unstacking
+-- [x] low ceiling
 -- [ ] low wall
+-- [ ] control inheritence logic
 - [ ] NPCs
 -- [ ] Dialogue
 --- [ ] emphasis

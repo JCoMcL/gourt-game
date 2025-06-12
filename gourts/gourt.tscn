@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bdhee0fbyvgae"]
+[gd_scene load_steps=17 format=3 uid="uid://bdhee0fbyvgae"]
 
 [ext_resource type="Script" uid="uid://d2jc10mybkqtt" path="res://gourts/gourt.gd" id="1_wkvig"]
 [ext_resource type="Texture2D" uid="uid://cq1kakogmn7t6" path="res://gourts/gourt/bodies/body0006.png" id="2_3k4ux"]
@@ -75,9 +75,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nsfnc"]
-radius = 127.016
-
 [node name="Gourt" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
@@ -103,13 +100,6 @@ animation = &"penniless"
 autoplay = "penniless"
 frame_progress = 0.908991
 flip_h = true
-
-[node name="Gaura" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Gaura"]
-shape = SubResource("CircleShape2D_nsfnc")
 
 [node name="Perch" type="Node2D" parent="."]
 position = Vector2(0, -100)

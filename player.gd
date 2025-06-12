@@ -33,6 +33,8 @@ func get_commands(c: Goon.Commands = null) -> Goon.Commands:
 	return c
 
 func _process(delta):
+	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
+
 	if player_character:
 		player_character.command(get_commands())
 		global_position = player_character.global_position

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://vnjjt8vqb7ge"]
+
+[ext_resource type="Script" uid="uid://bf32w4mi4g2ny" path="res://props/crusher.gd" id="1_nyuve"]
+[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="2_3612m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twwvs"]
+atlas = ExtResource("2_3612m")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1axx8"]
+size = Vector2(254, 254)
+
+[node name="Crusher" type="AnimatableBody2D"]
+script = ExtResource("1_nyuve")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_twwvs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_1axx8")

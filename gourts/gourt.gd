@@ -140,15 +140,7 @@ func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn'
 		friction += f.value * -factor
 	apply_force(friction, label)
 
-var agg = []
-func aggregate(v):
-	agg.append(v)
-	if agg.size() > 20:
-		print(agg.reduce(func (acc, v): return acc + v))
-		agg = []
-	return v
-
-func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=0.2, force_ratio=10):
+func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=0.2, force_ratio=20):
 	var our_mass = mass * Gourtilities.stack_count(self)
 	var their_mass = k.get_collider().mass
 
@@ -161,7 +153,7 @@ func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=0.2, for
 
 	var f = (1+restitution) * relative_velocity_along_normal / (1.0/our_mass + 1.0/their_mass) * k.get_normal()
 
-	k.get_collider().apply_force(aggregate(f * force_ratio), k.get_position() - k.get_collider().global_position )
+	k.get_collider().apply_force(f * force_ratio, k.get_position() - k.get_collider().global_position )
 	apply_force(-f * delta / Gourtilities.stack_count(self), "rigid reaction" )
 
 var velocity_before_move: Vector2

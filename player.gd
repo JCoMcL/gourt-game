@@ -40,9 +40,23 @@ func _process(delta):
 		global_position = player_character.global_position
 
 func _input(ev: InputEvent):
-	if not ev.is_action_pressed("probe"):
+	if not ev.is_action_pressed("probe"): #don't consume probe events, let the goon handle them directly
 		get_viewport().set_input_as_handled()
-	if valid_goon(player_character):
+	if ev.is_action_pressed("interract"):
+		var pq := PhysicsPointQueryParameters2D.new()
+		pq.collide_with_areas = true
+		pq.collide_with_bodies = true
+		pq.collision_mask = 32
+		pq.exclude = []
+		pq.position = get_global_mouse_position() #TODO see if we can not rely on mouse clicking		
+		var result = get_world_2d().direct_space_state.intersect_point(pq)
+		if result.size() == 0:
+			print("nothing detected")
+		else:
+			print(result[0])
+			player_character.interract(result[0].collider)
+
+	elif valid_goon(player_character):
 		player_character._input(ev)
 
 func game_over():

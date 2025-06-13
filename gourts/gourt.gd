@@ -131,6 +131,9 @@ func try_enter_door_recursive_downwards():
 		foot_friend.try_enter_door_recursive_downwards()
 	try_enter_door()
 
+func interract(result):
+	result.interract(self)
+
 #var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
 const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:

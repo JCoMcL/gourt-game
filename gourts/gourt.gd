@@ -109,22 +109,11 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		Gourtilities.stack(self, result.collider)
 
 func try_enter_door():
-	var pq := PhysicsPointQueryParameters2D.new()
-	pq.collide_with_areas = true
-	pq.collide_with_bodies = false
-	pq.collision_mask = Clision.layers["door"]
-	pq.exclude = []
-	pq.position = global_position
-	
-	var result = get_world_2d().direct_space_state.intersect_point(pq)
+	var result = Clision.intersect_point(self, global_position, "door")
 	if result.size() == 0:
-		print("nothing detected")
 		return
-	else:
-		identify(["it workerd!"])
 
 	result[0].collider.interract(self)
-	print(result[0].collider.name)
 
 func try_enter_door_recursive_downwards():
 	if foot_friend:

@@ -115,11 +115,6 @@ func try_enter_door():
 
 	result[0].collider.interract(self)
 
-func try_enter_door_recursive_downwards():
-	if foot_friend:
-		foot_friend.try_enter_door_recursive_downwards()
-	try_enter_door()
-
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
 

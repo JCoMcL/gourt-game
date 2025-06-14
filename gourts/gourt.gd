@@ -184,7 +184,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		apply_friction(Vector2(walk_friction,0))
 
-
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
@@ -211,8 +210,4 @@ func _process(delta: float) -> void:
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):
-		var stack_tip = Gourtilities.get_stack_tip(self)
-		if stack_tip != self:
-			stack_tip._input(ev)
-			return
-		try_enter_door_recursive_downwards()
+		Gourtilities.call_all(self, func(g): g.try_enter_door())

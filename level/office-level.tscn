@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=19 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_2lgek"]
 [ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="3_x1oxu"]
-[ext_resource type="Texture2D" uid="uid://fnyyvt8lyi50" path="res://props/door.png" id="4_g41wc"]
-[ext_resource type="Texture2D" uid="uid://c83xr6tgul0ok" path="res://props/arrow.png" id="5_p4wav"]
+[ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_qycbv"]
 [ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_43b34"]
 [ext_resource type="Texture2D" uid="uid://bg8514xi46mmo" path="res://props/npc gourtstack.png" id="8_3k8ca"]
@@ -66,18 +65,12 @@ texture = ExtResource("2_2lgek")
 position = Vector2(1794, -124)
 texture = ExtResource("3_x1oxu")
 
-[node name="Door" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-64, 71)
-texture = ExtResource("4_g41wc")
+[node name="Door" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
+exit = NodePath("../Door2")
 
-[node name="Door2" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-642, -1978)
-texture = ExtResource("4_g41wc")
-
-[node name="Arrow" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-61, -384)
-rotation = 3.05258
-texture = ExtResource("5_p4wav")
+[node name="Door2" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
+position = Vector2(-585, -1991)
+exit = NodePath("../Door")
 
 [node name="WaterCooler" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(-1126, -1885)
@@ -90,10 +83,6 @@ texture = ExtResource("6_qycbv")
 [node name="Sunglasses" type="Sprite2D" parent="TileMapLayer/WaterCoolest"]
 position = Vector2(30, -141)
 texture = ExtResource("7_43b34")
-
-[node name="Arrow2" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-659, -2431)
-texture = ExtResource("5_p4wav")
 
 [node name="NpcGourtstack" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(384, 76)
@@ -133,7 +122,7 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 texture = ExtResource("11_6o0x5")
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(2120, 227)
+position = Vector2(558, 227)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]

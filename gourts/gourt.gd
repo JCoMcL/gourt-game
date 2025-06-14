@@ -108,10 +108,15 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		identify(["just stacked to %s" % result.collider.name])
 		Gourtilities.stack(self, result.collider)
 
-#var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
-const special_layer = 4
+func try_enter_door():
+	var result = Clision.intersect_point(self, global_position, "door")
+	if result.size() == 0:
+		return
+
+	result[0].collider.interract(self)
+
 func is_special_collision(k: KinematicCollision2D) -> bool:
-	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
+	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
 
 class Force:
 	var value: Vector2
@@ -178,7 +183,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		apply_friction(Vector2(walk_friction,0))
 
-
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
@@ -203,3 +207,7 @@ func _process(delta: float) -> void:
 		$Body.play("transportative")
 	else:
 		$Body.play("idleative")
+
+func _input(ev: InputEvent) -> void:
+	if ev.is_action_pressed("enter door"):
+		Gourtilities.call_all(self, func(g): g.try_enter_door())

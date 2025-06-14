@@ -126,11 +126,6 @@ func try_enter_door():
 	result[0].collider.interract(self)
 	print(result[0].collider.name)
 
-func try_enter_door_recursive_downwards():
-	if foot_friend:
-		foot_friend.try_enter_door_recursive_downwards()
-	try_enter_door()
-
 #var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
 const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
@@ -197,7 +192,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		apply_friction(Vector2(walk_friction,0))
 
-
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
 
@@ -224,8 +218,4 @@ func _process(delta: float) -> void:
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):
-		var stack_tip = Gourtilities.get_stack_tip(self)
-		if stack_tip != self:
-			stack_tip._input(ev)
-			return
-		try_enter_door_recursive_downwards()
+		Gourtilities.call_all(self, func(g): g.try_enter_door())

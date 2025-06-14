@@ -158,7 +158,6 @@ head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
-position_smoothing_enabled = true
 script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"

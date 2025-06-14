@@ -22,11 +22,31 @@ func stack_now(g: Gourt, onto: Gourt):
 	if former_head_friend:
 		resolve_perch(former_head_friend)
 
-func resolve_perch(g: Gourt):
+# --- Recursive helpers ---
+func call_all_downwards(g: Gourt, f: Callable):
+	f.call(g)
 	if g.foot_friend:
-		g.position = perch_position(g.foot_friend)
+		call_all_downwards(g.foot_friend, f)
+
+func call_all_upwards(g: Gourt, f: Callable):
+	f.call(g)
 	if g.head_friend:
-		resolve_perch(g.head_friend)
+		call_all_upwards(g.head_friend, f)
+
+func call_all(g: Gourt, f: Callable):
+	f.call(g)
+	if g.foot_friend:
+		call_all_downwards(g.foot_friend, f)
+	if g.head_friend:
+		call_all_upwards(g.head_friend, f)
+
+# --- Recursive functions ---
+
+func resolve_perch(g: Gourt):
+	call_all_upwards(g, func(g: Gourt):
+		if g.foot_friend:
+			g.position = perch_position(g.foot_friend)
+	)
 
 func head_count(g: Gourt):
 	if g.head_friend:

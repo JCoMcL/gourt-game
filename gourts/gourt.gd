@@ -112,7 +112,7 @@ func try_enter_door():
 	var pq := PhysicsPointQueryParameters2D.new()
 	pq.collide_with_areas = true
 	pq.collide_with_bodies = false
-	pq.collision_mask = 16
+	pq.collision_mask = Clision.layers["door"]
 	pq.exclude = []
 	pq.position = global_position
 	
@@ -131,10 +131,8 @@ func try_enter_door_recursive_downwards():
 		foot_friend.try_enter_door_recursive_downwards()
 	try_enter_door()
 
-#var special_layer = ProjectSettings.get_setting("layer_names/2d_physics/special solid") todo
-const special_layer = 4
 func is_special_collision(k: KinematicCollision2D) -> bool:
-	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & special_layer
+	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
 
 class Force:
 	var value: Vector2

@@ -1,7 +1,7 @@
 x:done, -:underway
-- [x] Rigidbody Interaction
+- [-] Rigidbody Interaction
 - [ ] Doors
--- [ ] stairwell doors
+-- [x] stairwell doors
 -- [ ] inter-level doors
 - [ ] Interaction
 -- [ ] pick up items
@@ -9,15 +9,14 @@ x:done, -:underway
 -- [ ] equip items
 -- [ ] use static objects
 -- [ ] inter-gourt-action
-- [-] Unstacking
+- [ ] Unstacking
 -- [x] low ceiling
 -- [ ] low wall
--- [ ] control inheritence logic
+--- [ ] control inheritance logic
 - [ ] NPCs
--- [ ] Dialogue
+-- [-] Dialogue
 --- [ ] emphasis
 --- [ ] talking sfx
---- [ ] hyperlinks
 -- [ ] Movement / action
 -- [ ] Camera motion
 - [ ] Cursor

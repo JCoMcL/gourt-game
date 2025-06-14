@@ -67,19 +67,13 @@ func resolve_perch(g: Gourt):
 	)
 
 func head_count(g: Gourt):
-	if g.head_friend:
-		return 1 + head_count(g.head_friend)
-	return 0
+	return list_head_friends(g).size()
 
 func foot_count(g: Gourt):
-	if g.foot_friend:
-		return 1 + foot_count(g.foot_friend)
-	return 0
+	return list_foot_friends(g).size()
 
 func stack_count(g: Gourt):
 	return head_count(g) + foot_count(g) + 1
 
 func get_stack_tip(g: Gourt):
-	if g.head_friend:
-		return get_stack_tip(g.head_friend)
-	return g
+	return list_head_friends(g)[-1] if g.head_friend else g

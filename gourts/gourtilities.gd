@@ -23,6 +23,7 @@ func stack_now(g: Gourt, onto: Gourt):
 		resolve_perch(former_head_friend)
 
 # --- Recursive helpers ---
+# call
 func call_all_downwards(g: Gourt, f: Callable):
 	f.call(g)
 	if g.foot_friend:
@@ -39,6 +40,23 @@ func call_all(g: Gourt, f: Callable):
 		call_all_downwards(g.foot_friend, f)
 	if g.head_friend:
 		call_all_upwards(g.head_friend, f)
+
+# list
+func list_head_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
+	if g.head_friend:
+		acc.append(g.head_friend)
+		return list_head_friends(g.head_friend, acc)
+	return acc
+
+func list_foot_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
+	if g.foot_friend:
+		acc.append(g.foot_friend)
+		return list_foot_friends(g.foot_friend, acc)
+	return acc
+
+func list_stack_members(g: Gourt):
+## note that the returned list is in no particular order
+	return list_foot_friends(g) + [g] + list_head_friends(g)
 
 # --- Recursive functions ---
 

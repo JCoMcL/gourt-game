@@ -115,6 +115,9 @@ func try_enter_door():
 
 	result[0].collider.interract(self)
 
+func interract(result):
+	result.interract(self)
+
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
 

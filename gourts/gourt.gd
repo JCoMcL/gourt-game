@@ -12,7 +12,8 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
-@export var mass=20
+@export var mass = 20
+@export var reach = 400
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -115,8 +116,35 @@ func try_enter_door():
 
 	result[0].collider.interract(self)
 
-func interract(result):
-	result.interract(self)
+func interract(interractable):
+	var gourt = get_most_capable_gourt(interractable)
+	if not gourt:
+		print("All gourts are incapable")
+	else:
+		interractable.interract(get_most_capable_gourt(interractable))
+
+func find_most_capable_gourt(collider: Node2D, closest_gourt: Gourt = null, closest_distance: float = INF, visited: Array = []) -> Gourt:
+	if self in visited:
+		print(closest_gourt.name)
+		return closest_gourt
+	visited.append(self)
+	
+	var current_distance = global_position.distance_to(collider.global_position) - reach
+	if current_distance < closest_distance:
+		closest_gourt = self
+		closest_distance = current_distance
+	
+	if head_friend:
+		closest_gourt = head_friend.find_most_capable_gourt(collider, closest_gourt, closest_distance, visited)
+	if foot_friend:
+		closest_gourt = foot_friend.find_most_capable_gourt(collider, closest_gourt, closest_distance, visited)
+	
+	return closest_gourt
+
+func get_most_capable_gourt(interractable):
+	var most_capable_court = find_most_capable_gourt(interractable)
+	if reach > global_position.distance_to(interractable.global_position):
+		return most_capable_court
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

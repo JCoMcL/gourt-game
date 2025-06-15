@@ -110,11 +110,11 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		Gourtilities.stack(self, result.collider)
 
 func try_enter_door():
-	var result = Clision.intersect_point(self, global_position, "door")
+	var result = Clision.get_objects_at(global_position, "door")
 	if result.size() == 0:
 		return
 
-	result[0].collider.interract(self)
+	result[0].interract(self)
 
 func interract(interractable):
 	var gourt = get_most_capable_gourt(interractable)

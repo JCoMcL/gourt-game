@@ -13,7 +13,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
 @export var mass = 20
-@export var reach = 400
+@export var reach = 100
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -123,27 +123,20 @@ func interract(interractable):
 	else:
 		interractable.interract(get_most_capable_gourt(interractable))
 
-func find_most_capable_gourt(collider: Node2D, closest_gourt: Gourt = null, closest_distance: float = INF, visited: Array = []) -> Gourt:
-	if self in visited:
-		print(closest_gourt.name)
-		return closest_gourt
-	visited.append(self)
-	
-	var current_distance = global_position.distance_to(collider.global_position) - reach
-	if current_distance < closest_distance:
-		closest_gourt = self
-		closest_distance = current_distance
-	
-	if head_friend:
-		closest_gourt = head_friend.find_most_capable_gourt(collider, closest_gourt, closest_distance, visited)
-	if foot_friend:
-		closest_gourt = foot_friend.find_most_capable_gourt(collider, closest_gourt, closest_distance, visited)
-	
+func find_most_capable_gourt(collider: Node2D) -> Gourt:
+	var gourts = Gourtilities.list_stack_members(self)
+	var shortest_distance = INF
+	var closest_gourt: Gourt = null
+	for gourt in gourts:
+		var current_distance = gourt.global_position.distance_to(collider.global_position) - gourt.reach
+		if current_distance < shortest_distance:
+			shortest_distance = current_distance
+			closest_gourt = gourt
 	return closest_gourt
 
 func get_most_capable_gourt(interractable):
 	var most_capable_court = find_most_capable_gourt(interractable)
-	if reach > global_position.distance_to(interractable.global_position):
+	if most_capable_court.reach > most_capable_court.global_position.distance_to(interractable.global_position):
 		return most_capable_court
 
 func is_special_collision(k: KinematicCollision2D) -> bool:

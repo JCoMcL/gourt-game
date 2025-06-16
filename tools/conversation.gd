@@ -21,7 +21,7 @@ class Line:
 		return text.length() / 20.0 + 0.2
 
 @onready var lines = [ Line.new("Look at that.", actors[0]),
-	Line.new("This a seems like a violation workplace safety code.", actors[0]),
+	Line.new("This a seems like a violation of workplace safety code.", actors[0]),
 	Line.new("29 CFR 1910.212", actors[0]),
 	Line.new("Not to mention 1910.36(b)(1).", actors[0]),
 	Line.new("So true!", actors[0]),

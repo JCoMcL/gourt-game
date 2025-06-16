@@ -1,14 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuy1mgrdlirmk"]
+[gd_scene load_steps=3 format=3 uid="uid://cuy1mgrdlirmk"]
 
 [ext_resource type="Script" uid="uid://ccrqgcbvxoa1s" path="res://tools/speech_bubble.gd" id="1_gm1uq"]
+[ext_resource type="Theme" uid="uid://c6ecftjvibmcw" path="res://ui/theme.tres" id="1_pkjfo"]
 
-[node name="speech bubble" type="ColorRect"]
+[node name="speech bubble" type="Panel"]
 top_level = true
-offset_right = 46.0
-offset_bottom = 23.0
-color = Color(0, 0, 0, 1)
+offset_top = -213.0
+offset_right = 114.0
+offset_bottom = -182.0
+theme = ExtResource("1_pkjfo")
 script = ExtResource("1_gm1uq")
-text = "yolow"
 
 [node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -17,9 +18,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "yolow"
-
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Hello, World!"
+scroll_active = false

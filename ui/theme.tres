@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c6ecftjvibmcw"]
+
+[ext_resource type="StyleBox" uid="uid://qa8kolt2fmi7" path="res://ui/speech_bubble.stylebox" id="1_rqugq"]
+
+[sub_resource type="SystemFont" id="SystemFont_denks"]
+font_names = PackedStringArray("Coming Soon")
+
+[resource]
+default_font = SubResource("SystemFont_denks")
+default_font_size = 20
+/colors/dark = Color(0, 0, 0, 1)
+/styles/default = ExtResource("1_rqugq")
+Panel/styles/default = ExtResource("1_rqugq")
+Panel/styles/panel = ExtResource("1_rqugq")

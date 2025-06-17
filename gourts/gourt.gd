@@ -117,27 +117,22 @@ func try_enter_door():
 	result[0].interract(self)
 
 func interract(interractable):
-	var gourt = get_most_capable_gourt(interractable)
-	if not gourt:
-		print("All gourts are incapable")
-	else:
-		interractable.interract(get_most_capable_gourt(interractable))
+	var gourt = get_closest_gourt_to_interact(interractable)
+	if gourt:
+		interractable.interract(gourt)
 
-func find_most_capable_gourt(collider: Node2D) -> Gourt:
-	var gourts = Gourtilities.list_stack_members(self)
-	var shortest_distance = INF
-	var closest_gourt: Gourt = null
-	for gourt in gourts:
-		var current_distance = gourt.global_position.distance_to(collider.global_position) - gourt.reach
-		if current_distance < shortest_distance:
-			shortest_distance = current_distance
-			closest_gourt = gourt
-	return closest_gourt
+func sqr_dist_to(o: Node2D):
+	return global_position.distance_squared_to(o.global_position)
 
-func get_most_capable_gourt(interractable):
-	var most_capable_court = find_most_capable_gourt(interractable)
-	if most_capable_court.reach > most_capable_court.global_position.distance_to(interractable.global_position):
-		return most_capable_court
+func can_reach(o: Node2D):
+	return sqr_dist_to(o) < reach ** 2
+
+func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
+	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
+	return gourts_in_reach.reduce(func(g, closest):
+		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+	)
+
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

@@ -116,23 +116,24 @@ func try_enter_door():
 
 	result[0].interract(self)
 
-func interract(interractable):
-	var gourt = get_closest_gourt_to_interact(interractable)
+func interract(interractable, position: Vector2 = interractable.global_position) -> void:
+	var gourt = get_closest_gourt_to_interact(interractable, position)
+	print(Gourtilities.is_descendant(interractable, gourt))
 	if gourt:
+		print(gourt.name, " is closest to ", interractable.name, " at ", position)
 		interractable.interract(gourt)
 
-func sqr_dist_to(o: Node2D):
-	return global_position.distance_squared_to(o.global_position)
+func sqr_dist_to(o: Vector2):
+	return global_position.distance_squared_to(o)
 
-func can_reach(o: Node2D):
+func can_reach(o: Vector2):
 	return sqr_dist_to(o) < reach ** 2
 
-func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
-	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
+func get_closest_gourt_to_interact(interractable, position) -> Gourt:
+	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(position) and (!Gourtilities.is_descendant(interractable, g)))
 	return gourts_in_reach.reduce(func(g, closest):
-		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+		return g if (sqr_dist_to(position) < closest.sqr_dist_to(position)) else closest
 	)
-
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

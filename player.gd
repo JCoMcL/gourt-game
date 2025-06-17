@@ -43,9 +43,10 @@ func _input(ev: InputEvent):
 	if not ev.is_action_pressed("probe"): #don't consume probe events, let the goon handle them directly
 		get_viewport().set_input_as_handled()
 	if ev.is_action_pressed("interract"):
-		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
+		var mouse_position = get_global_mouse_position()
+		var collider = Clision.get_objects_at(mouse_position, "interactive")
 		if collider:
-			player_character.interract(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+			player_character.interract(collider[0], mouse_position) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

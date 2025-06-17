@@ -20,7 +20,6 @@ config/icon="res://icon.png"
 Gourtilities="*res://gourts/gourtilities.gd"
 Direction="*res://direction.gd"
 Clision="*res://clision.gd"
-Phystilities="*res://phystilities.gd"
 
 [input]
 

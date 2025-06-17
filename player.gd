@@ -46,7 +46,6 @@ func _input(ev: InputEvent):
 		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
 		if collider:
 			player_character.interract(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
-		else:
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

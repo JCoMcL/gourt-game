@@ -13,7 +13,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
 @export var mass = 20
-@export var reach = 100
+@export var reach = 180
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:

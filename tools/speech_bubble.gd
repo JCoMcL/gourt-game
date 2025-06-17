@@ -9,6 +9,8 @@ class_name SpeechBubble
 			label.text = value
 			update_size()
 
+@export var speaker: Node2D
+
 @onready var label = $Label
 
 func _ready():

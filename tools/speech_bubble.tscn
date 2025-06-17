@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuy1mgrdlirmk"]
+[gd_scene load_steps=5 format=3 uid="uid://cuy1mgrdlirmk"]
 
 [ext_resource type="Script" uid="uid://ccrqgcbvxoa1s" path="res://tools/speech_bubble.gd" id="1_gm1uq"]
 [ext_resource type="Theme" uid="uid://cbdsnwv4lfswa" path="res://ui/theme.tres" id="1_pkjfo"]
 [ext_resource type="Texture2D" uid="uid://b81bso44qcpnx" path="res://ui/tail.png" id="3_pkjfo"]
+[ext_resource type="Script" uid="uid://cyksg1xd3x3v4" path="res://tools/tail.gd" id="4_ofsrv"]
 
 [node name="speech bubble" type="Panel"]
 top_level = true
@@ -23,9 +24,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Hello, World!"
 scroll_active = false
 
-[node name="Line2D" type="Line2D" parent="."]
-position = Vector2(10, 5)
+[node name="Tail" type="Line2D" parent="."]
 points = PackedVector2Array(90, 27, 90, 76)
 width = 44.105
 texture = ExtResource("3_pkjfo")
 texture_mode = 2
+script = ExtResource("4_ofsrv")

@@ -47,7 +47,6 @@ func _input(ev: InputEvent):
 		if collider:
 			player_character.interract(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 		else:
-			print("Nothing to interract with at %s" % get_global_mouse_position())
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

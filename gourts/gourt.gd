@@ -12,7 +12,8 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
-@export var mass=20
+@export var mass = 20
+@export var reach = 180
 
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
@@ -109,11 +110,29 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		Gourtilities.stack(self, result.collider)
 
 func try_enter_door():
-	var result = Clision.intersect_point(self, global_position, "door")
+	var result = Clision.get_objects_at(global_position, "door")
 	if result.size() == 0:
 		return
 
-	result[0].collider.interract(self)
+	result[0].interract(self)
+
+func interract(interractable):
+	var gourt = get_closest_gourt_to_interact(interractable)
+	if gourt:
+		interractable.interract(gourt)
+
+func sqr_dist_to(o: Node2D):
+	return global_position.distance_squared_to(o.global_position)
+
+func can_reach(o: Node2D):
+	return sqr_dist_to(o) < reach ** 2
+
+func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
+	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
+	return gourts_in_reach.reduce(func(g, closest):
+		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+	)
+
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

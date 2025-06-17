@@ -6,6 +6,7 @@ enum EquippableType { HEAD, EYES, HAND, FOOT }
 
 @export_enum("HEAD", "EYES", "HAND", "FOOT")
 var equippable_type: int = EquippableType.HEAD
+var selected: bool = false
 
 func interract(operator):
 	var target_slot: Node2D

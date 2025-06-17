@@ -15,6 +15,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var mass = 20
 @export var reach = 180
 
+var selected_equipment = null
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
@@ -133,6 +134,18 @@ func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
 		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
 	)
 
+func select_equipment(equipment):
+	selected_equipment = equipment
+
+func move_equipment_up():
+	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
+	print("moving equipment up", gourt, select_equipment)
+	gourt.head_friend.interract(selected_equipment) if gourt and gourt.head_friend else null
+
+func move_equipment_down():
+	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
+	print("moving equipment down", gourt, select_equipment)	
+	gourt.foot_friend.interract(selected_equipment) if gourt and gourt.foot_friend else null
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

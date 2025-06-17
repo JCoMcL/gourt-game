@@ -77,3 +77,21 @@ func stack_count(g: Gourt):
 
 func get_stack_tip(g: Gourt):
 	return list_head_friends(g)[-1] if g.head_friend else g
+
+func is_descendant(child: Node, potential_parent: Node) -> bool:
+	var current = child.get_parent()
+	while current:
+		if current == potential_parent:
+			return true
+		current = current.get_parent()
+	return false
+
+func get_equipment_owner(equipment) -> Gourt:
+	if not equipment or not equipment is Node:
+		return null
+	var parent = equipment.get_parent()
+	while parent and parent is Node:
+		if parent is Gourt:
+			return parent
+		parent = parent.get_parent()
+	return null

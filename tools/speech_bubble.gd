@@ -33,10 +33,10 @@ func offset_to(v: Vector2):
 
 var position_goals = [
 	func antigravity():
-		return global_position + Vector2.UP * size.y * 20,
+		return global_position + Vector2.UP * size.y * 20
 	func near_speaker():
 		if speaker:
-			return speaker.global_position
+			return $Tail.get_point_position(1) + global_position
 		return Vector2.ZERO
 	# on-screen
 	# away from other actors
@@ -46,5 +46,15 @@ var position_goals = [
 
 var velocity = Vector2.ZERO
 func _physics_process(delta: float) -> void:
+	var target_offset = Vector2.ZERO
 	for g in position_goals:
-		position += offset_to(g.call()) * delta
+		target_offset += offset_to(g.call())
+
+	velocity += Yute.snap_force(
+		velocity,
+		target_offset,
+		delta,
+		300,
+		0.2
+	)
+	global_position += velocity * delta

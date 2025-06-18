@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bceihsgcq1e2"]
+[gd_scene load_steps=5 format=3 uid="uid://cnuqy2f8bhgk3"]
 
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://props/animated.gdshader" id="1_0kmga"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_jiomh"]
@@ -17,3 +17,11 @@ texture = ExtResource("2_jiomh")
 position = Vector2(0, -303.5)
 script = ExtResource("3_jiomh")
 enabled = true
+
+[node name="Speak Hole" type="Control" parent="Handle"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -20.0
+offset_top = 21.5
+offset_right = 27.53
+offset_bottom = 90.69

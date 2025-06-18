@@ -6,31 +6,25 @@ extends Line2D
 func nearest(f:float, a:float, b:float):
 	return a if abs(f-a) < abs(f-b) else b
 
-func get_nearest_point_on_perimeter(r: Rect2, p: Vector2):
-	p.x =  clampf(p.x, r.position.x, r.end.x)
-	p.y =  clampf(p.y, r.position.y, r.end.y)
-	var nearest_x = nearest(p.x, r.position.x, r.end.x)
-	var nearest_y = nearest(p.y, r.position.y, r.end.y)
-	if abs(p.x - nearest_x) > abs(nearest_y - p.y):
-		return Vector2(p.x, nearest_y)
-	else:
-		return Vector2(nearest_x, p.y)
-
 func local_rect(o: Node):
+	var sh = o.get_node_or_null("Handle/Speak Hole") #TODO this should definitely be a method on the speaker
+	if sh:
+		return local_rect(sh)
 	if o.has_method("get_rect"):
 		var r = o.get_rect()
-		return Rect2(to_local(o.global_position - r.size/2), r.size)
+		var pos = o.global_position - (r.size/2 if o is Sprite2D else Vector2.ZERO)
+		return Rect2(to_local(pos), r.size)
 	else:
 		print("not implemented :(") #FIXME?
 
 func _process(delta):
 	if bubble.speaker:
-		set_point_position(1, get_nearest_point_on_perimeter(
+		set_point_position(1, Yute.get_nearest_point_on_perimeter(
 			local_rect(bubble.speaker),
 			to_local(bubble.global_position) + Vector2(bubble.size) * 0.8
 		))
 
-	set_point_position(0, get_nearest_point_on_perimeter(
+	set_point_position(0, Yute.get_nearest_point_on_perimeter(
 		Rect2(Vector2.ZERO, bubble.get_rect().size),
 		get_point_position(1)
 	))

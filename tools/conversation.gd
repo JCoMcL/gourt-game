@@ -15,6 +15,7 @@ class Line:
 		print("%s: %s" % [speaker.name, text])
 		speech_bubble.text = text
 		speech_bubble.speaker = speaker
+		speech_bubble.anneal_position(10)
 		
 	func duration() -> float:
 		return text.length() / 20.0 + 0.2

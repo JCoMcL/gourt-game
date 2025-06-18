@@ -10,6 +10,7 @@ class_name SpeechBubble
 			update_size()
 
 @export var speaker: Node2D
+@export_tool_button("Step", "Play") var f = anneal_position
 
 @onready var label = $Label
 
@@ -33,7 +34,7 @@ func offset_to(v: Vector2):
 
 var position_goals = [
 	func antigravity():
-		return global_position + Vector2.UP * size.y * 2
+		return global_position + Vector2.UP * size.y * 5
 		,
 	func near_speaker():
 		if speaker:
@@ -46,7 +47,7 @@ var position_goals = [
 ]
 
 var velocity = Vector2.ZERO
-func _physics_process(delta: float) -> void:
+func update_position(delta):
 	var target_offset = Vector2.ZERO
 	for g in position_goals:
 		target_offset += offset_to(g.call())
@@ -58,4 +59,15 @@ func _physics_process(delta: float) -> void:
 		300,
 		0.2
 	)
-	global_position += velocity * delta
+	position += velocity * delta
+
+func anneal_position(iterations: int = 1, delta=0.5):
+	print("annealing start:")
+	for i in range(iterations):
+		print(position)
+		$Tail._process(delta) #FIXME yeah this is obviously a hack
+		update_position(delta)
+
+func _physics_process(delta: float) -> void:
+	if not Engine.is_editor_hint():
+		update_position(delta)

@@ -5,6 +5,8 @@ extends Node2D
 	set(value):
 		enabled = value
 		process_mode = Node.PROCESS_MODE_INHERIT if value else Node.PROCESS_MODE_DISABLED
+@export_tool_button("Reset", "Reload") var fre = _ready
+
 
 @onready var sprite: Sprite2D = get_parent()
 @onready var height_vec = Vector2(0, -sprite.get_rect().size.y / 2)

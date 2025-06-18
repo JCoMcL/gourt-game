@@ -33,7 +33,8 @@ func offset_to(v: Vector2):
 
 var position_goals = [
 	func antigravity():
-		return global_position + Vector2.UP * size.y * 20
+		return global_position + Vector2.UP * size.y * 2
+		,
 	func near_speaker():
 		if speaker:
 			return $Tail.get_point_position(1) + global_position

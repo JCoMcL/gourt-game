@@ -13,4 +13,3 @@ void vertex() {
 float stripes(float f) {
 	return sin(f*100.0);
 }
-

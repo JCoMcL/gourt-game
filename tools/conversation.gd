@@ -15,8 +15,6 @@ class Line:
 		print("%s: %s" % [speaker.name, text])
 		speech_bubble.text = text
 		speech_bubble.speaker = speaker
-		var speaker_rect = speaker.get_rect()
-		speech_bubble.position = speaker.global_position + Vector2(-80, -speaker_rect.size.y / 2 - 80) # Position speech bubble above the actor
 		
 	func duration() -> float:
 		return text.length() / 20.0 + 0.2

@@ -139,13 +139,13 @@ func select_equipment(equipment):
 
 func move_equipment_up():
 	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
-	print("moving equipment up", gourt, select_equipment)
-	gourt.head_friend.interract(selected_equipment) if gourt and gourt.head_friend else null
+	if gourt and gourt.head_friend:
+		selected_equipment.interract(gourt.head_friend)
 
 func move_equipment_down():
 	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
-	print("moving equipment down", gourt, select_equipment)	
-	gourt.foot_friend.interract(selected_equipment) if gourt and gourt.foot_friend else null
+	if gourt and gourt.foot_friend:
+		selected_equipment.interract(gourt.foot_friend)
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

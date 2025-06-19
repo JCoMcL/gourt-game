@@ -51,9 +51,14 @@ func _input(ev: InputEvent):
 	if ev.is_action_pressed("select equipment"):
 		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
 		if collider:
-			print("selecting equipment", collider)
-			selected_item = collider[0] #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+			selected_item = collider[0]
 			player_character.select_equipment(selected_item)
+			selected_item.set_selected(true)
+		else:
+			if selected_item:
+				player_character.select_equipment(null)
+				selected_item.set_selected(false)
+				selected_item = null				
 	if ev.is_action_pressed("move equipment up"):
 		player_character.move_equipment_up()
 	if ev.is_action_pressed("move equipment down"):

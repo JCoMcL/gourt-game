@@ -7,25 +7,22 @@
 
 [node name="speech bubble" type="Panel"]
 top_level = true
-offset_top = -213.0
-offset_right = 114.0
-offset_bottom = -182.0
+offset_top = -94.8633
+offset_right = 116.28
+offset_bottom = -63.2433
 theme = ExtResource("1_pkjfo")
 script = ExtResource("1_gm1uq")
 
 [node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 116.28
+offset_bottom = 31.62
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Hello, World!"
 scroll_active = false
 
 [node name="Tail" type="Line2D" parent="."]
-points = PackedVector2Array(90, 27, 90, 76)
+points = PackedVector2Array(90, 31.62, 90, 76)
 width = 44.105
 texture = ExtResource("3_pkjfo")
 texture_mode = 2

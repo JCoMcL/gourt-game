@@ -31,15 +31,20 @@ func update_size():
 
 func offset_to(v: Vector2):
 	return v - global_position
+func centred(v: Vector2):
+	return v + Vector2(-size.x, size.y) /2
 
 var position_goals = [
 	func antigravity():
-		return global_position + Vector2.UP * size.y * 5
+		return global_position + Vector2.UP * size.y * 3
 		,
 	func near_speaker():
 		if speaker:
-			return $Tail.get_point_position(1) + global_position
-		return Vector2.ZERO
+			var spk = speaker.get_node_or_null("Handle/Speak Hole") #TODO this should definitely be a method on the speaker
+			if not spk:
+				spk = speaker
+			return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))
+		return Vector2.ZERO #speech bubbles without speakers go to (0,0) as god intended
 	# on-screen
 	# away from other actors
 	# not overlapping speaker
@@ -62,12 +67,18 @@ func update_position(delta):
 	position += velocity * delta
 
 func anneal_position(iterations: int = 1, delta=0.5):
-	print("annealing start:")
 	for i in range(iterations):
-		print(position)
-		$Tail._process(delta) #FIXME yeah this is obviously a hack
 		update_position(delta)
 
 func _physics_process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		update_position(delta)
+
+var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
+func _draw() -> void: #Hey andrey, if you're reading this, this helped like you wouldn't believe
+	if Engine.is_editor_hint():
+		for i in range(position_goals.size()):
+			draw_circle(
+				position_goals[i].call() - global_position,
+				8.0, colors[i], true
+			)

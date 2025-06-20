@@ -1,10 +1,10 @@
 [gd_scene load_steps=22 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
-[ext_resource type="Script" uid="uid://cnvx1nc2i330f" path="res://tools/conversation.gd" id="2_gt2um"]
-[ext_resource type="PackedScene" uid="uid://cuy1mgrdlirmk" path="res://tools/speech_bubble.tscn" id="2_twwvs"]
+[ext_resource type="Script" path="res://actors/conversation.gd" id="2_gt2um"]
+[ext_resource type="PackedScene" uid="uid://cuy1mgrdlirmk" path="res://ui/speech_bubble/speech_bubble.tscn" id="2_twwvs"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
-[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://props/janitor.tscn" id="4_gt2um"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="4_gt2um"]
 [ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_qycbv"]
 [ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="6_rh3h7"]
 [ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_43b34"]
@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
-[ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://props/inspectors.tscn" id="14_gt2um"]
+[ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="14_gt2um"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")

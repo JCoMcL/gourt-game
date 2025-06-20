@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=3 format=3 uid="uid://cbdsnwv4lfswa"]
 
-[ext_resource type="StyleBox" uid="uid://ega218hh227x" path="res://ui/speech_bubble.stylebox" id="1_rqugq"]
+[ext_resource type="StyleBox" uid="uid://ega218hh227x" path="res://ui/speech_bubble/speech_bubble.stylebox" id="1_rqugq"]
 
 [sub_resource type="SystemFont" id="SystemFont_denks"]
 font_names = PackedStringArray("Coming Soon")

@@ -18,9 +18,9 @@ config/icon="res://icon.png"
 [autoload]
 
 Gourtilities="*res://gourts/gourtilities.gd"
-Direction="*res://direction.gd"
+Direction="*res://tools/direction.gd"
 Clision="*res://clision.gd"
-Yute="*res://yute.gd"
+Yute="*res://tools/yute.gd"
 
 [input]
 

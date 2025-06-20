@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://o17u11s8w1d2"
-path="res://.godot/imported/janitor.png-0cccd2c8523a1417320dd581ec7c4764.ctex"
+path="res://.godot/imported/janitor.png-bfb2388b877e6e375b21c535591e17ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://props/janitor.png"
-dest_files=["res://.godot/imported/janitor.png-0cccd2c8523a1417320dd581ec7c4764.ctex"]
+source_file="res://actors/janitor.png"
+dest_files=["res://.godot/imported/janitor.png-bfb2388b877e6e375b21c535591e17ba.ctex"]
 
 [params]
 

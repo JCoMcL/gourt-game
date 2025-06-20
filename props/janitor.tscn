@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bceihsgcq1e2"]
+
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://props/animated.gdshader" id="1_0kmga"]
+[ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_jiomh"]
+[ext_resource type="Script" uid="uid://c2yyp1lfm34fi" path="res://props/handle.gd" id="3_jiomh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1axx8"]
+shader = ExtResource("1_0kmga")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[node name="Janitor" type="Sprite2D"]
+material = SubResource("ShaderMaterial_1axx8")
+texture = ExtResource("2_jiomh")
+
+[node name="Handle" type="Node2D" parent="."]
+position = Vector2(0, -303.5)
+script = ExtResource("3_jiomh")
+enabled = true

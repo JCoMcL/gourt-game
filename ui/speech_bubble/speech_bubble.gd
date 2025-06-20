@@ -45,7 +45,10 @@ var position_goals = [
 				spk = speaker
 			return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))
 		return Vector2.ZERO #speech bubbles without speakers go to (0,0) as god intended
-	# on-screen
+		,
+	func on_screen():
+		return global_position
+	# optimal tail length
 	# away from other actors
 	# not overlapping speaker
 	# not overlapping gourts
@@ -74,6 +77,9 @@ func _physics_process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		update_position(delta)
 
+func screen_to_world(v):
+	return get_viewport().global_canvas_transform.affine_inverse() * v
+			
 var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
 func _draw() -> void: #Hey andrey, if you're reading this, this helped like you wouldn't believe
 	if Engine.is_editor_hint():
@@ -82,3 +88,22 @@ func _draw() -> void: #Hey andrey, if you're reading this, this helped like you 
 				position_goals[i].call() - global_position,
 				8.0, colors[i], true
 			)
+		var r = get_viewport().get_visible_rect()
+		
+		var start = screen_to_world(r.position)
+		var end = screen_to_world(r.end)
+		var wr = Yute.get_viewport_world_rect(self)
+		if wr.has_point(global_position):
+			print(global_position)
+		wr.position -= global_position
+		end -= global_position
+		draw_polyline(
+			PackedVector2Array([
+				wr.position,
+				Vector2(wr.position.x, wr.end.y),
+				wr.end,
+				Vector2(wr.end.x, wr.position.y),
+				wr.position
+			]),
+			colors[1], 20
+		)

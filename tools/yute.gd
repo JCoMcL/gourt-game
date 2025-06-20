@@ -16,3 +16,12 @@ func get_nearest_point_on_perimeter(r: Rect2, p: Vector2):
 		return Vector2(p.x, nearest_y)
 	else:
 		return Vector2(nearest_x, p.y)
+
+func viewport_to_world(v: Vector2, relative_to: Node = self):
+	return relative_to.get_viewport().global_canvas_transform.affine_inverse() * v
+
+func get_viewport_world_rect(relative_to: Node = self) -> Rect2:
+	var r = relative_to.get_viewport().get_visible_rect()
+	var start = viewport_to_world(r.position, relative_to)
+	var end = viewport_to_world(r.end, relative_to)
+	return Rect2(start, end - start)

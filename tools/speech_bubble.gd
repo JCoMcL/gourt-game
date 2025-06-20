@@ -9,7 +9,7 @@ class_name SpeechBubble
 			label.text = value
 			update_size()
 
-@export var speaker: Node2D
+@export var speaker: Actor
 @export_tool_button("Step", "Play") var f = anneal_position
 
 @onready var label = $Label
@@ -40,7 +40,7 @@ var position_goals = [
 		,
 	func near_speaker():
 		if speaker:
-			var spk = speaker.get_node_or_null("Handle/Speak Hole") #TODO this should definitely be a method on the speaker
+			var spk = speaker.get_mouth()
 			if not spk:
 				spk = speaker
 			return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))

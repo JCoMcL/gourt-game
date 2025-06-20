@@ -3,9 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Script" uid="uid://cnvx1nc2i330f" path="res://tools/conversation.gd" id="2_gt2um"]
 [ext_resource type="PackedScene" uid="uid://cuy1mgrdlirmk" path="res://tools/speech_bubble.tscn" id="2_twwvs"]
-[ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="3_x1oxu"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
-[ext_resource type="PackedScene" uid="uid://bceihsgcq1e2" path="res://props/janitor.tscn" id="4_gt2um"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://props/janitor.tscn" id="4_gt2um"]
 [ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_qycbv"]
 [ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="6_rh3h7"]
 [ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_43b34"]
@@ -16,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
+[ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://props/inspectors.tscn" id="14_gt2um"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -66,7 +66,7 @@ tile_set = SubResource("TileSet_mdp56")
 [node name="Conversation" type="Area2D" parent="TileMapLayer" node_paths=PackedStringArray("actors")]
 position = Vector2(2015, -249)
 script = ExtResource("2_gt2um")
-actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
+actors = [NodePath("../inspectors"), NodePath("../Janitor")]
 speech_bubble_scene = ExtResource("2_twwvs")
 speed = 20.0
 
@@ -78,10 +78,6 @@ shape = SubResource("RectangleShape2D_twwvs")
 
 [node name="Janitor" parent="TileMapLayer" instance=ExtResource("4_gt2um")]
 position = Vector2(2211, -130)
-
-[node name="Inspectors" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(1794, -124)
-texture = ExtResource("3_x1oxu")
 
 [node name="Door" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
 position = Vector2(-16, 61)
@@ -185,13 +181,28 @@ position = Vector2(0, -100)
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
+[node name="Rogue Gourt" parent="TileMapLayer" instance=ExtResource("13_ax68m")]
+position = Vector2(1279, -1072)
+
+[node name="inspectors" parent="TileMapLayer" instance=ExtResource("14_gt2um")]
+position = Vector2(1786, -128)
+
+[node name="Handle" parent="TileMapLayer/inspectors" index="0"]
+process_mode = 4
+enabled = false
+
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
 position_smoothing_enabled = true
 script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
-[node name="Rogue Gourt" parent="." instance=ExtResource("13_ax68m")]
-position = Vector2(2097, -1006)
+[node name="speech bubble" parent="." node_paths=PackedStringArray("speaker") instance=ExtResource("2_twwvs")]
+offset_left = 2173.0
+offset_top = -520.0
+offset_right = 2289.28
+offset_bottom = -488.38
+speaker = NodePath("../TileMapLayer/Janitor")
 
-[editable path="TileMapLayer/Door"]
+[editable path="TileMapLayer/Janitor"]
+[editable path="TileMapLayer/inspectors"]

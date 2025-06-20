@@ -1,12 +1,12 @@
 extends Area2D
 
-@export var actors: Array[Node2D]
+@export var actors: Array[Actor]
 @export var speech_bubble_scene: PackedScene
 @export var speed: float = 0.1
 
 class Line:
 	var text: String
-	var speaker: Node2D
+	var speaker: Actor
 	func _init(text: String, speaker: Node2D):
 		self.text = text
 		self.speaker = speaker

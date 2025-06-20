@@ -7,9 +7,8 @@ func nearest(f:float, a:float, b:float):
 	return a if abs(f-a) < abs(f-b) else b
 
 func local_rect(o: Node):
-	var sh = o.get_node_or_null("Handle/Speak Hole") #TODO this should definitely be a method on the speaker
-	if sh:
-		return local_rect(sh)
+	if o.has_method("get_mouth"):
+		return local_rect(o.get_mouth())
 	if o.has_method("get_rect"):
 		var r = o.get_rect()
 		var pos = o.global_position - (r.size/2 if o is Sprite2D else Vector2.ZERO)

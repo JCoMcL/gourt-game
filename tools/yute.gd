@@ -25,3 +25,25 @@ func get_viewport_world_rect(relative_to: Node = self) -> Rect2:
 	var start = viewport_to_world(r.position, relative_to)
 	var end = viewport_to_world(r.end, relative_to)
 	return Rect2(start, end - start)
+
+func four_corners(r: Rect2) -> Array[Vector2]:
+	return [
+		r.position,
+		Vector2(r.position.x, r.end.y),
+		r.end,
+		Vector2(r.end.x, r.position.y)
+	]
+
+func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
+	if outer.encloses(inner):
+		print("enclosed")
+		return inner.position
+
+	# return inner's position plus the offset of the furthest vertex from outer
+	var out = four_corners(inner).map(func(v):
+		return get_nearest_point_on_perimeter(outer, v) - v
+	).reduce(func(v:Vector2, longest):
+		return v if v.length_squared() > longest.length_squared() else longest
+	) + inner.position
+	print(out)
+	return out

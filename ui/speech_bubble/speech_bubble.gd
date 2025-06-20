@@ -47,7 +47,10 @@ var position_goals = [
 		return Vector2.ZERO #speech bubbles without speakers go to (0,0) as god intended
 		,
 	func on_screen():
-		return global_position
+		var r = get_rect()
+		r.position = global_position
+		return Yute.nearest_overlapping_position(r, Yute.get_viewport_world_rect(self))
+
 	# optimal tail length
 	# away from other actors
 	# not overlapping speaker
@@ -88,22 +91,3 @@ func _draw() -> void: #Hey andrey, if you're reading this, this helped like you 
 				position_goals[i].call() - global_position,
 				8.0, colors[i], true
 			)
-		var r = get_viewport().get_visible_rect()
-		
-		var start = screen_to_world(r.position)
-		var end = screen_to_world(r.end)
-		var wr = Yute.get_viewport_world_rect(self)
-		if wr.has_point(global_position):
-			print(global_position)
-		wr.position -= global_position
-		end -= global_position
-		draw_polyline(
-			PackedVector2Array([
-				wr.position,
-				Vector2(wr.position.x, wr.end.y),
-				wr.end,
-				Vector2(wr.end.x, wr.position.y),
-				wr.position
-			]),
-			colors[1], 20
-		)

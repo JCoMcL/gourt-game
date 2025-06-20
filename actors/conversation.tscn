@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpyqi3nxqposm"]
+
+[ext_resource type="Script" uid="uid://cnvx1nc2i330f" path="res://actors/conversation.gd" id="1_h5wgq"]
+[ext_resource type="PackedScene" uid="uid://cuy1mgrdlirmk" path="res://ui/speech_bubble/speech_bubble.tscn" id="2_x1475"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twwvs"]
+size = Vector2(825, 730)
+
+[node name="Conversation" type="Area2D" node_paths=PackedStringArray("actors")]
+script = ExtResource("1_h5wgq")
+actors = [NodePath(""), NodePath("")]
+speech_bubble_scene = ExtResource("2_x1475")
+speed = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-59.5, 43)
+shape = SubResource("RectangleShape2D_twwvs")
+
+[node name="Timer" type="Timer" parent="."]

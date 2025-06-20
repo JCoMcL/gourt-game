@@ -1,7 +1,7 @@
-[gd_scene load_steps=22 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=23 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
-[ext_resource type="Script" path="res://actors/conversation.gd" id="2_gt2um"]
+[ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="2_1axx8"]
 [ext_resource type="PackedScene" uid="uid://cuy1mgrdlirmk" path="res://ui/speech_bubble/speech_bubble.tscn" id="2_twwvs"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="4_gt2um"]
@@ -63,18 +63,9 @@ position = Vector2(96, 172)
 tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAAABAAAAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD///n/AAAAAAAAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///j/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mdp56")
 
-[node name="Conversation" type="Area2D" parent="TileMapLayer" node_paths=PackedStringArray("actors")]
+[node name="Conversation" parent="TileMapLayer" node_paths=PackedStringArray("actors") instance=ExtResource("2_1axx8")]
 position = Vector2(2015, -249)
-script = ExtResource("2_gt2um")
 actors = [NodePath("../inspectors"), NodePath("../Janitor")]
-speech_bubble_scene = ExtResource("2_twwvs")
-speed = 20.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Conversation"]
-position = Vector2(-48.5, 56)
-shape = SubResource("RectangleShape2D_twwvs")
-
-[node name="Timer" type="Timer" parent="TileMapLayer/Conversation"]
 
 [node name="Janitor" parent="TileMapLayer" instance=ExtResource("4_gt2um")]
 position = Vector2(2211, -130)
@@ -145,8 +136,18 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 [node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
 texture = ExtResource("11_6o0x5")
 
+[node name="Rogue Gourt" parent="TileMapLayer" instance=ExtResource("13_ax68m")]
+position = Vector2(1279, -1072)
+
+[node name="inspectors" parent="TileMapLayer" instance=ExtResource("14_gt2um")]
+position = Vector2(1786, -128)
+
+[node name="Handle" parent="TileMapLayer/inspectors" index="0"]
+process_mode = 4
+enabled = false
+
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(-2038, -1607)
+position = Vector2(2373, 272)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -180,16 +181,6 @@ foot_friend = NodePath("../Gourt6")
 position = Vector2(0, -100)
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
-
-[node name="Rogue Gourt" parent="TileMapLayer" instance=ExtResource("13_ax68m")]
-position = Vector2(1279, -1072)
-
-[node name="inspectors" parent="TileMapLayer" instance=ExtResource("14_gt2um")]
-position = Vector2(1786, -128)
-
-[node name="Handle" parent="TileMapLayer/inspectors" index="0"]
-process_mode = 4
-enabled = false
 
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
 position_smoothing_enabled = true

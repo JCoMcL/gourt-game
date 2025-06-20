@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuy1mgrdlirmk"]
 
-[ext_resource type="Script" uid="uid://ccrqgcbvxoa1s" path="res://tools/speech_bubble.gd" id="1_gm1uq"]
+[ext_resource type="Script" uid="uid://ccrqgcbvxoa1s" path="res://ui/speech_bubble/speech_bubble.gd" id="1_gm1uq"]
 [ext_resource type="Theme" uid="uid://cbdsnwv4lfswa" path="res://ui/theme.tres" id="1_pkjfo"]
-[ext_resource type="Texture2D" uid="uid://b81bso44qcpnx" path="res://ui/tail.png" id="3_pkjfo"]
-[ext_resource type="Script" uid="uid://cyksg1xd3x3v4" path="res://tools/tail.gd" id="4_ofsrv"]
+[ext_resource type="Texture2D" uid="uid://b81bso44qcpnx" path="res://ui/speech_bubble/tail.png" id="3_pkjfo"]
+[ext_resource type="Script" uid="uid://cyksg1xd3x3v4" path="res://ui/speech_bubble/tail.gd" id="4_ofsrv"]
 
 [node name="speech bubble" type="Panel"]
 top_level = true
-offset_top = -94.8633
+offset_top = -94.8626
 offset_right = 116.28
-offset_bottom = -63.2433
+offset_bottom = -63.2426
 theme = ExtResource("1_pkjfo")
 script = ExtResource("1_gm1uq")
 

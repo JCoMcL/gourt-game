@@ -1,8 +1,8 @@
 extends Area2D
 
-@export var actors: Array[Node2D] # List of actors involved in the conversation
-@export var speed: float = 0.1 # Speed of the text display in characters per second
-var counter = 0
+@export var actors: Array[Node2D]
+@export var speech_bubble_scene: PackedScene
+@export var speed: float = 0.1
 
 class Line:
 	var text: String
@@ -11,15 +11,14 @@ class Line:
 		self.text = text
 		self.speaker = speaker
 	
-	func display():
-		# This function could be used to display the line in the game UI.
-		# For now, we will just print it to the console.
+	func display(speech_bubble: SpeechBubble):
 		print("%s: %s" % [speaker.name, text])
-	
+		speech_bubble.text = text
+		var speaker_rect = speaker.get_rect()
+		speech_bubble.position = speaker.global_position + Vector2(0, -speaker_rect.size.y / 2) # Position speech bubble above the actor
+		
 	func duration() -> float:
-		# Calculate the duration based on the length of the text and speed
-		return text.length() / 20 + 0.2
-
+		return text.length() / 20.0 + 0.2
 
 @onready var lines = [ Line.new("Look at that.", actors[0]),
 	Line.new("This a seems like a violation workplace safety code.", actors[0]),
@@ -32,18 +31,23 @@ class Line:
 	Line.new("Thank you for your cooperation", actors[0]),
 ]
 
+var counter = 0
+var speech_bubble: SpeechBubble
 func display_line():
-	lines[counter].display()
+	if ! speech_bubble:
+		speech_bubble = speech_bubble_scene.instantiate()
+		add_child(speech_bubble)
+	lines[counter].display(speech_bubble)
+	$Timer.start((lines[counter]).duration())
 	counter += 1
-	if counter < lines.size():
-		$Timer.start((lines[counter]).duration())
-
+	if counter == lines.size():
+		$Timer.timeout.disconnect(display_line)
+		$Timer.timeout.connect(speech_bubble.queue_free)
 
 func _ready():
 	print(speed)
 	$Timer.timeout.connect(display_line)
-	$Timer.one_shot = true
-
+	$Timer.one_shot = true	
 	if lines.size() > 0:
 		display_line()
 	else:

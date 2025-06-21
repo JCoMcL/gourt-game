@@ -130,8 +130,8 @@ func can_reach(o: Node2D):
 
 func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
 	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
-	return gourts_in_reach.reduce(func(g, closest):
-		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+	return gourts_in_reach.reduce(func(closest, g):
+		return g if g.sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
 	)
 
 func select_equipment(equipment):

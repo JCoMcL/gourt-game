@@ -22,11 +22,26 @@ func interract(operator):
 			target_slot = operator.get_node("Body/LegSlot1")
 		_:
 			return
-
 	global_position = target_slot.global_position
-	reparent(target_slot)
-
+	if target_slot.get_child_count() == 0:
+		if self.get_parent():
+			reparent(target_slot)
+		else:
+			target_slot.add_child(self)
 	position = Vector2.ZERO
+
+func rigor_mortis():
+		var rb = RigidBody2D.new()
+		rb.position = global_position
+		rb.add_child($CollisionShape2D.duplicate(0))
+		rb.collision_mask = Clision.layers["solid"]
+		var parent = get_parent()
+		if parent:
+			parent.add_child(rb) # TODO: should add to the scene and shouldn't be connected to gourt
+			rb.global_position = global_position
+			reparent(rb)
+			get_tree().create_timer(2.0).timeout.connect(rb.queue_free)
+			return
 
 func set_selected(is_selected: bool):
 	if is_selected:
@@ -36,9 +51,9 @@ func set_selected(is_selected: bool):
 
 func flash():
 	if tween:
-		tween.kill()
-		tween = null		
+		tween.kill()		
 	tween = get_tree().create_tween()
+	tween.bind_node(self)
 	tween.set_loops()
 	tween.tween_property(self, "modulate:a", 0.3, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

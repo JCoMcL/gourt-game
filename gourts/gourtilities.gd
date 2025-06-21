@@ -95,3 +95,23 @@ func get_equipment_owner(equipment) -> Gourt:
 			return parent
 		parent = parent.get_parent()
 	return null
+
+# Probably want to move this to a more general utilities file
+func find_node_by_name(root: Node, target_name: String) -> Node:
+	if root.name == target_name:
+		return root
+	for child in root.get_children():
+		var found = find_node_by_name(child, target_name)
+		if found:
+			return found
+	return null
+
+func replace_node(current_node, new_node, parent):
+	var index = parent.get_children().find(current_node)
+	current_node.queue_free()
+	if new_node:
+		var n = new_node.instantiate()
+		print("instantiated: ", n.name, " at ", n.global_position)
+		parent.add_child(n)
+		parent.move_child(n, index)
+		n.global_position = parent.global_position

@@ -42,7 +42,6 @@ class Position_Goal:
 		self.weight = weight
 
 	func calculate():
-		print(f.call())
 		return f.call()
 
 var position_goals = [
@@ -60,13 +59,13 @@ var position_goals = [
 	,1),
 
 	Position_Goal.new(func on_screen():
-	var r = get_rect()
+	var r = get_rect().grow(32)
 	r.position = global_position #TODO getting our own global rect reliably is more steps than this
 	var screen_rect = Yute.get_viewport_world_rect(self)
 	if screen_rect.encloses(r):
 		return null #goal is satisfied
-	return Yute.nearest_overlapping_position(r, Yute.get_viewport_world_rect(self))
-	,9999)
+	return Yute.nearest_overlapping_position(r, screen_rect)
+	,50)
 
 	# optimal tail length
 	# away from other actors
@@ -100,7 +99,7 @@ func anneal_position(iterations: int = 1, delta=0.5):
 	for i in range(iterations):
 		update_position(delta)
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
 		update_position(delta)
 

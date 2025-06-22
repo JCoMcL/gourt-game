@@ -46,7 +46,7 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 		return get_nearest_point_on_perimeter(outer, v) - v
 	).reduce(func(v:Vector2, longest):
 		return v if v.length_squared() > longest.length_squared() else longest
-	) + inner.position
+	) * 1.01 + inner.position
 
 	#test that it works
 	var new_inner = Rect2(out, inner.size)

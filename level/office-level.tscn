@@ -1,14 +1,13 @@
-[gd_scene load_steps=21 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=19 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://props/janitor.png" id="2_2lgek"]
+[ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://props/inspectors.png" id="3_x1oxu"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
-[ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="6_qycbv"]
-[ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="6_rh3h7"]
-[ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="7_43b34"]
 [ext_resource type="Texture2D" uid="uid://bg8514xi46mmo" path="res://props/npc gourtstack.png" id="8_3k8ca"]
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_2sgh0"]
+[ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
@@ -41,9 +40,6 @@ physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 4
 sources/0 = SubResource("TileSetAtlasSource_ssvay")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gt2um"]
-size = Vector2(171, 63.8125)
-
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4txm"]
 friction = 0.06
 bounce = 0.44
@@ -61,6 +57,15 @@ position = Vector2(96, 172)
 tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAAABAAAAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD///n/AAAAAAAAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///j/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mdp56")
 
+[node name="Sunglasses" parent="TileMapLayer" instance=ExtResource("3_rh3h7")]
+position = Vector2(-2020, -1849)
+scale = Vector2(0.8, 0.8)
+
+[node name="Cool Guy" type="Sprite2D" parent="TileMapLayer"]
+position = Vector2(-896, -1919)
+scale = Vector2(1.24, 1)
+texture = ExtResource("2_2lgek")
+
 [node name="Janitor" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(2211, -130)
 texture = ExtResource("2_2lgek")
@@ -76,27 +81,6 @@ exit = NodePath("../Door2")
 [node name="Door2" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
 position = Vector2(-585, -1991)
 exit = NodePath("../Door")
-
-[node name="WaterCooler" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-1126, -1885)
-texture = ExtResource("6_qycbv")
-
-[node name="WaterCoolest" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(-2412, -1880)
-texture = ExtResource("6_qycbv")
-
-[node name="Sunglasses" type="Area2D" parent="TileMapLayer/WaterCoolest"]
-position = Vector2(27, -137)
-collision_layer = 32
-collision_mask = 0
-script = ExtResource("6_rh3h7")
-equippable_type = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/WaterCoolest/Sunglasses"]
-shape = SubResource("RectangleShape2D_gt2um")
-
-[node name="Sprite" type="Sprite2D" parent="TileMapLayer/WaterCoolest/Sunglasses"]
-texture = ExtResource("7_43b34")
 
 [node name="NpcGourtstack" type="Sprite2D" parent="TileMapLayer"]
 position = Vector2(384, 76)
@@ -126,7 +110,7 @@ position = Vector2(226, 222)
 shape = SubResource("CircleShape2D_w4oyg")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="TileMapLayer"]
-position = Vector2(-1781, -1771)
+position = Vector2(-1782, -1771)
 center_of_mass_mode = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/RigidBody2D"]
@@ -135,8 +119,11 @@ polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 
 [node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
 texture = ExtResource("11_6o0x5")
 
+[node name="WaterCooler2" parent="TileMapLayer" instance=ExtResource("10_1slrw")]
+position = Vector2(-2381, -1886)
+
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(-2038, -1607)
+position = Vector2(-2060, -1605)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -179,5 +166,11 @@ metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
 [node name="Rogue Gourt" parent="." instance=ExtResource("13_ax68m")]
 position = Vector2(2097, -1006)
+
+[node name="WaterCooler" parent="." instance=ExtResource("10_1slrw")]
+position = Vector2(-1275, -1718)
+
+[node name="WaterCooler2" parent="." instance=ExtResource("10_1slrw")]
+position = Vector2(-1275, -1718)
 
 [editable path="TileMapLayer/Door"]

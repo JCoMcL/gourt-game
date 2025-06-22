@@ -7,11 +7,11 @@ class_name Transactor
 @export var input = null
 @export var output: PackedScene = null
 
-func interract(operator):
+func interact(operator):
 	if input:
 		Gourtilities.replace_node(input, output, operator)
 	else:
 		var o = output.instantiate()
 		o.global_position = operator.global_position
 		print(o.name, " instantiated at ", o.global_position)
-		operator.interract(o)
+		operator.interact(o)

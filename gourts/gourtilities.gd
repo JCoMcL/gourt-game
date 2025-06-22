@@ -96,6 +96,14 @@ func get_equipment_owner(equipment) -> Gourt:
 		parent = parent.get_parent()
 	return null
 
+func get_interactive_items(root, items):
+	var special_items = []
+	for item in items:
+		var i = find_node_by_name(root, item)
+		if i:
+			special_items.append(i)
+	return special_items
+
 # Probably want to move this to a more general utilities file
 func find_node_by_name(root: Node, target_name: String) -> Node:
 	if root.name == target_name:

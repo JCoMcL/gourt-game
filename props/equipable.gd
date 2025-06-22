@@ -8,7 +8,7 @@ enum EquippableType { HEAD, EYES, HAND, FOOT }
 var equippable_type: int = EquippableType.HEAD
 var tween : Tween = null
 
-func interract(operator):
+func interact(operator):
 	var target_slot: Node2D
 
 	match equippable_type:

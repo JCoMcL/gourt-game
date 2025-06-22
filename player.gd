@@ -51,10 +51,10 @@ func _input(ev: InputEvent):
 	if not ev.is_action_pressed("probe"):
 		get_viewport().set_input_as_handled()
 
-	if ev.is_action_pressed("interract"):
+	if ev.is_action_pressed("interact"):
 		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
 		if collider:
-			player_character.interract(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+			player_character.interact(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
 		var g = get_gourt_under_cursor()
 		if g:

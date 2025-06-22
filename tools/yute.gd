@@ -37,7 +37,6 @@ func four_corners(r: Rect2) -> Array[Vector2]:
 
 func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 	if outer.encloses(inner):
-		print("enclosed")
 		return inner.position
 
 	# return inner's position plus the offset of the furthest vertex from outer

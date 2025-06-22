@@ -34,22 +34,39 @@ func offset_to(v: Vector2):
 func centred(v: Vector2):
 	return v + Vector2(-size.x, size.y) /2
 
+class Position_Goal:
+	var f: Callable
+	var weight: float
+	func _init(f: Callable, weight=1):
+		self.f = f
+		self.weight = weight
+
+	func calculate():
+		print(f.call())
+		return f.call()
+
 var position_goals = [
-	func antigravity():
-		return global_position + Vector2.UP * size.y * 3
-		,
-	func near_speaker():
-		if speaker:
-			var spk = speaker.get_mouth()
-			if not spk:
-				spk = speaker
-			return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))
-		return Vector2.ZERO #speech bubbles without speakers go to (0,0) as god intended
-		,
-	func on_screen():
-		var r = get_rect()
-		r.position = global_position
-		return Yute.nearest_overlapping_position(r, Yute.get_viewport_world_rect(self))
+	Position_Goal.new(func antigravity():
+	return global_position + Vector2.UP * size.y * 3
+	,1),
+
+	Position_Goal.new(func near_speaker():
+	if speaker:
+		var spk = speaker.get_mouth()
+		if not spk:
+			spk = speaker
+		return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))
+	return null
+	,1),
+
+	Position_Goal.new(func on_screen():
+	var r = get_rect()
+	r.position = global_position #TODO getting our own global rect reliably is more steps than this
+	var screen_rect = Yute.get_viewport_world_rect(self)
+	if screen_rect.encloses(r):
+		return null #goal is satisfied
+	return Yute.nearest_overlapping_position(r, Yute.get_viewport_world_rect(self))
+	,9999)
 
 	# optimal tail length
 	# away from other actors
@@ -60,8 +77,15 @@ var position_goals = [
 var velocity = Vector2.ZERO
 func update_position(delta):
 	var target_offset = Vector2.ZERO
+	var total_weight = 0
 	for g in position_goals:
-		target_offset += offset_to(g.call())
+		var tgt = g.calculate()
+		if tgt is Vector2:
+			target_offset += offset_to(tgt) * g.weight
+			total_weight += g.weight
+
+	if total_weight != 0:
+		target_offset /= total_weight
 
 	velocity += Yute.snap_force(
 		velocity,
@@ -84,10 +108,13 @@ func screen_to_world(v):
 	return get_viewport().global_canvas_transform.affine_inverse() * v
 			
 var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
-func _draw() -> void: #Hey andrey, if you're reading this, this helped like you wouldn't believe
+func _draw() -> void:
 	if Engine.is_editor_hint():
 		for i in range(position_goals.size()):
-			draw_circle(
-				position_goals[i].call() - global_position,
-				8.0, colors[i], true
-			)
+			var pg = position_goals[i].calculate()
+			if pg is Vector2:
+				draw_circle(
+					pg - global_position,
+					8.0 * position_goals[i].weight,
+					colors[i], true
+				)

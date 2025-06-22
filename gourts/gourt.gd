@@ -15,7 +15,6 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var mass = 20
 @export var reach = 180
 
-var selected_equipment = null
 var rng = RandomNumberGenerator.new()
 func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
@@ -134,18 +133,26 @@ func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
 		return g if g.sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
 	)
 
-func select_equipment(equipment):
-	selected_equipment = equipment
+func get_equipped_item() -> Equippable:
+	for slot in [
+		$Body/HandSlot1,
+		$Body/HandSlot2,
+		$Body/Face/EyesSlot
+	]:
+		if slot.get_child_count() > 0:
+			return slot.get_child(0)
+	return null
+
 
 func move_equipment_up():
-	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
-	if gourt and gourt.head_friend:
-		selected_equipment.interract(gourt.head_friend)
+	var equipment = get_equipped_item()
+	if equipment and head_friend:
+		equipment.interract(head_friend)
 
 func move_equipment_down():
-	var gourt = Gourtilities.get_equipment_owner(selected_equipment)
-	if gourt and gourt.foot_friend:
-		selected_equipment.interract(gourt.foot_friend)
+	var equipment = get_equipped_item()
+	if equipment and foot_friend:
+		equipment.interract(foot_friend)
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

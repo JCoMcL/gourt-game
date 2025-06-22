@@ -77,3 +77,49 @@ func stack_count(g: Gourt):
 
 func get_stack_tip(g: Gourt):
 	return list_head_friends(g)[-1] if g.head_friend else g
+
+func is_descendant(child: Node, potential_parent: Node) -> bool:
+	var current = child.get_parent()
+	while current:
+		if current == potential_parent:
+			return true
+		current = current.get_parent()
+	return false
+
+func get_equipment_owner(equipment) -> Gourt:
+	if not equipment or not equipment is Node:
+		return null
+	var parent = equipment.get_parent()
+	while parent and parent is Node:
+		if parent is Gourt:
+			return parent
+		parent = parent.get_parent()
+	return null
+
+func get_interactive_items(root, items):
+	var special_items = []
+	for item in items:
+		var i = find_node_by_name(root, item)
+		if i:
+			special_items.append(i)
+	return special_items
+
+# Probably want to move this to a more general utilities file
+func find_node_by_name(root: Node, target_name: String) -> Node:
+	if root.name == target_name:
+		return root
+	for child in root.get_children():
+		var found = find_node_by_name(child, target_name)
+		if found:
+			return found
+	return null
+
+func replace_node(current_node, new_node, parent):
+	var index = parent.get_children().find(current_node)
+	current_node.queue_free()
+	if new_node:
+		var n = new_node.instantiate()
+		print("instantiated: ", n.name, " at ", n.global_position)
+		parent.add_child(n)
+		parent.move_child(n, index)
+		n.global_position = parent.global_position

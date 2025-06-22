@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6a0ra2cd2h4g"]
+
+[ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="1_04tnx"]
+[ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="2_3hb3s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gt2um"]
+size = Vector2(171, 63.8125)
+
+[node name="Sunglasses" type="Area2D"]
+scale = Vector2(0.645161, 0.8)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_04tnx")
+equippable_type = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gt2um")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_3hb3s")

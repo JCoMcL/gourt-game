@@ -114,12 +114,19 @@ func try_enter_door():
 	if result.size() == 0:
 		return
 
-	result[0].interract(self)
+	result[0].interact(self)
 
-func interract(interractable):
-	var gourt = get_closest_gourt_to_interact(interractable)
+func interact(interactable: Node):
+	var gourt = get_closest_gourt_to_interact(interactable)
 	if gourt:
-		interractable.interract(gourt)
+		if "interactive_items" in interactable:
+			var specials = Gourtilities.get_interactive_items(gourt, interactable.interactive_items)
+			if specials.size() > 0:
+				interactable.interact(specials[0])
+			else:
+				interactable.interact(gourt)	
+		else:
+			interactable.interact(gourt)
 
 func sqr_dist_to(o: Node2D):
 	return global_position.distance_squared_to(o.global_position)
@@ -129,10 +136,30 @@ func can_reach(o: Node2D):
 
 func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
 	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
-	return gourts_in_reach.reduce(func(g, closest):
-		return g if sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+	return gourts_in_reach.reduce(func(closest, g):
+		return g if g.sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
 	)
 
+func get_equipped_item() -> Equippable:
+	for slot in [
+		$Body/HandSlot1,
+		$Body/HandSlot2,
+		$Body/Face/EyesSlot
+	]:
+		if slot.get_child_count() > 0:
+			return slot.get_child(0)
+	return null
+
+
+func move_equipment_up():
+	var equipment = get_equipped_item()
+	if equipment and head_friend:
+		equipment.interact(head_friend)
+
+func move_equipment_down():
+	var equipment = get_equipped_item()
+	if equipment and foot_friend:
+		equipment.interact(foot_friend)
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

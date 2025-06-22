@@ -104,20 +104,11 @@ flip_h = true
 [node name="EyesSlot" type="Node2D" parent="Body/Face"]
 position = Vector2(6, -31)
 
-[node name="HeadSlot" type="Node2D" parent="Body"]
-position = Vector2(-11, -46)
-
 [node name="HandSlot1" type="Node2D" parent="Body"]
 position = Vector2(-70, 27)
 
 [node name="HandSlot2" type="Node2D" parent="Body"]
 position = Vector2(48, 36)
-
-[node name="LegSlot1" type="Node2D" parent="Body"]
-position = Vector2(-33, 48)
-
-[node name="LegSlot2" type="Node2D" parent="Body"]
-position = Vector2(15, 53)
 
 [node name="Perch" type="Node2D" parent="."]
 position = Vector2(0, -100)

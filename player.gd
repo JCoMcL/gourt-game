@@ -12,9 +12,6 @@ class_name Master #TODO: this class should be more generic: player and AI should
 func valid_goon(g: Goon) -> bool:
 	return g and is_instance_valid(g)
 
-func screen_position(world_position: Vector2):
-	return get_viewport().get_screen_transform() * get_global_transform_with_canvas() * world_position
-
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
 	#TODO how does input priority work exactly? Does it make this reording unneccesary?

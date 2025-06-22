@@ -45,7 +45,6 @@ func display_line():
 		$Timer.timeout.connect(speech_bubble.queue_free)
 
 func _ready():
-	print(speed)
 	$Timer.timeout.connect(display_line)
 	$Timer.one_shot = true	
 	if lines.size() > 0:

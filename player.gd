@@ -56,9 +56,10 @@ func _input(ev: InputEvent):
 		get_viewport().set_input_as_handled()
 
 	if ev.is_action_pressed("interact"):
-		var interactables = Clision.get_objects_at(event_position(ev), "interactive")
+		var ev_pos = event_position(ev)
+		var interactables = Clision.get_objects_at(ev_pos, "interactive")
 		if interactables:
-			player_character.interact(interactables[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+			player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
 		var c = get_character_at_event(ev) #FIXME this lets us control all characters, not just our player character
 		if c:

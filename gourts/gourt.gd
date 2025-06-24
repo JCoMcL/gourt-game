@@ -113,28 +113,46 @@ func try_enter_door():
 
 	result[0].interact(self)
 
-func interact(interactable: Node):
-	var gourt = get_closest_gourt_to_interact(interactable)
+func _interact(what: Node, where: Vector2) -> bool:
+	var gourt: Gourt
+	gourt = get_closest_gourt_to_interact(where)
+	if not gourt:
+		gourt = get_closest_gourt_to_interact(what)
+
 	if gourt:
-		if "interactive_items" in interactable:
-			var specials = Gourtilities.get_interactive_items(gourt, interactable.interactive_items)
+		if "interactive_items" in what:
+			var specials = Gourtilities.get_interactive_items(gourt, what.interactive_items)
 			if specials.size() > 0:
-				interactable.interact(specials[0])
+				what.interact(specials[0])
 			else:
-				interactable.interact(gourt)	
+				what.interact(gourt)
 		else:
-			interactable.interact(gourt)
+			what.interact(gourt)
+		return true
+	return false
 
-func sqr_dist_to(o: Node2D):
-	return global_position.distance_squared_to(o.global_position)
+func sqr_dist_to(o) -> float:
+	if o is Vector2:
+		return global_position.distance_squared_to(o)
+	elif o is Node2D:
+		return sqr_dist_to(o.global_position)
+	assert(false, "Type Error: {0}".format([o]))
+	return INF
 
-func can_reach(o: Node2D):
+func am_closest_to(o) -> bool:
+	var d = sqr_dist_to(o)
+	return (
+		((not head_friend) or (head_friend.sqr_dist_to(o) > d)) and
+		((not foot_friend) or (foot_friend.sqr_dist_to(o) > d))
+	)
+
+func can_reach(o) -> bool: #TODO more reliable test would check if we can reach any part, not just the center
 	return sqr_dist_to(o) < reach ** 2
 
-func get_closest_gourt_to_interact(interactable: Node2D) -> Gourt:
-	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(interactable))
+func get_closest_gourt_to_interact(o) -> Gourt:
+	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(o))
 	return gourts_in_reach.reduce(func(closest, g):
-		return g if g.sqr_dist_to(interactable) < closest.sqr_dist_to(interactable) else closest
+		return g if g.sqr_dist_to(o) < closest.sqr_dist_to(o) else closest
 	)
 
 func get_equipped_item() -> Equippable:

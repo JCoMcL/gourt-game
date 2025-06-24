@@ -55,7 +55,7 @@ func list_foot_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
 	return acc
 
 func list_stack_members(g: Gourt):
-## note that the returned list is in no particular order
+	## note that the returned list is in no particular order
 	return list_foot_friends(g) + [g] + list_head_friends(g)
 
 # --- Recursive functions ---

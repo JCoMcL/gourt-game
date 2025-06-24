@@ -36,10 +36,18 @@ func _process(delta):
 		player_character.command(get_commands())
 		global_position = player_character.global_position
 
-func get_gourt_under_cursor() -> Gourt:
-	var gourts_under_cursor = Clision.get_objects_at(get_global_mouse_position(), "characters")
-	if gourts_under_cursor.size():
-		return gourts_under_cursor[0]
+func event_position(ev: InputEvent) -> Vector2:
+	if ev is InputEventMouse or ev is InputEventScreenTouch:
+		return Yute.viewport_to_world(ev.position, player_character)
+	# idk what to do here, we'll have to see
+	if "position" in ev:
+		return player_character.global_position + ev.position
+	return player_character.global_position
+
+func get_character_at_event(ev: InputEvent) -> Gourt:
+	var characters = Clision.get_objects_at(event_position(ev), "characters")
+	if characters.size():
+		return characters[0]
 	return null
 
 func _input(ev: InputEvent):
@@ -48,17 +56,17 @@ func _input(ev: InputEvent):
 		get_viewport().set_input_as_handled()
 
 	if ev.is_action_pressed("interact"):
-		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
-		if collider:
-			player_character.interact(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+		var interactables = Clision.get_objects_at(event_position(ev), "interactive")
+		if interactables:
+			player_character.interact(interactables[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
-		var g = get_gourt_under_cursor()
-		if g:
-			g.move_equipment_up()
+		var c = get_character_at_event(ev) #FIXME this lets us control all characters, not just our player character
+		if c:
+			c.move_equipment_up()
 	elif ev.is_action_pressed("move equipment down"):
-		var g = get_gourt_under_cursor()
-		if g:
-			g.move_equipment_down()
+		var c = get_character_at_event(ev)
+		if c:
+			c.move_equipment_down()
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

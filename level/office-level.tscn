@@ -10,9 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
+[ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="12_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
+[ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -164,8 +167,8 @@ script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
-[node name="Rogue Gourt" parent="." instance=ExtResource("13_ax68m")]
-position = Vector2(2097, -1006)
+[node name="WaterCooler" parent="." instance=ExtResource("10_1slrw")]
+position = Vector2(-1275, -1718)
 
 [node name="WaterCooler" parent="." instance=ExtResource("10_1slrw")]
 position = Vector2(-1275, -1718)

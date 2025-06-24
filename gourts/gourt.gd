@@ -49,9 +49,6 @@ func break_stack(impulse_scale: int = 1) -> void:
 		triangular_distribution(-1, -2)
 	) * impulse_scale, "breaksplosion")
 
-func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 300, sharpness:float = 0.3) -> Vector2:
-	return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor
-
 #TODO reimplement to be less guesswork-oriented 
 func get_bounds() -> Rect2:
 	if head_friend:
@@ -213,7 +210,7 @@ func _physics_process(delta: float) -> void:
 
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		var f = snap_force(velocity, target_offset, delta) * mass;
+		var f = Yute.snap_force(velocity, target_offset, delta) * mass;
 		if target_offset.length() > snap_distance:
 			foot_friend.apply_force(f, "snapback")
 			break_stack()

@@ -60,23 +60,28 @@ func list_stack_members(g: Gourt):
 
 # --- Recursive functions ---
 
-func resolve_perch(g: Gourt):
+func resolve_perch(g: Gourt) -> void:
 	call_all_upwards(g, func(g: Gourt):
 		if g.foot_friend:
 			g.position = perch_position(g.foot_friend)
 	)
 
-func head_count(g: Gourt):
+func head_count(g: Gourt) -> int:
 	return list_head_friends(g).size()
 
-func foot_count(g: Gourt):
+func foot_count(g: Gourt) -> int:
 	return list_foot_friends(g).size()
 
-func stack_count(g: Gourt):
+func stack_count(g: Gourt) -> int:
 	return head_count(g) + foot_count(g) + 1
 
-func get_stack_tip(g: Gourt):
+func get_stack_tip(g: Gourt) -> Gourt:
 	return list_head_friends(g)[-1] if g.head_friend else g
+
+func in_same_stack(a: Gourt, b: Gourt) -> bool:
+	return a and b and b in list_stack_members(a)
+
+# --- misc. maybe off-topic ---
 
 func is_descendant(child: Node, potential_parent: Node) -> bool:
 	var current = child.get_parent()

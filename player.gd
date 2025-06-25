@@ -44,18 +44,42 @@ func event_position(ev: InputEvent) -> Vector2:
 		return player_character.global_position + ev.position
 	return player_character.global_position
 
-func quick_move_item(ev: InputEvent, direction: int):
+var _selected_gourt: Gourt
+var _selected_item: Node
+func invalidate_selection():
+	_selected_item = null
+	_selected_gourt = null
+
+func quick_move_item(item: Node, direction: int):
+	if item is Gourt:
+		if _selected_item and item == _selected_gourt:
+			_selected_item = Gourtilities.get_equipment_owner(_selected_item).move_equipment(direction, _selected_item)
+		else:
+			_selected_gourt = item
+			_selected_item = item.move_equipment(direction)
+	else:
+		_selected_gourt = Gourtilities.get_equipment_owner(item)
+		if _selected_gourt:
+			_selected_item = _selected_gourt.move_equipment(direction, item)
+
+func try_quick_move_item(ev: InputEvent, direction: int):
+	var hovered_gourts = Clision.get_objects_at(event_position(ev), "characters")
+	if _selected_gourt not in hovered_gourts:
+		_selected_gourt = null
+
 	var items = Clision.get_objects_at(event_position(ev), "interactive") + Clision.get_objects_at(event_position(ev), "characters")
-	print(items)
-	if not items:
-		return
 
-	if items[0] is Gourt:
-		return items[0].move_equipment(direction)
+	if items:
+		var item_gourt = items[0] if items[0] is Gourt else Gourtilities.get_equipment_owner(items[0])
+		if Gourtilities.in_same_stack(player_character, item_gourt):
+			quick_move_item(items[0], direction)
+			return
+	if _selected_item:
+		if Gourtilities.in_same_stack(player_character, Gourtilities.get_equipment_owner(_selected_item)):
+			quick_move_item(_selected_item, direction)
+		else:
+			_selected_item = null
 
-	var equipment_owner = Gourtilities.get_equipment_owner(items[0])
-	if equipment_owner:
-		return equipment_owner.move_equipment(direction, items[0])
 
 func _input(ev: InputEvent):
 	#don't consume probe events, let the goon handle them directly
@@ -68,9 +92,9 @@ func _input(ev: InputEvent):
 		if interactables:
 			player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
-		quick_move_item(ev, Direction.UP)
+		try_quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):
-		quick_move_item(ev, Direction.DOWN)
+		try_quick_move_item(ev, Direction.DOWN)
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

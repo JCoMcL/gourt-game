@@ -113,11 +113,13 @@ func try_enter_door():
 
 	result[0].interact(self)
 
+func interact(operator: Node):
+	var o = get_equipped_item()
+	if o:
+		o.interact(operator)
+
 func _interact(what: Node, where: Vector2) -> bool:
-	var gourt: Gourt
-	gourt = get_closest_gourt_to_interact(where)
-	if not gourt:
-		gourt = get_closest_gourt_to_interact(what)
+	var gourt = get_closest_gourt_to_interact(what, where)
 
 	if gourt:
 		if "interactive_items" in what:
@@ -149,10 +151,14 @@ func am_closest_to(o) -> bool:
 func can_reach(o) -> bool: #TODO more reliable test would check if we can reach any part, not just the center
 	return sqr_dist_to(o) < reach ** 2
 
-func get_closest_gourt_to_interact(o) -> Gourt:
-	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return g.can_reach(o))
+func get_closest_gourt_to_interact(what: Node2D, where: Vector2) -> Gourt:
+	var gourts_in_reach = Gourtilities.list_stack_members(self).filter(func(g): return (
+		(g.can_reach(where) or g.can_reach(what)) and
+		g != what and
+		g != Gourtilities.get_equipment_owner(what)
+	))
 	return gourts_in_reach.reduce(func(closest, g):
-		return g if g.sqr_dist_to(o) < closest.sqr_dist_to(o) else closest
+		return g if g.sqr_dist_to(where) < closest.sqr_dist_to(where) else closest
 	)
 
 func get_equipped_item() -> Equippable:
@@ -166,7 +172,7 @@ func get_equipped_item() -> Equippable:
 	return null
 
 
-func move_equipment(direction: int, equipment=null):
+func move_equipment(direction: int, equipment: Node = null) -> Node:
 	if not equipment:
 		equipment = get_equipped_item()
 	if not equipment:
@@ -178,6 +184,7 @@ func move_equipment(direction: int, equipment=null):
 		Direction.DOWN:
 			if foot_friend:
 				equipment.interact(foot_friend)
+	return equipment
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

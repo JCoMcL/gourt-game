@@ -167,10 +167,4 @@ metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 [node name="WaterCooler" parent="." instance=ExtResource("10_1slrw")]
 position = Vector2(-1275, -1718)
 
-[node name="WaterCooler2" parent="." instance=ExtResource("10_1slrw")]
-position = Vector2(-1275, -1718)
-
-[node name="WaterCooler3" parent="." instance=ExtResource("10_1slrw")]
-position = Vector2(-1275, -1718)
-
 [editable path="TileMapLayer/Door"]

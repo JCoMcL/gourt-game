@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd5q3dnirvb6v"]
+
+[ext_resource type="PackedScene" uid="uid://ct7k4e5ao3m44" path="res://props/filled_cup.tscn" id="1_4qou6"]
+[ext_resource type="Texture2D" uid="uid://bev1ivg8dnqbd" path="res://props/sunglasses.png" id="2_6ga2d"]
+
+[node name="Coolest Filled Cup" instance=ExtResource("1_4qou6")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+position = Vector2(0, -15)
+scale = Vector2(0.351555, 0.351555)
+texture = ExtResource("2_6ga2d")

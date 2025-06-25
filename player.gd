@@ -44,11 +44,18 @@ func event_position(ev: InputEvent) -> Vector2:
 		return player_character.global_position + ev.position
 	return player_character.global_position
 
-func get_character_at_event(ev: InputEvent) -> Gourt:
-	var characters = Clision.get_objects_at(event_position(ev), "characters")
-	if characters.size():
-		return characters[0]
-	return null
+func quick_move_item(ev: InputEvent, direction: int):
+	var items = Clision.get_objects_at(event_position(ev), Clision.combined_layers(["characters", "interactive"]))
+	print(items)
+	if not items:
+		return
+
+	if items[0] is Gourt:
+		return items[0].move_equipment(direction)
+
+	var equipment_owner = Gourtilities.get_equipment_owner(items[0])
+	if equipment_owner:
+		return equipment_owner.move_equipment(direction, items[0])
 
 func _input(ev: InputEvent):
 	#don't consume probe events, let the goon handle them directly
@@ -61,13 +68,9 @@ func _input(ev: InputEvent):
 		if interactables:
 			player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
-		var c = get_character_at_event(ev) #FIXME this lets us control all characters, not just our player character
-		if c:
-			c.move_equipment_up()
+		quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):
-		var c = get_character_at_event(ev)
-		if c:
-			c.move_equipment_down()
+		quick_move_item(ev, Direction.DOWN)
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

@@ -166,15 +166,18 @@ func get_equipped_item() -> Equippable:
 	return null
 
 
-func move_equipment_up():
-	var equipment = get_equipped_item()
-	if equipment and head_friend:
-		equipment.interact(head_friend)
-
-func move_equipment_down():
-	var equipment = get_equipped_item()
-	if equipment and foot_friend:
-		equipment.interact(foot_friend)
+func move_equipment(direction: int, equipment=null):
+	if not equipment:
+		equipment = get_equipped_item()
+	if not equipment:
+		return
+	match direction:
+		Direction.UP:
+			if head_friend:
+				equipment.interact(head_friend)
+		Direction.DOWN:
+			if foot_friend:
+				equipment.interact(foot_friend)
 
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]

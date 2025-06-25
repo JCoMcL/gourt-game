@@ -36,11 +36,48 @@ func _process(delta):
 		player_character.command(get_commands())
 		global_position = player_character.global_position
 
-func get_gourt_under_cursor() -> Gourt:
-	var gourts_under_cursor = Clision.get_objects_at(get_global_mouse_position(), "characters")
-	if gourts_under_cursor.size():
-		return gourts_under_cursor[0]
-	return null
+func event_position(ev: InputEvent) -> Vector2:
+	if ev is InputEventMouse or ev is InputEventScreenTouch:
+		return Yute.viewport_to_world(ev.position, player_character)
+	# idk what to do here, we'll have to see
+	if "position" in ev:
+		return player_character.global_position + ev.position
+	return player_character.global_position
+
+var _selected_gourt: Gourt
+var _selected_item: Node
+func invalidate_selection():
+	_selected_item = null
+	_selected_gourt = null
+
+func quick_move_item(item: Node, direction: int):
+	if item is Gourt:
+		if _selected_item and item == _selected_gourt:
+			_selected_item = Gourtilities.get_equipment_owner(_selected_item).move_equipment(direction, _selected_item)
+		else:
+			_selected_gourt = item
+			_selected_item = item.move_equipment(direction)
+	else:
+		_selected_gourt = Gourtilities.get_equipment_owner(item)
+		if _selected_gourt:
+			_selected_item = _selected_gourt.move_equipment(direction, item)
+
+func try_quick_move_item(ev: InputEvent, direction: int):
+	var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results
+	if _selected_gourt not in items:
+		_selected_gourt = null
+
+	if items:
+		var item_gourt = items[0] if items[0] is Gourt else Gourtilities.get_equipment_owner(items[0])
+		if Gourtilities.in_same_stack(player_character, item_gourt):
+			quick_move_item(items[0], direction)
+			return
+	if _selected_item:
+		if Gourtilities.in_same_stack(player_character, Gourtilities.get_equipment_owner(_selected_item)):
+			quick_move_item(_selected_item, direction)
+		else:
+			_selected_item = null
+
 
 func _input(ev: InputEvent):
 	#don't consume probe events, let the goon handle them directly
@@ -48,17 +85,14 @@ func _input(ev: InputEvent):
 		get_viewport().set_input_as_handled()
 
 	if ev.is_action_pressed("interact"):
-		var collider = Clision.get_objects_at(get_global_mouse_position(), "interactive")
-		if collider:
-			player_character.interact(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+		var ev_pos = event_position(ev)
+		var interactables = Clision.get_objects_at(ev_pos, "interactive")
+		if interactables:
+			player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
-		var g = get_gourt_under_cursor()
-		if g:
-			g.move_equipment_up()
+		try_quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):
-		var g = get_gourt_under_cursor()
-		if g:
-			g.move_equipment_down()
+		try_quick_move_item(ev, Direction.DOWN)
 	elif valid_goon(player_character):
 		player_character._input(ev)
 

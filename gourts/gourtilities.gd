@@ -55,28 +55,33 @@ func list_foot_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
 	return acc
 
 func list_stack_members(g: Gourt):
-## note that the returned list is in no particular order
+	## note that the returned list is in no particular order
 	return list_foot_friends(g) + [g] + list_head_friends(g)
 
 # --- Recursive functions ---
 
-func resolve_perch(g: Gourt):
+func resolve_perch(g: Gourt) -> void:
 	call_all_upwards(g, func(g: Gourt):
 		if g.foot_friend:
 			g.position = perch_position(g.foot_friend)
 	)
 
-func head_count(g: Gourt):
+func head_count(g: Gourt) -> int:
 	return list_head_friends(g).size()
 
-func foot_count(g: Gourt):
+func foot_count(g: Gourt) -> int:
 	return list_foot_friends(g).size()
 
-func stack_count(g: Gourt):
+func stack_count(g: Gourt) -> int:
 	return head_count(g) + foot_count(g) + 1
 
-func get_stack_tip(g: Gourt):
+func get_stack_tip(g: Gourt) -> Gourt:
 	return list_head_friends(g)[-1] if g.head_friend else g
+
+func in_same_stack(a: Gourt, b: Gourt) -> bool:
+	return a and b and b in list_stack_members(a)
+
+# --- misc. maybe off-topic ---
 
 func is_descendant(child: Node, potential_parent: Node) -> bool:
 	var current = child.get_parent()
@@ -99,27 +104,7 @@ func get_equipment_owner(equipment) -> Gourt:
 func get_interactive_items(root, items):
 	var special_items = []
 	for item in items:
-		var i = find_node_by_name(root, item)
+		var i = Yute.find_node_by_name(root, item)
 		if i:
 			special_items.append(i)
 	return special_items
-
-# Probably want to move this to a more general utilities file
-func find_node_by_name(root: Node, target_name: String) -> Node:
-	if root.name == target_name:
-		return root
-	for child in root.get_children():
-		var found = find_node_by_name(child, target_name)
-		if found:
-			return found
-	return null
-
-func replace_node(current_node, new_node, parent):
-	var index = parent.get_children().find(current_node)
-	current_node.queue_free()
-	if new_node:
-		var n = new_node.instantiate()
-		print("instantiated: ", n.name, " at ", n.global_position)
-		parent.add_child(n)
-		parent.move_child(n, index)
-		n.global_position = parent.global_position

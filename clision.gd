@@ -10,6 +10,12 @@ var layers: Dictionary[String, int]:
 			print("Generated layer map:", layers)
 		return layers
 
+func combined_layers(layer_names: Array[String]):
+	var out = 0
+	for s in layer_names:
+		out |= layers[s]
+	return out
+
 enum {AREAS, BODIES, AREAS_AND_BODIES}
 func get_objects_at(where: Vector2, mask=65535, collider_type=AREAS_AND_BODIES, world: World2D=null):
 	var pq := PhysicsPointQueryParameters2D.new()

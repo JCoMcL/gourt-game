@@ -5,4 +5,4 @@ extends Area2D
 
 func interact(operator):
 	if operator.name in interactive_items:
-		Gourtilities.replace_node(operator, output, operator.get_parent())
+		Yute.replace_node(operator, output, operator.get_parent())

@@ -15,6 +15,11 @@ func get_bounds() -> Rect2:
 func _input(ev: InputEvent):
 	pass
 
+func _interact(what: Node, where: Vector2) -> bool:
+	if what.has_method("interact"):
+		return what.interact(self)
+	return false
+
 func identify(lines = []):
 	for s in [
 		"\nI am %s" % name

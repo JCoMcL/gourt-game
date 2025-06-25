@@ -17,14 +17,6 @@ twitch integtation
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
 
-[` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
-
-[` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
-
-[` player_character.interact(collider[0]) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
-
-[` print("Goodbye World!") #TODO actual game-over`](./player.gd)
-
 [` return UP if y > 0 else DOWN #WARN untested`](./tools/direction.gd)
 
 [` return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor`](./tools/yute.gd)
@@ -39,7 +31,15 @@ twitch integtation
 
 [` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./goon.gd)
 
-[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
+[` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
+
+[` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
+
+[` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
+
+[` player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
+
+[` print("Goodbye World!") #TODO actual game-over`](./player.gd)
 
 [` extends Goon #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./gourts/gourt.gd)
 
@@ -53,7 +53,11 @@ twitch integtation
 
 [` if result and result.collider is Gourt and not result.collider.head_friend  #BM1`](./gourts/gourt.gd)
 
+[` func can_reach(o) -> bool  #TODO more reliable test would check if we can reach any part, not just the center`](./gourts/gourt.gd)
+
 [` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't phyiscally accurate`](./gourts/gourt.gd)
+
+[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
 
 [` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)
 

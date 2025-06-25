@@ -63,11 +63,9 @@ func quick_move_item(item: Node, direction: int):
 			_selected_item = _selected_gourt.move_equipment(direction, item)
 
 func try_quick_move_item(ev: InputEvent, direction: int):
-	var hovered_gourts = Clision.get_objects_at(event_position(ev), "characters")
-	if _selected_gourt not in hovered_gourts:
+	var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results
+	if _selected_gourt not in items:
 		_selected_gourt = null
-
-	var items = Clision.get_objects_at(event_position(ev), "interactive") + Clision.get_objects_at(event_position(ev), "characters")
 
 	if items:
 		var item_gourt = items[0] if items[0] is Gourt else Gourtilities.get_equipment_owner(items[0])

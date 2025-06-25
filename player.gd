@@ -45,7 +45,7 @@ func event_position(ev: InputEvent) -> Vector2:
 	return player_character.global_position
 
 func quick_move_item(ev: InputEvent, direction: int):
-	var items = Clision.get_objects_at(event_position(ev), Clision.combined_layers(["characters", "interactive"]))
+	var items = Clision.get_objects_at(event_position(ev), "interactive") + Clision.get_objects_at(event_position(ev), "characters")
 	print(items)
 	if not items:
 		return

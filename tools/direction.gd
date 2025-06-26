@@ -30,4 +30,3 @@ func get_direction(v: Vector2, deadzone=0.0):
 	if absf(v.x) > absf(v.y):
 		return get_x(v.x, deadzone)
 	return get_y(v.y, deadzone)
-

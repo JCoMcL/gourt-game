@@ -250,7 +250,6 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y > 0:
 		scan_for_perch()
 
-
 	if is_on_floor():
 		apply_friction(Vector2(walk_friction,0))
 
@@ -272,12 +271,30 @@ func _physics_process(delta: float) -> void:
 		if k.get_collider() is RigidBody2D:
 			collide_with_rigidbody(k, delta)
 
+const IDLE = "I_"
+const ACTIVE = "A_"
+func get_animations_of_type(body_part: AnimatedSprite2D, prefix: String):
+	var out = []
+	for s in body_part.sprite_frames.get_animation_names():
+		if s.begins_with(prefix):
+			out.append(s)
+	return out
+
+@onready var BODY: AnimatedSprite2D = $Body
+@onready var FACE: AnimatedSprite2D = $Body/Face
+var body_anim: String
+var face_anim: String
+func _ready():
+	body_anim = get_animations_of_type(BODY, IDLE).pick_random()
+	face_anim = get_animations_of_type(FACE, IDLE).pick_random()
+
 func _process(delta: float) -> void:
 	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))
 	if walk_target != 0:
-		$Body.play("transportative")
+		BODY.play("A_transportative")
 	else:
-		$Body.play("idleative")
+		BODY.play(body_anim)
+		FACE.play(face_anim)
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):

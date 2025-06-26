@@ -4,6 +4,8 @@ extends Node
 func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 300, sharpness:float = 0.3) -> Vector2:
 	return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor
 
+# --- space, shape, and coordinates ---
+
 func nearest(f:float, a:float, b:float):
 	return a if abs(f-a) < abs(f-b) else b
 
@@ -53,6 +55,8 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 	assert(outer.encloses(new_inner))
 	return out
 
+# --- nodes ---
+
 func find_node_by_name(root: Node, target_name: String) -> Node:
 	if root.name == target_name:
 		return root
@@ -71,3 +75,16 @@ func replace_node(current_node, new_node, parent):
 		parent.add_child(n)
 		parent.move_child(n, index)
 		n.global_position = parent.global_position
+
+# --- random ---
+
+var rng = RandomNumberGenerator.new()
+func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
+	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
+
+func percent_chance(i):
+	return rng.randf() * 100 < i
+
+func cointoss():
+	return randf() < 0.5
+

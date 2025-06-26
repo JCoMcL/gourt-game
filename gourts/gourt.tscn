@@ -126,19 +126,34 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_yf2ro")
-}, {
-"duration": 1.0,
 "texture": ExtResource("6_vwanj")
+}],
+"loop": false,
+"name": &"A_probative_down",
+"speed": 5.0
 }, {
-"duration": 1.0,
-"texture": ExtResource("7_5xow2")
-}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("7_5xow2")
 }],
 "loop": false,
-"name": &"A_probative",
+"name": &"A_probative_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_5xow2")
+}],
+"loop": false,
+"name": &"A_probative_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_yf2ro")
+}],
+"loop": false,
+"name": &"A_probative_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -612,16 +627,13 @@ shape = SubResource("CapsuleShape2D_q10vy")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ny44")
-animation = &"A_transportative"
-frame_progress = 0.721159
+animation = &"A_probative_up"
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
-position = Vector2(-23.585, 0)
 sprite_frames = SubResource("SpriteFrames_lri5v")
-animation = &"A_wakeless"
+animation = &"I_amogess"
 autoplay = "I_penniless"
-frame_progress = 0.0803766
-flip_h = true
+frame_progress = 0.372213
 
 [node name="EyesSlot" type="Node2D" parent="Body/Face"]
 position = Vector2(6, -31)

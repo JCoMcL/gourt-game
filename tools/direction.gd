@@ -3,7 +3,7 @@ extends Node
 enum {UP, DOWN, LEFT, RIGHT, NONE}
 
 func pretty(i:int):
-	return ["up", " down", " left", " right", "none"][i]
+	return ["up", "down", "left", "right", "none"][i]
 
 func test_spread(f: float, within: float, of: float) -> bool:
 	return (of - within) < f and f < (of + within)
@@ -25,8 +25,20 @@ func get_x(x: float, deadzone=0.0):
 	return RIGHT if x > 0 else LEFT
 func get_y(y: float, deadzone=0.0):
 	if absf(y) < deadzone: return NONE
-	return UP if y > 0 else DOWN #WARN untested
+	return UP if y < 0 else DOWN
 func get_direction(v: Vector2, deadzone=0.0):
 	if absf(v.x) > absf(v.y):
 		return get_x(v.x, deadzone)
 	return get_y(v.y, deadzone)
+
+func _get_vec(o) -> Vector2:
+	if o is Vector2:
+		return o
+	if o is Node2D:
+		return o.global_position
+	assert(false, "type error")
+	return Vector2.ZERO
+
+func get_relative(from, to, deadzone=0.0):
+	return get_direction(_get_vec(to) - _get_vec(from), deadzone)
+

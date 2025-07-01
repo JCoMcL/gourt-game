@@ -130,7 +130,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"A_probative_down",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -138,7 +138,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"A_probative_left",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -146,7 +146,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"A_probative_right",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,7 +154,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"A_probative_up",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -627,13 +627,13 @@ shape = SubResource("CapsuleShape2D_q10vy")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ny44")
-animation = &"A_probative_up"
+animation = &"I_pensive"
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 sprite_frames = SubResource("SpriteFrames_lri5v")
-animation = &"I_amogess"
+animation = &"I_aboundless"
 autoplay = "I_penniless"
-frame_progress = 0.372213
+frame_progress = 0.676325
 
 [node name="EyesSlot" type="Node2D" parent="Body/Face"]
 position = Vector2(6, -31)

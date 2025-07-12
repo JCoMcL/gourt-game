@@ -8,7 +8,7 @@ enum EquippableType { HEAD, EYES, HAND, FOOT }
 var equippable_type: int = EquippableType.HEAD
 var tween : Tween = null
 
-func interact(operator):
+func interact(operator) -> bool:
 	var target_slot: Node2D
 
 	match equippable_type:
@@ -21,7 +21,7 @@ func interact(operator):
 		EquippableType.FOOT:
 			target_slot = operator.get_node("Body/LegSlot1")
 		_:
-			return
+			return false
 	global_position = target_slot.global_position
 	if target_slot.get_child_count() == 0:
 		if self.get_parent():
@@ -29,6 +29,7 @@ func interact(operator):
 		else:
 			target_slot.add_child(self)
 	position = Vector2.ZERO
+	return true
 
 func rigor_mortis():
 		var rb = RigidBody2D.new()

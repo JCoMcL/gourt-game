@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bbbog68rjtlrb"]
 
-[ext_resource type="Script" uid="uid://crvr0k1g7qv3s" path="res://props/water_coolest.gd" id="2_8vm3n"]
+[ext_resource type="Script" path="res://props/water_coolest.gd" id="2_8vm3n"]
 [ext_resource type="PackedScene" uid="uid://dh5axk4fye6o3" path="res://props/cup.tscn" id="2_sgrtc"]
 [ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="3_i5a3f"]
 [ext_resource type="Script" uid="uid://daeo8suka7j7l" path="res://props/cup_filler.gd" id="4_brw10"]

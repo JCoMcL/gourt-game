@@ -117,7 +117,6 @@ func interact(operator: Node) -> bool:
 
 func perform_the_interaction_fr(what: Node, where: Vector2) -> bool:
 	var d = Direction.get_relative(self, where)
-	print(Direction.pretty(d))
 	auto_animate = false
 	BODY.play("A_probative_%s" % Direction.pretty(d))
 	set_facing(d)
@@ -296,8 +295,7 @@ func resume_auto_animate():
 	auto_animate = true
 
 func animate():
-	if not auto_animate:
-		return
+	z_index = Gourtilities.foot_count(self) + 1 #render gourts ontop of foot friends
 
 	if foot_friend and abs(velocity.x) > 100 and Yute.percent_chance(abs(velocity.x) / 50):
 		set_facing(foot_friend.facing)
@@ -313,7 +311,8 @@ func animate():
 		FACE.play(face_anim)
 
 func _process(delta: float) -> void:
-	animate()
+	if auto_animate:
+		animate()
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):

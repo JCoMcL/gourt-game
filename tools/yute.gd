@@ -87,4 +87,3 @@ func percent_chance(i):
 
 func cointoss():
 	return randf() < 0.5
-

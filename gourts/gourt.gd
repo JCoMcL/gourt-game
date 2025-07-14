@@ -121,14 +121,13 @@ func perform_the_interaction_fr(what: Node, where: Vector2) -> bool:
 	BODY.play("A_probative_%s" % Direction.pretty(d))
 	set_facing(d)
 
-	if "interactive_items" in what:
-		var specials = Gourtilities.get_interactive_items(self, what.interactive_items)
-		if specials.size() > 0:
-			return what.interact(specials[0])
-		else:
-			return what.interact(self)
-	else:
-		return what.interact(self)
+	var items_to_use = Gourtilities.get_items_useable_for_interaction(self, what)
+	for item in items_to_use:
+		var did_it_work = what.interact(item)
+		if did_it_work:
+			return true
+
+	return what.interact(self)
 
 func _interact(what: Node, where: Vector2) -> bool:
 	var gourt = get_closest_gourt_to_interact(what, where)

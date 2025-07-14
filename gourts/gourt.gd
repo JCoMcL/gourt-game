@@ -121,6 +121,11 @@ func perform_the_interaction_fr(what: Node, where: Vector2) -> bool:
 	BODY.play("A_probative_%s" % Direction.pretty(d))
 	set_facing(d)
 
+	if what is Gourt: #baby, don't hurt me
+		# render ontop of target gourt to make poking animations look better
+		# this will get reset automatically in the main animation loop
+		z_index = max(z_index, what.z_index+1)
+
 	var items_to_use = Gourtilities.get_items_useable_for_interaction(self, what)
 	for item in items_to_use:
 		var did_it_work = what.interact(item)

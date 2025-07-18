@@ -11,7 +11,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var walk_accel = 20
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
-@export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
+@export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
 @export var mass = 20
 @export var reach = 180
 

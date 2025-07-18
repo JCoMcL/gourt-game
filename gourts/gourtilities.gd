@@ -101,10 +101,13 @@ func get_equipment_owner(equipment) -> Gourt:
 		parent = parent.get_parent()
 	return null
 
-func get_interactive_items(root, items):
+func get_items_useable_for_interaction(interactor, interactable) -> Array:
 	var special_items = []
-	for item in items:
-		var i = Yute.find_node_by_name(root, item)
+	if "interactive_items" not in interactable:
+		return special_items
+
+	for item in interactable.interactive_items:
+		var i = Yute.find_node_by_name(interactor, item)
 		if i:
 			special_items.append(i)
 	return special_items

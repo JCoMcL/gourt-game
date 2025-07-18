@@ -11,13 +11,12 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @export var walk_accel = 20
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
-@export var stack_elasticity = 0.8 #FIXME: setting this above 0.5 results in infinte-energy.
+@export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
 @export var mass = 20
 @export var reach = 180
 
-var rng = RandomNumberGenerator.new()
-func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
-	return rng.randf_range(upper, lower) + rng.randf_range(upper, lower)
+@onready var BODY: AnimatedSprite2D = $Body
+@onready var FACE: AnimatedSprite2D = $Body/Face
 
 func identify(lines = []):
 	super([
@@ -33,10 +32,7 @@ func flip() -> void:
 	transform.x *= -1
 
 func set_facing(d: int) -> void:
-	if d == Direction.NONE:
-		return
-	assert(d == Direction.LEFT || d == Direction.RIGHT)
-	if d != facing:
+	if (d == Direction.LEFT or d == Direction.RIGHT) and d != facing:
 		flip()
 		facing = d
 
@@ -45,8 +41,8 @@ func break_stack(impulse_scale: int = 1) -> void:
 		foot_friend.head_friend = null
 		foot_friend = null
 	apply_force(Vector2(
-		triangular_distribution(-2, 2),
-		triangular_distribution(-1, -2)
+		Yute.triangular_distribution(-2, 2),
+		Yute.triangular_distribution(-1, -2)
 	) * impulse_scale, "breaksplosion")
 
 #TODO reimplement to be less guesswork-oriented 
@@ -82,7 +78,7 @@ func die():
 		head_friend = null
 
 func yeetonate():
-	velocity = Vector2(triangular_distribution() * 320, triangular_distribution(-2,-3) * 20)
+	velocity = Vector2(Yute.triangular_distribution() * 320, Yute.triangular_distribution(-2,-3) * 20)
 	if head_friend:
 		head_friend.velocity.y = -200
 		head_friend.velocity.x *= 0.6
@@ -113,24 +109,35 @@ func try_enter_door():
 
 	result[0].interact(self)
 
-func interact(operator: Node):
+func interact(operator: Node) -> bool:
 	var o = get_equipped_item()
 	if o:
-		o.interact(operator)
+		return o.interact(operator)
+	return false
+
+func perform_the_interaction_fr(what: Node, where: Vector2) -> bool:
+	var d = Direction.get_relative(self, where)
+	auto_animate = false
+	BODY.play("A_probative_%s" % Direction.pretty(d))
+	set_facing(d)
+
+	if what is Gourt: #baby, don't hurt me
+		# render ontop of target gourt to make poking animations look better
+		# this will get reset automatically in the main animation loop
+		z_index = max(z_index, what.z_index+1)
+
+	var items_to_use = Gourtilities.get_items_useable_for_interaction(self, what)
+	for item in items_to_use:
+		var did_it_work = what.interact(item)
+		if did_it_work:
+			return true
+
+	return what.interact(self)
 
 func _interact(what: Node, where: Vector2) -> bool:
 	var gourt = get_closest_gourt_to_interact(what, where)
-
 	if gourt:
-		if "interactive_items" in what:
-			var specials = Gourtilities.get_interactive_items(gourt, what.interactive_items)
-			if specials.size() > 0:
-				what.interact(specials[0])
-			else:
-				what.interact(gourt)
-		else:
-			what.interact(gourt)
-		return true
+		return gourt.perform_the_interaction_fr(what, where)
 	return false
 
 func sqr_dist_to(o) -> float:
@@ -250,7 +257,6 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y > 0:
 		scan_for_perch()
 
-
 	if is_on_floor():
 		apply_friction(Vector2(walk_friction,0))
 
@@ -272,12 +278,45 @@ func _physics_process(delta: float) -> void:
 		if k.get_collider() is RigidBody2D:
 			collide_with_rigidbody(k, delta)
 
-func _process(delta: float) -> void:
-	set_facing(Direction.get_x( velocity.x if foot_friend else walk_target, 10))
-	if walk_target != 0:
-		$Body.play("transportative")
+const IDLE = "I_"
+const ACTIVE = "A_"
+func get_animations_of_type(body_part: AnimatedSprite2D, prefix: String):
+	var out = []
+	for s in body_part.sprite_frames.get_animation_names():
+		if s.begins_with(prefix):
+			out.append(s)
+	return out
+
+var body_anim: String
+var face_anim: String
+func _ready():
+	body_anim = get_animations_of_type(BODY, IDLE).pick_random()
+	face_anim = get_animations_of_type(FACE, IDLE).pick_random()
+	BODY.animation_finished.connect(resume_auto_animate)
+
+var auto_animate = true
+func resume_auto_animate():
+	auto_animate = true
+
+func animate():
+	z_index = Gourtilities.foot_count(self) + 1 #render gourts ontop of foot friends
+
+	if foot_friend and abs(velocity.x) > 100 and Yute.percent_chance(abs(velocity.x) / 50):
+		set_facing(foot_friend.facing)
+
+	if velocity.y > 100: #falling
+		if Yute.percent_chance(velocity.y / 100):
+			BODY.play("A_restive")
+	elif walk_target != 0:
+		BODY.play("A_transportative")
+		set_facing(Direction.get_x(walk_target))
 	else:
-		$Body.play("idleative")
+		BODY.play(body_anim)
+		FACE.play(face_anim)
+
+func _process(delta: float) -> void:
+	if auto_animate:
+		animate()
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):

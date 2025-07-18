@@ -9,6 +9,11 @@ class_name Master #TODO: this class should be more generic: player and AI should
 			g.under_new_management(self)
 		player_character = g
 
+@export_range(1, 100) var position_smoothing: float = 10
+@export_range(0, 100) var position_threshold: float = 10
+@export_range(1, 1000) var zoom_smoothing: float = 100
+@export_range(1, 10) var max_zoom: float = 1
+
 func valid_goon(g: Goon) -> bool:
 	return g and is_instance_valid(g)
 
@@ -20,8 +25,6 @@ func _ready():
 		player_character.under_new_management(self)
 	else:
 		player_character = Goon.new() #easier than constant null-checking
-	var track_bounds = player_character.get_bounds()
-	offset = (track_bounds.get_center() - player_character.global_position)
 
 func get_commands(c: Goon.Commands = null) -> Goon.Commands:
 	if not c:
@@ -34,7 +37,20 @@ func _process(delta):
 
 	if player_character:
 		player_character.command(get_commands())
-		global_position = player_character.global_position
+		var track_bounds = player_character.get_bounds()
+		var view_bounds = Yute.get_viewport_world_rect(self)
+		var error_vectors = [
+			track_bounds.position - view_bounds.position,
+			track_bounds.end - view_bounds.end
+		]
+		var position_error = (error_vectors[0] + error_vectors[1]) / 2
+		var zoom_error = min(
+			(error_vectors[0].x - error_vectors[1].x) / view_bounds.size.x,
+			(error_vectors[0].y - error_vectors[1].y) / view_bounds.size.y
+		) #TODO: this is not 100% correct, you can still see substantuially more with a bigger screen
+		# the goal is to completely abstract out screen size so we never have to worry about it again
+		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) / position_smoothing
+		zoom = lerp(zoom, Vector2.ONE * zoom_error, 1/zoom_smoothing)
 
 func event_position(ev: InputEvent) -> Vector2:
 	if ev is InputEventMouse or ev is InputEventScreenTouch:

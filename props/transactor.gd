@@ -8,7 +8,7 @@ class_name Transactor
 @export var input = null
 @export var output: PackedScene = null
 
-func interact(operator):
+func interact(operator) -> bool:
 	if input:
 		Yute.replace_node(input, output, operator)
 	else:
@@ -16,3 +16,4 @@ func interact(operator):
 		o.global_position = operator.global_position
 		print(o.name, " instantiated at ", o.global_position)
 		operator.interact(o)
+	return true

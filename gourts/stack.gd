@@ -33,8 +33,12 @@ func rm_gourt(g: Gourt):
 	g.queue_free()
 
 func unleash_children():
-	pass
+	var p = get_parent()
+	print(p)
+	for c in get_children():
+		c.reparent.call_deferred(p)
+	queue_free()
 
-func _ready() -> void:
-	if not Engine.is_editor_hint:
+func _enter_tree() -> void:
+	if not Engine.is_editor_hint():
 		unleash_children()

@@ -20,6 +20,9 @@ func _interact(what: Node, where: Vector2) -> bool:
 		return what.interact(self)
 	return false
 
+func say(s: String):
+	print(s) #TODO
+
 func identify(lines = []):
 	for s in [
 		"\nI am %s" % name

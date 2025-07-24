@@ -104,7 +104,7 @@ func _input(ev: InputEvent):
 		var ev_pos = event_position(ev)
 		var interactables = Clision.get_objects_at(ev_pos, "interactive")
 		if interactables:
-			player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+			player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
 	elif ev.is_action_pressed("move equipment up"):
 		try_quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):

@@ -1,23 +1,43 @@
 x:done, -:underway
+- [ ] Opening Cutscene
+- [ ] Death Animation
+- [ ] Annotated Animated Sprite2D
+- [ ] Traverse spike floor
+-- [ ] Proper item holding for animations
+-- [ ] Correctly position sunglasses
 - [-] Rigidbody Interaction
-- [ ] Doors
--- [x] stairwell doors
--- [ ] inter-level doors
-- [ ] Interaction
--- [ ] pick up items
+- [ ] Gourt disguise
+- [ ] Elevator
+-- [ ] level transition
+-- [ ] open when you press the button
+-- [ ] interior
+-- [ ] elevator music
+-- [ ] control panel
+- [-] Interaction
+-- [ ] pick up gourts
+-- [x] pick up items
+-- [x] use items on objects
 -- [ ] use items
--- [ ] equip items
--- [ ] use static objects
--- [ ] inter-gourt-action
+-- [-] equip items
+-- [x] use static objects
+-- [x] inter-gourt-action
+- [ ] Level Triggers
+-- [ ] Invisible wall
+-- [ ] Camera Focus Zone
 - [ ] Unstacking
 -- [x] low ceiling
--- [ ] low wall
---- [ ] control inheritance logic
+-- [ ] orphan gourt behaviours
+-- [ ] control inheritance logic
 - [ ] NPCs
+-- [ ] NPC Interaction
 -- [-] Dialogue
+--- [ ] animations
 --- [ ] emphasis
 --- [ ] talking sfx
--- [ ] Movement / action
--- [ ] Camera motion
+-- [-] Movement / action
+- [-] Camera
+-- [x] Focus on player character
+-- [ ] Focus in additional objects
+-- [ ] Manual override for cutscenes
 - [ ] Cursor
 - [ ] Game Over

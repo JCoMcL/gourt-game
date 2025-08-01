@@ -46,9 +46,9 @@ func break_stack(impulse_scale: int = 1) -> void:
 	) * impulse_scale, "breaksplosion")
 
 #TODO reimplement to be less guesswork-oriented 
-func get_bounds() -> Rect2:
+func get_global_rect() -> Rect2:
 	if head_friend:
-		return head_friend.get_bounds()
+		return head_friend.get_global_rect()
 	else:
 		var self_bounds = super()
 		self_bounds.size.y *= Gourtilities.foot_count(self)

@@ -37,7 +37,7 @@ func _process(delta):
 
 	if player_character:
 		player_character.command(get_commands())
-		var track_bounds = player_character.get_bounds()
+		var track_bounds = player_character.get_global_rect()
 		var view_bounds = Yute.get_viewport_world_rect(self)
 		var error_vectors = [
 			track_bounds.position - view_bounds.position,

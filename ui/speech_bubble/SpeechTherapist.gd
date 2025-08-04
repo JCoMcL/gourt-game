@@ -11,7 +11,7 @@ func say(speaker: Node2D, words: String) -> SpeechBubble:
 		sb = bubbles[speaker]
 	else:
 		sb = speech_bubble.instantiate()
-		speaker.get_tree().get_root().add_child(sb)
+		speaker.add_child(sb)
 		sb.speaker = speaker
 		bubbles[speaker] = sb
 	sb.text = words

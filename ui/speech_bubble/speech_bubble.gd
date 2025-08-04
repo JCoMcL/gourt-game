@@ -11,6 +11,7 @@ class_name SpeechBubble
 
 @export var speaker: Node2D
 @export_tool_button("Step", "Play") var f = anneal_position
+@export var debug_overlays = false
 
 @onready var label = $Label
 
@@ -104,6 +105,8 @@ func anneal_position(iterations: int = 1, delta=0.5):
 		update_position(delta)
 
 func _process(delta: float) -> void:
+	if debug_overlays:
+		queue_redraw()
 	if not Engine.is_editor_hint():
 		update_position(delta)
 
@@ -112,7 +115,14 @@ func screen_to_world(v):
 			
 var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
 func _draw() -> void:
-	if Engine.is_editor_hint():
+	if debug_overlays:
+		draw_polyline(
+			Yute.four_corners(speaker.get_rect()).map(func(p):
+			return p + speaker.global_position - global_position
+			),
+			Color("red")
+		)
+
 		for i in range(position_goals.size()):
 			var pg = position_goals[i].calculate()
 			if pg is Vector2:

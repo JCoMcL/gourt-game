@@ -74,11 +74,12 @@ texture = ExtResource("2_2lgek")
 position = Vector2(2211, -130)
 texture = ExtResource("2_2lgek")
 
-[node name="Inspectors" type="CharacterBody2D" parent="TileMapLayer"]
+[node name="Inspectors" type="CharacterBody2D" parent="TileMapLayer" node_paths=PackedStringArray("targets")]
 position = Vector2(1794, -124)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("5_rh3h7")
+targets = [NodePath("../Janitor"), NodePath("../Door")]
 
 [node name="Inspectors" type="Sprite2D" parent="TileMapLayer/Inspectors"]
 texture = ExtResource("3_x1oxu")

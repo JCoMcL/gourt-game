@@ -2,38 +2,51 @@
 extends Goon
 class_name Actor
 
-@export var move := false
-@export var move_speed := 0
-@export var fall_speed := 1
-@export var mass = 20
+var speed = 300.0
+var gravity = 900.0
+var spcial_distance = 20.0
+enum Direction {LEFT, RIGHT}
+var facing = 0
+var interact = false
+var target
+var scenario = []
 
 func get_mouth():
 	return get_node("Handle/Speak Hole")
 
-func exit_stage_right():
-	move = true
-	move_speed = 200
-
-func exit_stage_left():
-	move = true
-	move_speed = -200
-
 func is_special_collision(k: KinematicCollision2D) -> bool:
-	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
+	return PhysicsServer2D.body_get_collision_layer(k.get_collider_rid()) & Clision.layers["special solid"]
 
 func die():
 	collision_layer = 0
 	collision_mask = 0
-	move_speed = 0 
-	fall_speed = 40 # Dramatic fall
+	velocity = Vector2.ZERO
+
+func move_to_target():
+	var dx = target.global_position.x - global_position.x
+	if abs(dx) < spcial_distance:
+		velocity.x = 0
+		if interact:
+			target.interact(self)
+		target = null
+		interact = false
+		return
+	var direction = sign(dx)
+	var t_facing = Direction.RIGHT if direction > 0 else Direction.LEFT
+	if t_facing != facing:
+		flip()
+		facing = t_facing
+	velocity.x = speed * direction
 
 func _physics_process(delta):
-	if move:
-		position.x += move_speed * delta
-		position.y += fall_speed
-		print("moving", position, move_speed, get_gravity().y)
-	move_and_slide()
+	velocity.y += gravity * delta
+	if target:
+		move_to_target()
 	for i in range(get_slide_collision_count()):
 		var k = get_slide_collision(i)
 		if is_special_collision(k):
 			die()
+	move_and_slide()
+
+func flip():
+	transform.x *= -1

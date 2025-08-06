@@ -22,6 +22,7 @@ Direction="*res://tools/direction.gd"
 Clision="*res://clision.gd"
 Yute="*res://tools/yute.gd"
 SpeechTherapist="*res://ui/speech_bubble/SpeechTherapist.gd"
+Settings="*res://settings.gd"
 
 [input]
 

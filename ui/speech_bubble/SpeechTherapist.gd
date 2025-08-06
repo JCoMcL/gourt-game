@@ -7,13 +7,14 @@ func _ready():
 
 func say(speaker: Node2D, words: String) -> SpeechBubble:
 	var sb: SpeechBubble
-	if bubbles.has(speaker):
+	if bubbles.has(speaker) and is_instance_valid(bubbles[speaker]):
 		sb = bubbles[speaker]
+		sb.add_text(words)
 	else:
 		sb = speech_bubble.instantiate()
 		speaker.add_child(sb)
 		sb.speaker = speaker
 		bubbles[speaker] = sb
-	sb.text = words
-	sb.anneal_position(50)
+		sb.anneal_position(50)
+		sb.text = words
 	return sb

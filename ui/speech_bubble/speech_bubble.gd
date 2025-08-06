@@ -12,11 +12,43 @@ class_name SpeechBubble
 @export var speaker: Node2D
 @export_tool_button("Step", "Play") var f = anneal_position
 @export var debug_overlays = false
+@export var auto_expire = true:
+	set(value):
+		auto_expire = value
+		if auto_expire:
+			on_done_showing.connect(queue_free)
+		else:
+			on_done_showing.disconnect(queue_free)
 
 @onready var label = $Label
+@onready var timer = $Timer
+
+signal on_done_showing() #emitted when the duration for the text based on Settings.text_speed runs out
 
 func _ready():
+	timer.timeout.connect(on_done_showing.emit)
+
+	# trigger setters
 	text = text
+	auto_expire = auto_expire
+
+	reset_timer()
+
+func add_text(s: String):
+	if text:
+		text = text + " " + s
+	else:
+		text = s
+
+	timer.start(timer.time_left + Settings.text_duration(s))
+
+func reset_timer():
+	timer.start(Settings.text_duration(text) + 1.0)
+
+func reset_text(s: String):
+	## set text and restart timer
+	text = s
+	reset_timer()
 	
 func update_size():
 	if ! label:

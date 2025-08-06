@@ -4,10 +4,7 @@ var act = 0
 func _ready():
 	scenario = [
 		func():
-			target = targets[0],
-		func():
-			target = targets[1]
-			interact = true
+			target = targets[0]
 	]
 
 func _physics_process(delta):

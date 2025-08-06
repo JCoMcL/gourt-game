@@ -79,7 +79,7 @@ position = Vector2(1794, -124)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("5_rh3h7")
-targets = [NodePath("../Janitor"), NodePath("../Door")]
+targets = [NodePath("../Elevator")]
 
 [node name="Inspectors" type="Sprite2D" parent="TileMapLayer/Inspectors"]
 texture = ExtResource("3_x1oxu")

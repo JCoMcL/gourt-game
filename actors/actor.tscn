@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnuqy2f8bhgk3"]
+[gd_scene load_steps=7 format=3 uid="uid://cnuqy2f8bhgk3"]
 
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="1_0kmga"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://actors/janitor.png" id="2_jiomh"]
@@ -10,9 +10,12 @@ shader = ExtResource("1_0kmga")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
-[node name="Janitor" type="Sprite2D"]
-material = SubResource("ShaderMaterial_4r7ot")
-texture = ExtResource("2_jiomh")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y4hdp"]
+size = Vector2(206, 599)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("3_4r7ot")
 
 [node name="Handle" type="Node2D" parent="."]
@@ -27,3 +30,11 @@ offset_left = -20.0
 offset_top = 21.5
 offset_right = 27.53
 offset_bottom = 90.69
+
+[node name="Janitor" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4r7ot")
+texture = ExtResource("2_jiomh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 0.5)
+shape = SubResource("RectangleShape2D_y4hdp")

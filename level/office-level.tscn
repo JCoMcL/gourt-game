@@ -1,9 +1,7 @@
-[gd_scene load_steps=19 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=21 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
-[ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://actors/janitor.png" id="2_2lgek"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
-[ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://actors/cast/inspectors.png" id="3_x1oxu"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_2sgh0"]
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
@@ -12,7 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
+[ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
+[ext_resource type="PackedScene" path="res://props/words.tscn" id="14_rh3h7"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
+[ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="15_1axx8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -60,14 +62,6 @@ tile_set = SubResource("TileSet_mdp56")
 [node name="Sunglasses" parent="TileMapLayer" instance=ExtResource("3_rh3h7")]
 position = Vector2(-2020, -1849)
 scale = Vector2(0.8, 0.8)
-
-[node name="Janitor" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(2211, -130)
-texture = ExtResource("2_2lgek")
-
-[node name="Inspectors" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(1794, -124)
-texture = ExtResource("3_x1oxu")
 
 [node name="Door" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
 position = Vector2(-16, 61)
@@ -164,7 +158,7 @@ position = Vector2(-1275, -1718)
 position = Vector2(-1275, -1718)
 
 [node name="Gourt Stack2" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(431, 524)
+position = Vector2(388, 520)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack2" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -247,5 +241,27 @@ foot_friend = NodePath("../Gourt0")
 [node name="Poster" type="Sprite2D" parent="."]
 position = Vector2(370, -1781)
 texture = ExtResource("13_1slrw")
+
+[node name="Always" parent="Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-39, -212)
+scale = Vector2(-9.85821, 3.72495)
+
+[node name="Hit" parent="Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(41, -176)
+scale = Vector2(-6.09284, 4.20244)
+
+[node name="Target" parent="Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-12, 135)
+scale = Vector2(-10.0539, 2.93887)
+
+[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
+position = Vector2(1689, 42)
+
+[node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+position = Vector2(2203, 49)
+
+[node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
+position = Vector2(1913, -29)
+actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
 
 [editable path="TileMapLayer/Door"]

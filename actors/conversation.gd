@@ -1,8 +1,6 @@
 extends Area2D
 
 @export var actors: Array[Actor]
-@export var speech_bubble_scene: PackedScene
-@export var speed: float = 0.1
 
 class Line:
 	var text: String
@@ -10,16 +8,7 @@ class Line:
 	func _init(text: String, speaker: Node2D):
 		self.text = text
 		self.speaker = speaker
-	
-	func display(speech_bubble: SpeechBubble):
-		print("%s: %s" % [speaker.name, text])
-		speech_bubble.text = text
-		speech_bubble.speaker = speaker
-		speech_bubble.anneal_position(10)
 		
-	func duration() -> float:
-		return text.length() / 20.0 + 0.2
-
 @onready var lines = [ Line.new("Look at that.", actors[0]),
 	Line.new("This a seems like a violation of workplace safety code.", actors[0]),
 	Line.new("29 CFR 1910.212", actors[0]),
@@ -34,19 +23,24 @@ class Line:
 var counter = 0
 var speech_bubble: SpeechBubble
 func display_line():
+	var line: Line = lines[counter]
+	print("%s: %s" % [line.speaker.name, line.text])
+
 	if ! speech_bubble:
-		speech_bubble = speech_bubble_scene.instantiate()
-		add_child(speech_bubble)
-	lines[counter].display(speech_bubble)
-	$Timer.start((lines[counter]).duration())
+		speech_bubble = SpeechTherapist.say(line.speaker, line.text)
+		speech_bubble.auto_expire = false
+		speech_bubble.on_done_showing.connect(display_line)
+	else:
+		speech_bubble.reset_text(line.text)
+		speech_bubble.speaker = line.speaker
+	speech_bubble.anneal_position(10)
+
 	counter += 1
 	if counter == lines.size():
-		$Timer.timeout.disconnect(display_line)
-		$Timer.timeout.connect(speech_bubble.queue_free)
+		speech_bubble.on_done_showing.disconnect(display_line)
+		speech_bubble.auto_expire = true
 
 func _ready():
-	$Timer.timeout.connect(display_line)
-	$Timer.one_shot = true	
 	if lines.size() > 0:
 		display_line()
 	else:

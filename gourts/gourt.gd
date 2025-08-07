@@ -46,9 +46,9 @@ func break_stack(impulse_scale: int = 1) -> void:
 	) * impulse_scale, "breaksplosion")
 
 #TODO reimplement to be less guesswork-oriented 
-func get_bounds() -> Rect2:
+func get_global_rect() -> Rect2:
 	if head_friend:
-		return head_friend.get_bounds()
+		return head_friend.get_global_rect()
 	else:
 		var self_bounds = super()
 		self_bounds.size.y *= Gourtilities.foot_count(self)
@@ -135,9 +135,18 @@ func perform_the_interaction_fr(what: Node, where: Vector2) -> bool:
 	return what.interact(self)
 
 func _interact(what: Node, where: Vector2) -> bool:
-	var gourt = get_closest_gourt_to_interact(what, where)
-	if gourt:
-		return gourt.perform_the_interaction_fr(what, where)
+	var gourt: Gourt
+	if what is Word:
+		gourt = Gourtilities.get_stack_tip(self)
+		gourt.say(what.examine(gourt))
+		return true
+	elif what.has_method("interact"):
+		gourt = get_closest_gourt_to_interact(what, where)
+		if gourt:
+			if what is Word:
+				gourt.say(what.examine(gourt))
+				return true
+			return gourt.perform_the_interaction_fr(what, where)
 	return false
 
 func sqr_dist_to(o) -> float:
@@ -156,6 +165,8 @@ func am_closest_to(o) -> bool:
 	)
 
 func can_reach(o) -> bool: #TODO more reliable test would check if we can reach any part, not just the center
+	if o is Word:
+		return true
 	return sqr_dist_to(o) < reach ** 2
 
 func get_closest_gourt_to_interact(what: Node2D, where: Vector2) -> Gourt:

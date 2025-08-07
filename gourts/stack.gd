@@ -34,7 +34,6 @@ func rm_gourt(g: Gourt):
 
 func unleash_children():
 	var p = get_parent()
-	print(p)
 	for c in get_children():
 		c.reparent.call_deferred(p)
 	queue_free()

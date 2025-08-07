@@ -9,13 +9,46 @@ class_name SpeechBubble
 			label.text = value
 			update_size()
 
-@export var speaker: Actor
+@export var speaker: Node2D
 @export_tool_button("Step", "Play") var f = anneal_position
+@export var debug_overlays = false
+@export var auto_expire = true:
+	set(value):
+		auto_expire = value
+		if auto_expire:
+			on_done_showing.connect(queue_free)
+		else:
+			on_done_showing.disconnect(queue_free)
 
 @onready var label = $Label
+@onready var timer = $Timer
+
+signal on_done_showing() #emitted when the duration for the text based on Settings.text_speed runs out
 
 func _ready():
-	update_size()
+	timer.timeout.connect(on_done_showing.emit)
+
+	# trigger setters
+	text = text
+	auto_expire = auto_expire
+
+	reset_timer()
+
+func add_text(s: String):
+	if text:
+		text = text + " " + s
+	else:
+		text = s
+
+	timer.start(timer.time_left + Settings.text_duration(s))
+
+func reset_timer():
+	timer.start(Settings.text_duration(text) + 1.0)
+
+func reset_text(s: String):
+	## set text and restart timer
+	text = s
+	reset_timer()
 	
 func update_size():
 	if ! label:
@@ -50,12 +83,16 @@ var position_goals = [
 	,1),
 
 	Position_Goal.new(func near_speaker():
-	if speaker:
-		var spk = speaker.get_mouth()
-		if not spk:
-			spk = speaker
-		return centred(spk.global_position - Vector2(0, spk.get_rect().size.y / 2))
-	return null
+	if not speaker:
+		return null
+	var spk = speaker
+	if "get_mouth" in speaker:
+		var mouth = speaker.get_mouth()
+		if mouth:
+			spk = mouth
+
+	var speaker_rect = spk.get_rect()
+	return centred(speaker_rect.position + spk.global_position + Vector2(speaker_rect.size.x/2, 0))
 	,1),
 
 	Position_Goal.new(func on_screen():
@@ -100,6 +137,8 @@ func anneal_position(iterations: int = 1, delta=0.5):
 		update_position(delta)
 
 func _process(delta: float) -> void:
+	if debug_overlays:
+		queue_redraw()
 	if not Engine.is_editor_hint():
 		update_position(delta)
 
@@ -108,7 +147,14 @@ func screen_to_world(v):
 			
 var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
 func _draw() -> void:
-	if Engine.is_editor_hint():
+	if debug_overlays:
+		draw_polyline(
+			Yute.four_corners(speaker.get_rect()).map(func(p):
+			return p + speaker.global_position - global_position
+			),
+			Color("red")
+		)
+
 		for i in range(position_goals.size()):
 			var pg = position_goals[i].calculate()
 			if pg is Vector2:

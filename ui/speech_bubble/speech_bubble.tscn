@@ -12,6 +12,7 @@ offset_right = 116.28
 offset_bottom = -63.2426
 theme = ExtResource("1_pkjfo")
 script = ExtResource("1_gm1uq")
+debug_overlays = null
 
 [node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -27,3 +28,6 @@ width = 44.105
 texture = ExtResource("3_pkjfo")
 texture_mode = 2
 script = ExtResource("4_ofsrv")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

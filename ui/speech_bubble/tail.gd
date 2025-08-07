@@ -11,7 +11,7 @@ func local_rect(o: Node):
 		return local_rect(o.get_mouth())
 	if o.has_method("get_rect"):
 		var r = o.get_rect()
-		var pos = o.global_position - (r.size/2 if o is Sprite2D else Vector2.ZERO)
+		var pos = o.global_position + r.position
 		return Rect2(to_local(pos), r.size)
 	else:
 		print("not implemented :(") #FIXME?

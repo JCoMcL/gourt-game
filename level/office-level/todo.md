@@ -1,8 +1,8 @@
 x:done, -:underway
 - [ ] Opening Cutscene
 - [ ] Death Animation
-- [ ] Annotated Animated Sprite2D
 - [ ] Traverse spike floor
+- [ ] Annotated Animated Sprite2D
 -- [ ] Proper item holding for animations
 -- [ ] Correctly position sunglasses
 - [-] Rigidbody Interaction

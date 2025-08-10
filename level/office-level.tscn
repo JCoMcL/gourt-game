@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
-[ext_resource type="PackedScene" path="res://props/words.tscn" id="14_rh3h7"]
+[ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
 [ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="15_1axx8"]
 
@@ -147,15 +147,6 @@ foot_friend = NodePath("../Gourt0")
 script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
-
-[node name="WaterCooler" parent="." instance=ExtResource("10_1slrw")]
-position = Vector2(-1275, -1718)
-
-[node name="WaterCooler2" parent="." instance=ExtResource("10_1slrw")]
-position = Vector2(-1275, -1718)
-
-[node name="WaterCooler3" parent="." instance=ExtResource("10_1slrw")]
-position = Vector2(-1275, -1718)
 
 [node name="Gourt Stack2" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 position = Vector2(388, 520)

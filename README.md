@@ -17,6 +17,12 @@ twitch integtation
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
 
+[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./goon.gd)
+
+[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./goon.gd)
+
+[` print(s) #TODO`](./goon.gd)
+
 [` return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor`](./tools/yute.gd)
 
 [` var text_size = text_line.get_size() * 1.02 #FIXME calculation is slightly undersized.`](./ui/speech_bubble/speech_bubble.gd)
@@ -24,10 +30,6 @@ twitch integtation
 [` r.position = global_position #TODO getting our own global rect reliably is more steps than this`](./ui/speech_bubble/speech_bubble.gd)
 
 [` print("not implemented  (") #FIXME?`](./ui/speech_bubble/tail.gd)
-
-[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./goon.gd)
-
-[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./goon.gd)
 
 [` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
 
@@ -37,7 +39,7 @@ twitch integtation
 
 [` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
 
-[` player_character. _interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
+[` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
 
 [` print("Goodbye World!") #TODO actual game-over`](./player.gd)
 

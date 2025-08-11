@@ -1,11 +1,12 @@
 @icon("res://ui/cursor/cursor.png")
-extends Node
+extends CanvasItem
 class_name Cursor
 
 @export_group("Atlas Properties")
 @export var passive_spritesheet: Texture2D
 @export var region_size = 64
-@export var anchor_point = Vector2i(16,16)
+@export var anchor_point_offset = 16
+var anchor_point = Vector2i(anchor_point_offset, anchor_point_offset)
 
 @export_group("Settings")
 @export var frametime = 0.5 #seconds
@@ -25,9 +26,7 @@ func new_atlas_texture(atlas: Texture2D) -> AtlasTexture:
 var tex: AtlasTexture
 func _ready():
 	tex = new_atlas_texture(passive_spritesheet)
-
-	assert(get_xy() == other_get_xy())
-
+	angle = angle
 	update_cursor()
 
 func update_cursor():
@@ -35,12 +34,6 @@ func update_cursor():
 	Input.set_custom_mouse_cursor(tex,0,anchor_point)
 
 func get_xy() -> Vector2i:
-	return Vector2i(
-		tex.region.position.x / tex.region.size.x,
-		tex.region.position.x / tex.region.size.y
-	)
-
-func other_get_xy() -> Vector2i:
 	return Vector2i(
 		tex.region.position / tex.region.size
 	)
@@ -63,9 +56,30 @@ func add_xy(x, y):
 	set_xy(xy.x + x, xy.y + y)
 
 var frame_time_acc = 0
+var angle_index = 0
 func _process(delta):
 	frame_time_acc += delta
 	if frame_time_acc >= frametime:
 		frame_time_acc -= frametime
 		add_xy(0,1)
+		print(get_xy())
+		update_cursor()
+
+	angle = get_viewport().get_visible_rect().get_center().angle_to_point(get_viewport().get_mouse_position())
+	var _angle_index = int(angle * 12 / TAU)
+	if _angle_index != angle_index:
+		set_xy(_angle_index, null)
+		angle_index = _angle_index
+
+		var w = region_size
+		var o = anchor_point_offset
+		match angle_index:
+			0,1,2:
+				anchor_point = Vector2i(w-o, w-o)
+			3,4,5:
+				anchor_point = Vector2i(o, w-o) #what's this?
+			6,7,8:
+				anchor_point = Vector2i(o, o)
+			9,10,11:
+				anchor_point = Vector2i(w-o, o)
 		update_cursor()

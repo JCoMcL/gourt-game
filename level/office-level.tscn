@@ -54,13 +54,14 @@ radius = 33.1361
 radius = 26.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_twwvs"]
-noise_type = 4
-frequency = 0.0086
+noise_type = 3
+seed = 2
+frequency = 0.0009
 metadata/_preview_in_3d_space_ = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1axx8"]
+seamless = true
 bump_strength = 6.4
-normalize = false
 noise = SubResource("FastNoiseLite_twwvs")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1axx8"]
@@ -68,7 +69,7 @@ shader = ExtResource("16_twwvs")
 shader_parameter/factor = 1.0
 shader_parameter/pixel_offset = Vector2(0, 0)
 shader_parameter/noise = SubResource("NoiseTexture2D_1axx8")
-shader_parameter/noise_influence = 0.165
+shader_parameter/noise_influence = 0.145
 
 [node name="Node2D" type="Node2D"]
 

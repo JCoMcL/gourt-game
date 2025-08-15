@@ -85,5 +85,12 @@ func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 func percent_chance(i):
 	return rng.randf() * 100 < i
 
-func cointoss():
+func cointoss() -> bool:
 	return randf() < 0.5
+
+func randf_exp():
+	return rng.randf() ** 2
+
+func pick_random_exp(a: Array):
+	## each successive element is less likely to be picked
+	return a[ int((1.0 - randf_exp()) * a.size()) ]

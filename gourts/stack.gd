@@ -36,7 +36,7 @@ func unleash_children():
 	var p = get_parent()
 	for c in get_children():
 		c.reparent.call_deferred(p)
-	queue_free()
+	queue_free.call_deferred()
 
 func _enter_tree() -> void:
 	if not Engine.is_editor_hint():

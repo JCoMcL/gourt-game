@@ -57,6 +57,14 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 
 # --- nodes ---
 
+func get_level_container(from: Node) -> Node:
+	if from is LevelContainer:
+		return from
+	if from.get_parent():
+		return get_level_container(from.get_parent())
+	else:
+		return null
+
 func find_node_by_name(root: Node, target_name: String) -> Node:
 	if root.name == target_name:
 		return root
@@ -85,5 +93,12 @@ func triangular_distribution(lower: float = -1.0, upper: float = 1.0) -> float:
 func percent_chance(i):
 	return rng.randf() * 100 < i
 
-func cointoss():
+func cointoss() -> bool:
 	return randf() < 0.5
+
+func randf_exp():
+	return rng.randf() ** 2
+
+func pick_random_exp(a: Array):
+	## each successive element is less likely to be picked
+	return a[ int((randf_exp()) * a.size()) ]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Guort Game"
-run/main_scene="uid://b57lobk2dccaj"
+run/main_scene="uid://bp7w0rbvscf1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.png"
 

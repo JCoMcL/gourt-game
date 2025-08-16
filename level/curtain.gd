@@ -17,11 +17,11 @@ func new_tween() -> Tween:
 	current_tween = create_tween()
 	return current_tween
 
-func close(specific_duration = duration):
-	new_tween().tween_method(set_openness, get_openness(), 0.0, specific_duration * get_openness())
-func open(specific_duration = duration):
-	new_tween().tween_method(set_openness, get_openness(), 1.0, specific_duration* (1.0 - get_openness()))
-
-func _ready():
-	set_openness(0.0)
-	open(1)
+func close(specific_duration = duration) -> Tween:
+	var t = new_tween()
+	t.tween_method(set_openness, get_openness(), 0.0, specific_duration * get_openness())
+	return t
+func open(specific_duration = duration) -> Tween:
+	var t = new_tween()
+	t.tween_method(set_openness, get_openness(), 1.0, specific_duration* (1.0 - get_openness()))
+	return t

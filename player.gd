@@ -14,8 +14,8 @@ class_name Master #TODO: this class should be more generic: player and AI should
 @export_range(1, 1000) var zoom_smoothing: float = 100
 @export_range(1, 10) var max_zoom: float = 1
 
-func valid_goon(g: Goon) -> bool:
-	return g and is_instance_valid(g)
+func valid_goon(g) -> bool:
+	return g and is_instance_valid(g) and g is Goon
 
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
@@ -114,6 +114,7 @@ func _input(ev: InputEvent):
 
 func game_over():
 	print("Goodbye World!") #TODO actual game-over
+	Yute.get_level_container(self).reset_level()
 
 func nominate(g: Goon) -> bool:
 	if not g:

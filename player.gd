@@ -113,7 +113,7 @@ func _input(ev: InputEvent):
 		player_character._input(ev)
 
 func game_over():
-	print("Goodbye World!") #TODO actual game-over
+	await get_tree().create_timer(1).timeout
 	Yute.get_level_container(self).reset_level()
 
 func nominate(a: Actor) -> bool:

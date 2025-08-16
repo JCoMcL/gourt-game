@@ -271,6 +271,8 @@ func _physics_process(delta: float) -> void:
 
 	velocity_before_move = velocity
 	move_and_slide()
+	if is_on_floor():
+		angular_velocity = 0
 
 	for i in range(get_slide_collision_count()):
 		var k = get_slide_collision(i)
@@ -278,8 +280,6 @@ func _physics_process(delta: float) -> void:
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
 			collide_with_rigidbody(k, delta)
-	if is_on_floor():
-		angular_velocity = 0
 
 const IDLE = "I_"
 const ACTIVE = "A_"

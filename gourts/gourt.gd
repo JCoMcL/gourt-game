@@ -62,6 +62,14 @@ func die():
 	if head_friend:
 		head_friend.foot_friend = null
 		head_friend = null
+	$DeathSFX.play()
+	auto_animate = false
+	FACE.play("A_lifeless")
+	FACE.set_frame_and_progress(
+		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count("A_lifeless") ),
+		0
+	)
+	BODY.play("A_restive")
 
 
 func command(c: Commands) -> void:

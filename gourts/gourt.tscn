@@ -781,7 +781,7 @@ shape = SubResource("CapsuleShape2D_q10vy")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ny44")
-animation = &"A_explosive_2"
+animation = &"I_pensive"
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 sprite_frames = SubResource("SpriteFrames_lri5v")

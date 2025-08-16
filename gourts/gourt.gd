@@ -18,7 +18,7 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
 
-var angular_velocity = 0
+var angular_velocity: float = 0
 
 func identify(lines = []):
 	super([
@@ -66,33 +66,6 @@ func abdicate(nominee: Goon = null) -> bool:
 	if head_friend and master.nominate(head_friend):
 		return true
 	return master.nominate(null)
-
-func die():
-	collision_layer = 0
-	collision_mask = 0
-	walk_target = 0
-	abdicate()
-	if foot_friend:
-		foot_friend.head_friend = null #BM1
-		foot_friend = null
-	if head_friend:
-		head_friend.foot_friend = null
-		head_friend = null
-
-	# Animation
-	auto_animate = false
-	face_anim="A_lifeless"
-	body_anim=fall_anim
-	FACE.play(face_anim)
-	FACE.set_frame_and_progress(
-		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count(face_anim) ),
-		0
-	)
-	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
-	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
-	angular_velocity += Yute.triangular_distribution(-5,5)
-
-	$DeathSFX.play()
 
 func yeetonate():
 	velocity = Vector2(Yute.triangular_distribution() * 320, Yute.triangular_distribution(-2,-3) * 20)
@@ -305,6 +278,8 @@ func _physics_process(delta: float) -> void:
 			yeetonate()
 		if k.get_collider() is RigidBody2D:
 			collide_with_rigidbody(k, delta)
+	if is_on_floor():
+		angular_velocity = 0
 
 const IDLE = "I_"
 const ACTIVE = "A_"
@@ -337,7 +312,7 @@ func animate(delta: float):
 		set_facing(foot_friend.facing)
 
 	if velocity.y > 100: #falling
-		angular_velocity += 1 * delta * sign(angular_velocity)
+		angular_velocity += 1 * delta * sign(-velocity.x if angular_velocity == 0 else angular_velocity)
 		if Yute.percent_chance(velocity.y / 100):
 			BODY.play(fall_anim)
 	elif walk_target != 0:
@@ -347,9 +322,35 @@ func animate(delta: float):
 		BODY.play(body_anim)
 		FACE.play(face_anim)
 
+func die():
+	collision_layer = 0
+	collision_mask = 0
+	walk_target = 0
+	abdicate()
+	if foot_friend:
+		foot_friend.head_friend = null #BM1
+		foot_friend = null
+	if head_friend:
+		head_friend.foot_friend = null
+		head_friend = null
+
+	# Animation
+	auto_animate = false
+	face_anim="A_lifeless"
+	body_anim=fall_anim
+	FACE.play(face_anim)
+	FACE.set_frame_and_progress(
+		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count(face_anim) ),
+		0
+	)
+	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
+	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
+	angular_velocity += Yute.triangular_distribution(-5,5)
+
+	$DeathSFX.play()
+
 func _process(delta: float) -> void:
-	if foot_friend or head_friend:
-		angular_velocity = 0
+	if foot_friend or head_friend or is_on_floor():
 		BODY.rotation = 0
 	else:
 		BODY.rotation += angular_velocity * delta

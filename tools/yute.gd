@@ -101,4 +101,4 @@ func randf_exp():
 
 func pick_random_exp(a: Array):
 	## each successive element is less likely to be picked
-	return a[ int((1.0 - randf_exp()) * a.size()) ]
+	return a[ int((randf_exp()) * a.size()) ]

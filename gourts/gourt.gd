@@ -11,6 +11,8 @@ extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if w
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
 
+var angular_velocity = 0
+
 func identify(lines = []):
 	super([
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
@@ -62,14 +64,21 @@ func die():
 	if head_friend:
 		head_friend.foot_friend = null
 		head_friend = null
-	$DeathSFX.play()
+
+	# Animation
 	auto_animate = false
-	FACE.play("A_lifeless")
+	face_anim="A_lifeless"
+	body_anim=fall_anim
+	FACE.play(face_anim)
 	FACE.set_frame_and_progress(
-		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count("A_lifeless") ),
+		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count(face_anim) ),
 		0
 	)
-	BODY.play("A_restive")
+	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
+	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
+	angular_velocity += Yute.triangular_distribution(-5,5)
+
+	$DeathSFX.play()
 
 
 func command(c: Commands) -> void:
@@ -240,24 +249,29 @@ func get_animations_of_type(body_part: AnimatedSprite2D, prefix: String):
 
 var body_anim: String
 var face_anim: String
+var fall_anim: String
 func _ready():
 	body_anim = get_animations_of_type(BODY, IDLE).pick_random()
 	face_anim = get_animations_of_type(FACE, IDLE).pick_random()
+	fall_anim = get_animations_of_type(BODY, "A_restive").pick_random()
 	BODY.animation_finished.connect(resume_auto_animate)
 
 var auto_animate = true
 func resume_auto_animate():
 	auto_animate = true
 
-func animate():
+func animate(delta: float):
+	BODY.visible = true
+	FACE.visible = true
 	z_index = Gourtilities.foot_count(self) + 1 #render gourts ontop of foot friends
 
 	if foot_friend and abs(velocity.x) > 100 and Yute.percent_chance(abs(velocity.x) / 50):
 		set_facing(foot_friend.facing)
 
 	if velocity.y > 100: #falling
+		angular_velocity += 1 * delta * sign(angular_velocity)
 		if Yute.percent_chance(velocity.y / 100):
-			BODY.play("A_restive")
+			BODY.play(fall_anim)
 	elif walk_target != 0:
 		BODY.play("A_transportative")
 		set_facing(Direction.get_x(walk_target))
@@ -266,8 +280,14 @@ func animate():
 		FACE.play(face_anim)
 
 func _process(delta: float) -> void:
+	if foot_friend or head_friend:
+		angular_velocity = 0
+		BODY.rotation = 0
+	else:
+		BODY.rotation += angular_velocity * delta
+
 	if auto_animate:
-		animate()
+		animate(delta)
 
 func _input(ev: InputEvent) -> void:
 	super(ev)

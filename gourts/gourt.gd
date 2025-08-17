@@ -18,6 +18,8 @@ extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
 
+var angular_velocity: float = 0
+
 func identify(lines = []):
 	super([
 		"My Head Friend: %s" % head_friend.name if head_friend else "",
@@ -64,18 +66,6 @@ func abdicate(nominee: Goon = null) -> bool:
 	if head_friend and master.nominate(head_friend):
 		return true
 	return master.nominate(null)
-
-func die():
-	collision_layer = 0
-	collision_mask = 0
-	walk_target = 0
-	abdicate()
-	if foot_friend:
-		foot_friend.head_friend = null #BM1
-		foot_friend = null
-	if head_friend:
-		head_friend.foot_friend = null
-		head_friend = null
 
 func yeetonate():
 	velocity = Vector2(Yute.triangular_distribution() * 320, Yute.triangular_distribution(-2,-3) * 20)
@@ -281,6 +271,8 @@ func _physics_process(delta: float) -> void:
 
 	velocity_before_move = velocity
 	move_and_slide()
+	if is_on_floor():
+		angular_velocity = 0
 
 	for i in range(get_slide_collision_count()):
 		var k = get_slide_collision(i)
@@ -300,24 +292,29 @@ func get_animations_of_type(body_part: AnimatedSprite2D, prefix: String):
 
 var body_anim: String
 var face_anim: String
+var fall_anim: String
 func _ready():
 	body_anim = get_animations_of_type(BODY, IDLE).pick_random()
 	face_anim = get_animations_of_type(FACE, IDLE).pick_random()
+	fall_anim = get_animations_of_type(BODY, "A_restive").pick_random()
 	BODY.animation_finished.connect(resume_auto_animate)
 
 var auto_animate = true
 func resume_auto_animate():
 	auto_animate = true
 
-func animate():
+func animate(delta: float):
+	BODY.visible = true
+	FACE.visible = true
 	z_index = Gourtilities.foot_count(self) + 1 #render gourts ontop of foot friends
 
 	if foot_friend and abs(velocity.x) > 100 and Yute.percent_chance(abs(velocity.x) / 50):
 		set_facing(foot_friend.facing)
 
 	if velocity.y > 100: #falling
+		angular_velocity += 1 * delta * sign(-velocity.x if angular_velocity == 0 else angular_velocity)
 		if Yute.percent_chance(velocity.y / 100):
-			BODY.play("A_restive")
+			BODY.play(fall_anim)
 	elif walk_target != 0:
 		BODY.play("A_transportative")
 		set_facing(Direction.get_x(walk_target))
@@ -325,9 +322,41 @@ func animate():
 		BODY.play(body_anim)
 		FACE.play(face_anim)
 
+func die():
+	collision_layer = 0
+	collision_mask = 0
+	walk_target = 0
+	abdicate()
+	if foot_friend:
+		foot_friend.head_friend = null #BM1
+		foot_friend = null
+	if head_friend:
+		head_friend.foot_friend = null
+		head_friend = null
+
+	# Animation
+	auto_animate = false
+	face_anim="A_lifeless"
+	body_anim=fall_anim
+	FACE.play(face_anim)
+	FACE.set_frame_and_progress(
+		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count(face_anim) ),
+		0
+	)
+	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
+	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
+	angular_velocity += Yute.triangular_distribution(-5,5)
+
+	$DeathSFX.play()
+
 func _process(delta: float) -> void:
+	if foot_friend or head_friend or is_on_floor():
+		BODY.rotation = 0
+	else:
+		BODY.rotation += angular_velocity * delta
+
 	if auto_animate:
-		animate()
+		animate(delta)
 
 func _input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("enter door"):

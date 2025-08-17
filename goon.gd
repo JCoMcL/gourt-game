@@ -2,10 +2,14 @@ class_name Goon
 extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
 class Commands:
-	var walk: float
+	var walk: float #only used by them pesky gourts!!! 
+	var type: String
+	var params: Dictionary
 	# and obviously whatever else we end up needing
 
 var bounds_size = 60 #TODO this is the gourt's size, and it's a guess
+var command_queue: Array[Commands] = []
+
 func get_rect() -> Rect2:
 	## a Rect2 representing the boundary of the goon in local coordinates
 	var r = get_global_rect()
@@ -41,8 +45,13 @@ func _input_event(viewport: Node, ev: InputEvent, shape_idx: int):
 	if ev.is_action_pressed("probe"):
 		identify()
 
-func command(commands: Commands) -> void:
+func command(commands: Commands) -> void: #TODO make the parametric caommand the default command
 	pass
+
+func command_parametrically(cmd_type: String, params: Dictionary = {}):
+	command_queue.append(Commands.new())
+	command_queue[-1].type = cmd_type
+	command_queue[-1].params = params
 
 var master: Master
 func under_new_management(m: Master):

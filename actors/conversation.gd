@@ -40,7 +40,7 @@ func display_line():
 		speech_bubble.on_done_showing.disconnect(display_line)
 		speech_bubble.auto_expire = true
 
-func _ready():
+func activate():
 	if lines.size() > 0:
 		display_line()
 	else:

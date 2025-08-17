@@ -1,6 +1,8 @@
-[gd_scene load_steps=21 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=26 format=4 uid="uid://b57lobk2dccaj"]
 
+[ext_resource type="Script" uid="uid://jvh3sckyc6px" path="res://scenario.gd" id="1_twwvs"]
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
+[ext_resource type="Script" uid="uid://duakrhov1677n" path="res://scenariostep.gd" id="2_1axx8"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_2sgh0"]
@@ -15,6 +17,35 @@
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
 [ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="15_1axx8"]
+
+[sub_resource type="Resource" id="Resource_hed7g"]
+script = ExtResource("2_1axx8")
+action = 1
+target = NodePath("Conversation")
+params = {
+"position": Vector2(4698, -283),
+"type": "walk_to"
+}
+metadata/_custom_type_script = "uid://duakrhov1677n"
+
+[sub_resource type="Resource" id="Resource_1axx8"]
+script = ExtResource("2_1axx8")
+action = 3
+target = NodePath("")
+params = {
+"duration": 20
+}
+metadata/_custom_type_script = "uid://duakrhov1677n"
+
+[sub_resource type="Resource" id="Resource_4gsd2"]
+script = ExtResource("2_1axx8")
+action = 0
+target = NodePath("Inspectors")
+params = {
+"position": Vector2(4698, -283),
+"type": "walk_to"
+}
+metadata/_custom_type_script = "uid://duakrhov1677n"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -53,6 +84,8 @@ radius = 33.1361
 radius = 26.0
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_twwvs")
+steps = Array[ExtResource("2_1axx8")]([SubResource("Resource_hed7g"), SubResource("Resource_1axx8"), SubResource("Resource_4gsd2")])
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
@@ -108,7 +141,7 @@ texture = ExtResource("11_6o0x5")
 position = Vector2(-2381, -1886)
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(-332, -1548)
+position = Vector2(1268, 206)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -245,11 +278,15 @@ scale = Vector2(-6.09284, 4.20244)
 position = Vector2(-12, 135)
 scale = Vector2(-10.0539, 2.93887)
 
-[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
-position = Vector2(1689, 42)
-
 [node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
 position = Vector2(2203, 49)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
+position = Vector2(1691, 36)
+collision_layer = 2
+collision_mask = 5
 
 [node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
 position = Vector2(1913, -29)

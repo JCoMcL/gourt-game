@@ -3,14 +3,9 @@ class_name Actor
 
 var active_command: Goon.Commands = null
 
-@export var speed = 300.0
-@export var gravity = 900.0
 @export var social_distance = 20.0
-@export var facing = 0
 
 var target
-
-enum Direction {LEFT, RIGHT}
 
 func get_mouth():
 	return get_node("Sprite2D/Handle/Speak Hole")
@@ -36,15 +31,7 @@ func move_to_target():
 	if t_facing != facing:
 		flip()
 		facing = t_facing
-	velocity.x = speed * direction
-
-func die():
-	collision_layer = 0
-	collision_mask = 0
-	velocity = Vector2.ZERO
-
-func flip():
-	transform.x *= -1
+	velocity.x = walk_speed * direction
 
 func execute(command: Goon.Commands):
 	print("Executing command of type: %s" % command.type)
@@ -59,11 +46,6 @@ func execute(command: Goon.Commands):
 			pass
 
 func _physics_process(delta):
-	velocity.y += gravity * delta
 	if target:
 		move_to_target()
-	for i in range(get_slide_collision_count()):
-		var k = get_slide_collision(i)
-		if is_special_collision(k):
-			die()
-	move_and_slide()
+	super(delta)

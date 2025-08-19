@@ -13,6 +13,11 @@ func get_mouth():
 func is_special_collision(k: KinematicCollision2D) -> bool:
 	return PhysicsServer2D.body_get_collision_layer(k.get_collider_rid()) & Clision.layers["special solid"]
 
+func exit_stage_left():
+	target = Vector2(-INF, 0)
+func exit_stage_right():
+	target = Vector2(INF, 0)
+
 func _process(delta):
 	if command_queue.size() > 0:
 		print("Processing command queue: %d commands" % command_queue.size())

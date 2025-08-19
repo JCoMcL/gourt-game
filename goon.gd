@@ -10,7 +10,7 @@ extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be rew
 @export var mass = 20
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 
-var walk_target: float: # where we walkin' as a propertion of our speed
+var walk_target: float: # where we walkin' as a proportion of our speed
 	set(f):
 		walk_target = clampf(f, -1, 1)
 
@@ -44,7 +44,7 @@ func set_facing(d: int) -> void:
 
 func die():
 	velocity.x += Yute.triangular_distribution() * 320
-	velocity.y = Yute.triangular_distribution(-2,-3) * 20
+	velocity.y = Yute.triangular_distribution(-2,-3) * 40
 	collision_layer = 0
 	collision_mask = 0
 	walk_target = 0

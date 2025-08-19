@@ -18,7 +18,7 @@ class Line:
 	Line.new("We'll need to bring this finding to the owner the building at once.", actors[0]),
 	Line.new("The Boss. His office is that way.", actors[1]),
 	Line.new("Thank you for your cooperation", actors[0]),
-	actors[1].die
+	actors[0].exit_stage_right
 ]
 
 var counter = 0

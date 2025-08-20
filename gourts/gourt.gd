@@ -81,13 +81,6 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 		identify(["just stacked to %s" % result.collider.name])
 		Gourtilities.stack(self, result.collider)
 
-func try_enter_door():
-	var result = Clision.get_objects_at(global_position, "door")
-	if result.size() == 0:
-		return
-
-	result[0].interact(self)
-
 func interact(operator: Node) -> bool:
 	var o = get_equipped_item()
 	if o:
@@ -182,9 +175,6 @@ func move_equipment(direction: int, equipment: Node = null) -> Node:
 			if foot_friend:
 				equipment.interact(foot_friend)
 	return equipment
-
-func is_special_collision(k: KinematicCollision2D) -> bool:
-	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
 
 func apply_force_recursive_upwards(force: Vector2, factor=1.0, label=""):
 	force *= factor

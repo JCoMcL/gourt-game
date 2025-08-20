@@ -58,6 +58,14 @@ func identify(lines = []):
 	] + lines:
 		if s:
 			print(s)
+
+func try_enter_door():
+	var result = Clision.get_objects_at(global_position, "door")
+	if result.size() == 0:
+		return
+
+	result[0].interact(self)
+
 # --- Inter Actions
 
 func _interact(what: Node, where: Vector2) -> bool:

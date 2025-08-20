@@ -19,24 +19,24 @@ func exit_stage_right():
 	target = Vector2(INF, 0)
 
 func _process(delta):
+	set_facing(Direction.get_x(velocity.x, 5))
 	if command_queue.size() > 0:
 		print("Processing command queue: %d commands" % command_queue.size())
 		if !active_command:
 			active_command = command_queue.pop_front()
 			execute(active_command)
 
+func die():
+	target = null
+	super()
+
 func move_to_target():
 	var dx = target.x - global_position.x
 	if abs(dx) < social_distance:
-		velocity.x = 0
 		target = null
 		return
-	var direction = sign(dx)
-	var t_facing = Direction.RIGHT if direction > 0 else Direction.LEFT
-	if t_facing != facing:
-		flip()
-		facing = t_facing
-	velocity.x = walk_speed * direction
+
+	walk_target = dx
 
 func execute(command: Goon.Commands):
 	print("Executing command of type: %s" % command.type)

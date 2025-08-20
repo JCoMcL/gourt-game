@@ -235,7 +235,6 @@ func _physics_process(delta: float) -> void:
 		scan_for_perch()
 
 	super(delta) #performs move_and_slide
-
 	if is_on_floor():
 		angular_velocity = 0
 

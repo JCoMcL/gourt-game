@@ -1,44 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdheulpodhk4e"]
+[gd_scene load_steps=5 format=3 uid="uid://cdheulpodhk4e"]
 
-[ext_resource type="Script" uid="uid://c2yyp1lfm34fi" path="res://actors/handle.gd" id="2_3yob7"]
-[ext_resource type="Script" uid="uid://bfvkofduhcbjk" path="res://actors/actor.gd" id="2_fnw01"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="1_q6xjm"]
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="2_r5cny"]
 [ext_resource type="Texture2D" uid="uid://4l70h00uyex4" path="res://actors/cast/inspectors.png" id="3_fnw01"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhdj8"]
-shader = ExtResource("2_r5cny")
-shader_parameter/grow = 0.0
-shader_parameter/handle = Vector2(0, 0)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3yob7"]
+resource_local_to_scene = true
 shader = ExtResource("2_r5cny")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5cny"]
-size = Vector2(346, 580)
+[node name="Inspectors" instance=ExtResource("1_q6xjm")]
+material = SubResource("ShaderMaterial_3yob7")
 
-[node name="Inspectors" type="CharacterBody2D"]
-material = SubResource("ShaderMaterial_qhdj8")
-script = ExtResource("2_fnw01")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_3yob7")
 texture = ExtResource("3_fnw01")
 
-[node name="Handle" type="Node2D" parent="Sprite2D"]
+[node name="Handle" parent="Sprite2D" index="0"]
 position = Vector2(0, -310)
-script = ExtResource("2_3yob7")
-enabled = true
 
-[node name="Speak Hole" type="Control" parent="Sprite2D/Handle"]
-layout_mode = 3
-anchors_preset = 0
+[node name="Speak Hole" parent="Sprite2D/Handle" index="0"]
 offset_left = 33.0
-offset_top = 33.5
+offset_top = 49.0
 offset_right = 80.53
-offset_bottom = 102.69
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-5, 2)
-shape = SubResource("RectangleShape2D_r5cny")
+offset_bottom = 118.19

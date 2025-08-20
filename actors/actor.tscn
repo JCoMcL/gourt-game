@@ -6,16 +6,19 @@
 [ext_resource type="Script" uid="uid://c2yyp1lfm34fi" path="res://actors/handle.gd" id="3_jiomh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4r7ot"]
+resource_local_to_scene = true
 shader = ExtResource("1_0kmga")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4hdp"]
-size = Vector2(187, 583)
+size = Vector2(378, 583)
 
-[node name="Janitor" type="CharacterBody2D"]
+[node name="Actor" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_4r7ot")
 script = ExtResource("3_4r7ot")
+walk_speed = 300
+walk_accel = 15
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4r7ot")
@@ -35,5 +38,4 @@ offset_right = 27.53
 offset_bottom = 90.69
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3.5, 2.5)
 shape = SubResource("RectangleShape2D_y4hdp")

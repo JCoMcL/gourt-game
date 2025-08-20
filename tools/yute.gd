@@ -57,6 +57,14 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 
 # --- nodes ---
 
+func get_level_container(from: Node) -> Node:
+	if from is LevelContainer:
+		return from
+	if from.get_parent():
+		return get_level_container(from.get_parent())
+	else:
+		return null
+
 func find_node_by_name(root: Node, target_name: String) -> Node:
 	if root.name == target_name:
 		return root

@@ -215,6 +215,8 @@ func collide_with_rigidbody(k: KinematicCollision2D, restitution=0.2, force_rati
 	apply_force(-f / Gourtilities.stack_count(self), "rigid reaction" )
 
 func handle_collision(k: KinematicCollision2D):
+	if is_on_floor():
+		angular_velocity = 0
 	super(k)
 	if k.get_collider() is RigidBody2D:
 		collide_with_rigidbody(k)
@@ -235,8 +237,6 @@ func _physics_process(delta: float) -> void:
 		scan_for_perch()
 
 	super(delta) #performs move_and_slide
-	if is_on_floor():
-		angular_velocity = 0
 
 # TODO a lot of this code should be moved into the AnimatedSprite2D
 const IDLE = "I_"
@@ -279,33 +279,6 @@ func animate(delta: float):
 	else:
 		BODY.play(body_anim)
 		FACE.play(face_anim)
-
-func die():
-	collision_layer = 0
-	collision_mask = 0
-	walk_target = 0
-	abdicate()
-	if foot_friend:
-		foot_friend.head_friend = null #BM1
-		foot_friend = null
-	if head_friend:
-		head_friend.foot_friend = null
-		head_friend = null
-
-	# Animation
-	auto_animate = false
-	face_anim="A_lifeless"
-	body_anim=fall_anim
-	FACE.play(face_anim)
-	FACE.set_frame_and_progress(
-		int( (Yute.randf_exp()) * FACE.sprite_frames.get_frame_count(face_anim) ),
-		0
-	)
-	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
-	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
-	angular_velocity += Yute.triangular_distribution(-5,5)
-
-	$DeathSFX.play()
 
 func _process(delta: float) -> void:
 	if foot_friend or head_friend or is_on_floor():

@@ -43,7 +43,7 @@ func set_facing(d: int) -> void:
 # --- Actions ---
 
 func die():
-	velocity.x += Yute.triangular_distribution() * 320
+	velocity.x += Yute.triangular_distribution() * 120
 	velocity.y = Yute.triangular_distribution(-2,-3) * 40
 	collision_layer = 0
 	collision_mask = 0

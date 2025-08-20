@@ -48,8 +48,5 @@ func display_line():
 		display_line()
 
 
-func activate():
-	if lines.size() > 0:
-		display_line()
-	else:
-		print("No lines to display.")
+func _ready():
+	display_line()

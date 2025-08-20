@@ -1,8 +1,6 @@
-[gd_scene load_steps=25 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=24 format=4 uid="uid://b57lobk2dccaj"]
 
-[ext_resource type="Script" uid="uid://jvh3sckyc6px" path="res://scenario.gd" id="1_twwvs"]
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
-[ext_resource type="Script" uid="uid://duakrhov1677n" path="res://scenariostep.gd" id="2_1axx8"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator.png" id="9_2sgh0"]
@@ -13,29 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
 [ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="15_1axx8"]
-
-[sub_resource type="Resource" id="Resource_hed7g"]
-script = ExtResource("2_1axx8")
-action = 1
-target = NodePath("Conversation")
-params = {
-"position": Vector2(4698, -283),
-"type": "walk_to"
-}
-metadata/_custom_type_script = "uid://duakrhov1677n"
-
-[sub_resource type="Resource" id="Resource_1axx8"]
-script = ExtResource("2_1axx8")
-action = 3
-target = NodePath("")
-params = {
-"duration": 20
-}
-metadata/_custom_type_script = "uid://duakrhov1677n"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -73,9 +53,19 @@ radius = 33.1361
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1axx8"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_twwvs")
-steps = Array[ExtResource("2_1axx8")]([SubResource("Resource_hed7g"), SubResource("Resource_1axx8")])
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
@@ -269,11 +259,13 @@ position = Vector2(-12, 135)
 scale = Vector2(-10.0539, 2.93887)
 
 [node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+material = SubResource("ShaderMaterial_twwvs")
 position = Vector2(2203, 49)
 collision_layer = 2
 collision_mask = 5
 
 [node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
+material = SubResource("ShaderMaterial_1axx8")
 position = Vector2(1691, 36)
 collision_layer = 2
 collision_mask = 5

@@ -1,34 +1,34 @@
 extends Camera2D
 class_name Master #TODO: this class should be more generic: player and AI should inheret from it
 
-@export var player_character: Goon:
-	set(g):
-		if valid_goon(player_character):
+@export var player_character: Actor:
+	set(a):
+		if valid_actor(player_character):
 			player_character.under_new_management(null)
-		if valid_goon(g):
-			g.under_new_management(self)
-		player_character = g
+		if valid_actor(a):
+			a.under_new_management(self)
+		player_character = a
 
 @export_range(1, 100) var position_smoothing: float = 10
 @export_range(0, 100) var position_threshold: float = 10
 @export_range(1, 1000) var zoom_smoothing: float = 100
 @export_range(1, 10) var max_zoom: float = 1
 
-func valid_goon(g: Goon) -> bool:
-	return g and is_instance_valid(g)
+func valid_actor(a: Actor) -> bool:
+	return a and is_instance_valid(a)
 
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
 	#TODO how does input priority work exactly? Does it make this reording unneccesary?
 	get_parent().move_child.call_deferred(self, -1)
-	if valid_goon(player_character):
+	if valid_actor(player_character):
 		player_character.under_new_management(self)
 	else:
-		player_character = Goon.new() #easier than constant null-checking
+		player_character = Actor.new() #easier than constant null-checking
 
-func get_commands(c: Goon.Commands = null) -> Goon.Commands:
+func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 	if not c:
-		c = Goon.Commands.new()
+		c = Actor.Commands.new()
 	c.walk = Input.get_axis("go left","go right")
 	return c
 
@@ -96,7 +96,7 @@ func try_quick_move_item(ev: InputEvent, direction: int):
 
 
 func _input(ev: InputEvent):
-	#don't consume probe events, let the goon handle them directly
+	#don't consume probe events, let the actor handle them directly
 	if not ev.is_action_pressed("probe"):
 		get_viewport().set_input_as_handled()
 
@@ -109,16 +109,16 @@ func _input(ev: InputEvent):
 		try_quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):
 		try_quick_move_item(ev, Direction.DOWN)
-	elif valid_goon(player_character):
+	elif valid_actor(player_character):
 		player_character._input(ev)
 
 func game_over():
 	print("Goodbye World!") #TODO actual game-over
 
-func nominate(g: Goon) -> bool:
-	if not g:
+func nominate(a: Actor) -> bool:
+	if not a:
 		game_over()
 		player_character = null
 		return false
-	player_character = g
-	return player_character == g
+	player_character = a
+	return player_character == a

@@ -1,5 +1,5 @@
 class_name Gourt
-extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
+extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
 
 @export var head_friend: CharacterBody2D
@@ -38,7 +38,7 @@ func get_global_rect() -> Rect2:
 		self_bounds.size.y *= Gourtilities.foot_count(self)
 		return self_bounds
 
-func abdicate(nominee: Goon = null) -> bool:
+func abdicate(nominee: Actor = null) -> bool:
 	if not master:
 		return false #idk whether it should be true or false, we'll have to see
 	if nominee:

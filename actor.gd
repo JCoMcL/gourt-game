@@ -1,4 +1,4 @@
-class_name Goon
+class_name Actor
 extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
 @export var facing = Direction.LEFT
@@ -13,6 +13,9 @@ extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be rew
 var walk_target: float: # where we walkin' as a proportion of our speed
 	set(f):
 		walk_target = clampf(f, -1, 1)
+var target
+var social_distance = 20.0
+var active_command: Commands = null
 
 # --- Bounds ---
 
@@ -30,6 +33,9 @@ func get_global_rect() -> Rect2:
 		Vector2.ONE * bounds_size * 2
 	)
 
+func get_mouth():
+	return get_node_or_null("Sprite2D/Handle/Speak Hole")
+
 # --- Direction ---
 
 func flip() -> void:
@@ -43,6 +49,7 @@ func set_facing(d: int) -> void:
 # --- Actions ---
 
 func die():
+	target = null
 	velocity.x += Yute.triangular_distribution() * 120
 	velocity.y = Yute.triangular_distribution(-2,-3) * 40
 	collision_layer = 0
@@ -66,6 +73,19 @@ func try_enter_door():
 
 	result[0].interact(self)
 
+func move_to_target():
+	var dx = target.x - global_position.x
+	if abs(dx) < social_distance:
+		target = null
+		return
+
+	walk_target = dx
+
+func exit_stage_left():
+	target = Vector2(-INF, 0)
+func exit_stage_right():
+	target = Vector2(INF, 0)
+
 # --- Inter Actions
 
 func _interact(what: Node, where: Vector2) -> bool:
@@ -75,12 +95,8 @@ func _interact(what: Node, where: Vector2) -> bool:
 
 # --- Commands ---
 
-class Commands:
+class Commands: # Structure containing what to do each frame
 	var walk: float
-	var type: String
-	var params: Dictionary
-
-var command_queue: Array[Commands] = []
 
 func _input(ev: InputEvent): # This is currently needed for interface compliance, but might be expanded to actually do something
 	pass
@@ -89,13 +105,10 @@ func _input_event(viewport: Node, ev: InputEvent, shape_idx: int):
 	if ev.is_action_pressed("probe"):
 		identify()
 
-func command(c: Commands) -> void: #TODO make the parametric caommand the default command
+func command(c: Commands) -> void:
 	walk_target = c.walk
-
-func command_parametrically(cmd_type: String, params: Dictionary = {}):
-	command_queue.append(Commands.new())
-	command_queue[-1].type = cmd_type
-	command_queue[-1].params = params
+	if walk_target != 0:
+		target = null #TODO this this pretty naive since commands are issued every frame
 
 var master: Master
 func under_new_management(m: Master):
@@ -140,6 +153,9 @@ func _physics_process(delta: float) -> void:
 	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
 		velocity.x = move_toward(velocity.x, walk_target * walk_speed, walk_accel)
 
+	if target:
+		move_to_target()
+
 	for f in forces:
 		velocity += f.value / mass
 	forces = []
@@ -148,3 +164,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	for i in range(get_slide_collision_count()):
 		handle_collision(get_slide_collision(i))
+
+# --- Apearance ---
+
+func _process(delta):
+	set_facing(Direction.get_x(walk_target))

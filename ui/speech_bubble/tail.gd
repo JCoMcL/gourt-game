@@ -8,7 +8,9 @@ func nearest(f:float, a:float, b:float):
 
 func local_rect(o: Node):
 	if o.has_method("get_mouth"):
-		return local_rect(o.get_mouth())
+		var mouth = o.get_mouth()
+		if mouth:
+			return local_rect(mouth)
 	if o.has_method("get_rect"):
 		var r = o.get_rect()
 		var pos = o.global_position + r.position

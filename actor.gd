@@ -10,6 +10,7 @@ extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be rew
 @export var mass = 20
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 
+var angular_velocity: float = 0
 var walk_target: float: # where we walkin' as a proportion of our speed
 	set(f):
 		walk_target = clampf(f, -1, 1)
@@ -55,6 +56,7 @@ func die():
 	collision_layer = 0
 	collision_mask = 0
 	walk_target = 0
+	angular_velocity += Yute.triangular_distribution(-5,5)
 
 func say(s: String):
 	SpeechTherapist.say(self, s)
@@ -142,6 +144,8 @@ func is_special_collision(k: KinematicCollision2D) -> bool:
 func handle_collision(k: KinematicCollision2D):
 	if is_special_collision(k):
 		die()
+	elif is_on_floor():
+		angular_velocity = 0
 
 var velocity_before_move: Vector2
 func _physics_process(delta: float) -> void:
@@ -169,3 +173,7 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta):
 	set_facing(Direction.get_x(walk_target))
+	if is_on_floor():
+		$Sprite2D.rotation = 0 #FIXME Gourts don't have Sprite2D, really need to unify sprite logic somewhere
+	else:
+		$Sprite2D.rotation += angular_velocity * delta

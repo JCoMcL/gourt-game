@@ -34,7 +34,7 @@ x:done, -:underway
 --- [ ] animations
 --- [ ] emphasis
 --- [ ] talking sfx
--- [-] Movement / action
+-- [x] Movement / action
 - [-] Camera
 -- [x] Focus on player character
 -- [ ] Focus in additional objects

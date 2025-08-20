@@ -11,7 +11,6 @@ extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if w
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
 
-var angular_velocity: float = 0
 
 func identify(lines = []):
 	super([
@@ -76,7 +75,6 @@ func die():
 	)
 	FACE.visible = false # Face will be made visible by main animation loop after shock animation ends
 	BODY.play(get_animations_of_type(BODY, "A_explosive").pick_random())
-	angular_velocity += Yute.triangular_distribution(-5,5)
 
 	$DeathSFX.play()
 
@@ -215,8 +213,6 @@ func collide_with_rigidbody(k: KinematicCollision2D, restitution=0.2, force_rati
 	apply_force(-f / Gourtilities.stack_count(self), "rigid reaction" )
 
 func handle_collision(k: KinematicCollision2D):
-	if is_on_floor():
-		angular_velocity = 0
 	super(k)
 	if k.get_collider() is RigidBody2D:
 		collide_with_rigidbody(k)

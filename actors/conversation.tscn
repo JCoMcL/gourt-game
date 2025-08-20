@@ -5,9 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twwvs"]
 size = Vector2(825, 730)
 
-[node name="Conversation" type="Area2D" node_paths=PackedStringArray("actors")]
+[node name="Conversation" type="Area2D"]
 script = ExtResource("1_h5wgq")
-actors = [null, null]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_twwvs")

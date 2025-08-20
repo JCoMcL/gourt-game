@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=24 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
@@ -51,6 +52,18 @@ radius = 33.1361
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1axx8"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
 
 [node name="Node2D" type="Node2D"]
 
@@ -108,7 +121,7 @@ texture = ExtResource("11_6o0x5")
 position = Vector2(-2381, -1886)
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(-332, -1548)
+position = Vector2(1268, 206)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -245,11 +258,17 @@ scale = Vector2(-6.09284, 4.20244)
 position = Vector2(-12, 135)
 scale = Vector2(-10.0539, 2.93887)
 
-[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
-position = Vector2(1689, 42)
-
 [node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+material = SubResource("ShaderMaterial_twwvs")
 position = Vector2(2203, 49)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
+material = SubResource("ShaderMaterial_1axx8")
+position = Vector2(1691, 36)
+collision_layer = 2
+collision_mask = 5
 
 [node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
 position = Vector2(1913, -29)

@@ -1,19 +1,12 @@
 class_name Gourt
-extends Goon #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
+extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
-@export var facing = Direction.LEFT
 
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
 
-@export_category("motion")
-@export var walk_speed = 200
-@export var walk_accel = 20
-@export var walk_friction = 0.6 #this could be a puzzle mechanic
 @export var snap_distance = 120
 @export var stack_elasticity = 0.5 #FIXME: setting this above 0.5 results in infinte-energy.
-@export var mass = 20
-@export var reach = 180
 
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
@@ -24,17 +17,8 @@ func identify(lines = []):
 		"My Foot Friend: %s" % foot_friend.name if foot_friend else "",
 		"Am at {0} local, {1} global".format([position, global_position]),
 		"I would like to be at %s" % Gourtilities.global_perch_position(foot_friend) if foot_friend else "",
-		"My velocity: %.2v" % velocity,
-		"Forces last physics tick:\n%s" % saved_forces.map(func(f): return f._string()).reduce(func(acc, s): return "%s\n%s" % [acc, s]) if saved_forces else ""
+		"My velocity: %.2v" % velocity
 	] + lines)
-
-func flip() -> void:
-	transform.x *= -1
-
-func set_facing(d: int) -> void:
-	if (d == Direction.LEFT or d == Direction.RIGHT) and d != facing:
-		flip()
-		facing = d
 
 func break_stack(impulse_scale: int = 1) -> void:
 	if foot_friend:
@@ -54,7 +38,7 @@ func get_global_rect() -> Rect2:
 		self_bounds.size.y *= Gourtilities.foot_count(self)
 		return self_bounds
 
-func abdicate(nominee: Goon = null) -> bool:
+func abdicate(nominee: Actor = null) -> bool:
 	if not master:
 		return false #idk whether it should be true or false, we'll have to see
 	if nominee:
@@ -66,10 +50,12 @@ func abdicate(nominee: Goon = null) -> bool:
 	return master.nominate(null)
 
 func die():
-	collision_layer = 0
-	collision_mask = 0
-	walk_target = 0
+	super()
 	abdicate()
+	if head_friend:
+		head_friend.velocity.y = -200
+		head_friend.velocity.x *= 0.6
+
 	if foot_friend:
 		foot_friend.head_friend = null #BM1
 		foot_friend = null
@@ -77,20 +63,13 @@ func die():
 		head_friend.foot_friend = null
 		head_friend = null
 
-func yeetonate():
-	velocity = Vector2(Yute.triangular_distribution() * 320, Yute.triangular_distribution(-2,-3) * 20)
-	if head_friend:
-		head_friend.velocity.y = -200
-		head_friend.velocity.x *= 0.6
-	die()
 
-var walk_target: float
 func command(c: Commands) -> void:
 	if foot_friend:
 		foot_friend.command(c)
 		walk_target = 0
 	else:
-		walk_target = c.walk * walk_speed
+		super(c)
 
 func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds one match, so fails with overlapping gourts. Perhaps intersect_point would be better?
 	var result = get_world_2d().direct_space_state.intersect_ray(
@@ -101,13 +80,6 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
 		identify(["just stacked to %s" % result.collider.name])
 		Gourtilities.stack(self, result.collider)
-
-func try_enter_door():
-	var result = Clision.get_objects_at(global_position, "door")
-	if result.size() == 0:
-		return
-
-	result[0].interact(self)
 
 func interact(operator: Node) -> bool:
 	var o = get_equipped_item()
@@ -204,37 +176,13 @@ func move_equipment(direction: int, equipment: Node = null) -> Node:
 				equipment.interact(foot_friend)
 	return equipment
 
-func is_special_collision(k: KinematicCollision2D) -> bool:
-	return PhysicsServer2D.body_get_collision_layer( k.get_collider_rid() ) & Clision.layers["special solid"]
-
-class Force:
-	var value: Vector2
-	var name: String
-	func _init(f, s=""):
-		value=f
-		name= s if s else "unknown"
-
-	func _string():
-		return "%s: %.2v" % [name, value]
-
-var forces = []
-var saved_forces=forces
-func apply_force(force: Vector2, label=""):
-	forces.append(Force.new(force, label))
-
 func apply_force_recursive_upwards(force: Vector2, factor=1.0, label=""):
 	force *= factor
 	apply_force(force, label)
 	if head_friend:
 		head_friend.apply_force_recursive_upwards(force, factor, label)
 
-func apply_friction(factor: Vector2, label="friction"): #FIXME I think this isn't phyiscally accurate
-	var friction = Vector2.ZERO
-	for f in forces:
-		friction += f.value * -factor
-	apply_force(friction, label)
-
-func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=0.2, force_ratio=20):
+func collide_with_rigidbody(k: KinematicCollision2D, restitution=0.2, force_ratio=10):
 	var our_mass = mass * Gourtilities.stack_count(self)
 	var their_mass = k.get_collider().mass
 
@@ -248,12 +196,14 @@ func collide_with_rigidbody(k: KinematicCollision2D, delta, restitution=0.2, for
 	var f = (1+restitution) * relative_velocity_along_normal / (1.0/our_mass + 1.0/their_mass) * k.get_normal()
 
 	k.get_collider().apply_force(f * force_ratio, k.get_position() - k.get_collider().global_position )
-	apply_force(-f * delta / Gourtilities.stack_count(self), "rigid reaction" )
+	apply_force(-f / Gourtilities.stack_count(self), "rigid reaction" )
 
-var velocity_before_move: Vector2
+func handle_collision(k: KinematicCollision2D):
+	super(k)
+	if k.get_collider() is RigidBody2D:
+		collide_with_rigidbody(k)
+
 func _physics_process(delta: float) -> void:
-	apply_force(get_gravity() * delta * mass, "gravity")
-
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
 		var f = Yute.snap_force(velocity, target_offset, delta) * mass;
@@ -268,27 +218,9 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y > 0:
 		scan_for_perch()
 
-	if is_on_floor():
-		apply_friction(Vector2(walk_friction,0))
+	super(delta) #performs move_and_slide
 
-	if walk_target != 0 || is_on_floor(): #this check prevents unwanted drag on airborne guorts
-		velocity.x = move_toward(velocity.x, walk_target, walk_accel)
-
-	for f in forces:
-		velocity += f.value / mass
-	saved_forces=forces
-	forces = []
-
-	velocity_before_move = velocity
-	move_and_slide()
-
-	for i in range(get_slide_collision_count()):
-		var k = get_slide_collision(i)
-		if is_special_collision(k):
-			yeetonate()
-		if k.get_collider() is RigidBody2D:
-			collide_with_rigidbody(k, delta)
-
+# TODO a lot of this code should be moved into the AnimatedSprite2D
 const IDLE = "I_"
 const ACTIVE = "A_"
 func get_animations_of_type(body_part: AnimatedSprite2D, prefix: String):
@@ -330,5 +262,6 @@ func _process(delta: float) -> void:
 		animate()
 
 func _input(ev: InputEvent) -> void:
+	super(ev)
 	if ev.is_action_pressed("enter door"):
 		Gourtilities.call_all(self, func(g): g.try_enter_door())

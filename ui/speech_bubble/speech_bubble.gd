@@ -11,7 +11,7 @@ class_name SpeechBubble
 
 @export var speaker: Node2D
 @export_range(0.0, 1.0) var position_goal_strength = 0.7
-@export_tool_button("Step", "Play") var f = anneal_position
+@export_tool_button("Step", "Play") var f = update_position
 @export var debug_overlays = false
 @export var auto_expire = false:
 	set(value):
@@ -126,8 +126,7 @@ var position_goals = [
 	# not overlapping gourts
 ]
 
-var velocity = Vector2.ZERO
-func update_position(delta):
+func update_position():
 	var target_offset = Vector2.ZERO
 	var total_weight = 0
 	for g in position_goals:
@@ -141,7 +140,7 @@ func update_position(delta):
 
 	position += target_offset * position_goal_strength
 
-func anneal_position(iterations: int = 1, delta=0.1):
+func anneal_position(iterations: int = 1):
 	# FIXME this stopped working and I can't figure out why
 	global_position = speaker.global_position # a good enough hack in the interim
 	#for i in range(iterations):
@@ -151,7 +150,7 @@ func _process(delta: float) -> void:
 	if debug_overlays:
 		queue_redraw()
 	if not Engine.is_editor_hint():
-		update_position(delta)
+		update_position()
 
 func screen_to_world(v):
 	return get_viewport().global_canvas_transform.affine_inverse() * v

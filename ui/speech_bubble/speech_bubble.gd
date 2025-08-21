@@ -12,12 +12,12 @@ class_name SpeechBubble
 @export var speaker: Node2D
 @export_tool_button("Step", "Play") var f = anneal_position
 @export var debug_overlays = false
-@export var auto_expire = true:
+@export var auto_expire = false:
 	set(value):
 		auto_expire = value
 		if auto_expire:
 			on_done_showing.connect(queue_free)
-		else:
+		elif on_done_showing.is_connected(queue_free):
 			on_done_showing.disconnect(queue_free)
 
 @onready var label = $Label
@@ -77,12 +77,11 @@ class Position_Goal:
 	func calculate():
 		return f.call()
 
-var position_goals = [
-	Position_Goal.new(func antigravity():
+# --- Position Goals ---
+func antigravity():
 	return global_position + Vector2.UP * size.y * 3
-	,1),
 
-	Position_Goal.new(func near_speaker():
+func near_speaker():
 	if not speaker:
 		return null
 	var spk = speaker
@@ -93,17 +92,31 @@ var position_goals = [
 
 	var speaker_rect = spk.get_rect()
 	return centred(speaker_rect.position + spk.global_position + Vector2(speaker_rect.size.x/2, 0))
-	,1),
 
-	Position_Goal.new(func on_screen():
+func on_screen():
 	var r = get_rect().grow(32)
 	r.position = global_position #TODO getting our own global rect reliably is more steps than this
 	var screen_rect = Yute.get_viewport_world_rect(self)
 	if screen_rect.encloses(r):
 		return null #goal is satisfied
 	return Yute.nearest_overlapping_position(r, screen_rect)
-	,50)
 
+func keep_ideal_tail_length():
+	var ideal_tail_length = 10
+	# unit vector that points from the tip of the tail to the base
+	var tail_unit_vector = ($Tail.points[0] - $Tail.points[1]).normalized()
+	return (
+		tail_unit_vector * ideal_tail_length # tail vector of ideal length
+		+ $Tail.points[1] # from the tip of the tail
+		- $Tail.points[0] # relative to base of the tail
+		+ global_position # in global coordinates
+	)
+
+var position_goals = [
+	Position_Goal.new(antigravity ,1),
+	#Position_Goal.new(near_speaker ,1),
+	Position_Goal.new(on_screen ,50),
+	Position_Goal.new(keep_ideal_tail_length ,1)
 	# optimal tail length
 	# away from other actors
 	# not overlapping speaker
@@ -149,8 +162,8 @@ var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): re
 func _draw() -> void:
 	if debug_overlays:
 		draw_polyline(
-			Yute.four_corners(speaker.get_rect()).map(func(p):
-			return p + speaker.global_position - global_position
+			Yute.four_corners(Yute.get_global_rect(speaker)).map(func(p):
+			return p - global_position
 			),
 			Color("red")
 		)

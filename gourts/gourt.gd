@@ -220,7 +220,7 @@ func handle_collision(k: KinematicCollision2D):
 func _physics_process(delta: float) -> void:
 	if foot_friend:
 		var target_offset = Gourtilities.global_perch_position(foot_friend) - global_position
-		var f = Yute.snap_force(velocity, target_offset, delta) * mass;
+		var f = Yute.snap_force(velocity, target_offset, delta / Engine.time_scale) * mass # TODO Why do we need to divide by timescale here but nat anywhere else?
 		if target_offset.length() > snap_distance:
 			foot_friend.apply_force(f, "snapback")
 			break_stack()

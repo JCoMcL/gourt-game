@@ -1,6 +1,6 @@
 x:done, -:underway
 - [ ] Opening Cutscene
-- [ ] Death Animation
+- [x] Death Animation
 - [ ] Traverse spike floor
 - [ ] Annotated Animated Sprite2D
 -- [ ] Proper item holding for animations
@@ -34,10 +34,10 @@ x:done, -:underway
 --- [ ] animations
 --- [ ] emphasis
 --- [ ] talking sfx
--- [-] Movement / action
+-- [x] Movement / action
 - [-] Camera
 -- [x] Focus on player character
 -- [ ] Focus in additional objects
 -- [ ] Manual override for cutscenes
 - [ ] Cursor
-- [ ] Game Over
+- [x] Game Over

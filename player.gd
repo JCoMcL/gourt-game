@@ -15,7 +15,7 @@ class_name Master #TODO: this class should be more generic: player and AI should
 @export_range(1, 10) var max_zoom: float = 1
 
 func valid_actor(a: Actor) -> bool:
-	return a and is_instance_valid(a)
+	return a and is_instance_valid(a) and a is Actor
 
 func _ready():
 	#move to bottom of tree to recieve inputs first among siblings.
@@ -113,7 +113,8 @@ func _input(ev: InputEvent):
 		player_character._input(ev)
 
 func game_over():
-	print("Goodbye World!") #TODO actual game-over
+	await get_tree().create_timer(1).timeout
+	Yute.get_level_container(self).reset_level()
 
 func nominate(a: Actor) -> bool:
 	if not a:

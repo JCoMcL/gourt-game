@@ -21,10 +21,10 @@ func get_strict_direction(to: Vector2):
 	return NONE
 
 func get_x(x: float, deadzone=0.0):
-	if absf(x) < deadzone: return NONE
+	if absf(x) <= deadzone: return NONE
 	return RIGHT if x > 0 else LEFT
 func get_y(y: float, deadzone=0.0):
-	if absf(y) < deadzone: return NONE
+	if absf(y) <= deadzone: return NONE
 	return UP if y < 0 else DOWN
 func get_direction(v: Vector2, deadzone=0.0):
 	if absf(v.x) > absf(v.y):

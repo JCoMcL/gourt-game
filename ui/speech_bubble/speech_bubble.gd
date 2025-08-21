@@ -142,8 +142,10 @@ func update_position(delta):
 	position += target_offset * position_goal_strength
 
 func anneal_position(iterations: int = 1, delta=0.1):
-	for i in range(iterations):
-		update_position(delta)
+	# FIXME this stopped working and I can't figure out why
+	global_position = speaker.global_position # a good enough hack in the interim
+	#for i in range(iterations):
+		#update_position(delta)
 
 func _process(delta: float) -> void:
 	if debug_overlays:

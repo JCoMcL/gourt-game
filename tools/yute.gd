@@ -42,7 +42,7 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 		return inner.position
 
 	# return inner's position plus the offset of the furthest vertex from outer
-	var out = four_corners(inner).filter(func(p):
+	var new_pos = four_corners(inner).filter(func(p):
 		return not outer.has_point(p) #only outside points
 	).map(func(v):
 		return get_nearest_point_on_perimeter(outer, v) - v
@@ -50,10 +50,16 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 		return v if v.length_squared() > longest.length_squared() else longest
 	) * 1.01 + inner.position
 
+	if inner.size.x >= outer.size.x:
+		new_pos.x = outer.position.x - (inner.size.x - outer.size.x) / 2
+	if inner.size.y >= outer.size.y:
+		new_pos.y = outer.position.y - (inner.size.y - outer.size.y) / 2
+
 	#test that it works
-	var new_inner = Rect2(out, inner.size)
-	assert(outer.encloses(new_inner))
-	return out
+	var new_inner = Rect2(new_pos, inner.size)
+	assert(outer.encloses(new_inner) or inner.size.x >= outer.size.x or inner.size.y >= outer.size.y)
+
+	return new_pos
 
 # --- nodes ---
 

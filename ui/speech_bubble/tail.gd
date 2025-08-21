@@ -6,22 +6,18 @@ extends Line2D
 func nearest(f:float, a:float, b:float):
 	return a if abs(f-a) < abs(f-b) else b
 
-func local_rect(o: Node):
-	if o.has_method("get_mouth"):
-		var mouth = o.get_mouth()
-		if mouth:
-			return local_rect(mouth)
-	if o.has_method("get_rect"):
-		var r = o.get_rect()
-		var pos = o.global_position + r.position
-		return Rect2(to_local(pos), r.size)
-	else:
-		print("not implemented :(") #FIXME?
+func speaker_local_rect(o: Node) -> Rect2:
+	var mouth = Yute.find_node_by_name(o, "Speak Hole")
+	var r = Yute.get_global_rect(mouth if mouth else o)
+	r.position -= global_position
+	return r
 
 func _process(delta):
+	if not bubble:
+		return
 	if bubble.speaker:
 		set_point_position(1, Yute.get_nearest_point_on_perimeter(
-			local_rect(bubble.speaker),
+			speaker_local_rect(bubble.speaker),
 			to_local(bubble.global_position) + Vector2(bubble.size) * 0.8
 		))
 

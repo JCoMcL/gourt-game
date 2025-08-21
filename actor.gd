@@ -34,9 +34,6 @@ func get_global_rect() -> Rect2:
 		Vector2.ONE * bounds_size * 2
 	)
 
-func get_mouth():
-	return get_node_or_null("Sprite2D/Handle/Speak Hole")
-
 # --- Direction ---
 
 func flip() -> void:

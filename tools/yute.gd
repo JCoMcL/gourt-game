@@ -61,6 +61,20 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 
 	return new_pos
 
+func get_global_rect(o: Node) -> Rect2:
+	if not o:
+		return Rect2(Vector2.ZERO, Vector2.ZERO)
+	if not Engine.is_editor_hint:
+		if o.has_method("get_global_rect") and o is not InstancePlaceholder:
+			return o.get_global_rect()
+		if o.has_method("get_rect"):
+			var r = o.get_rect()
+			r.position += o.global_position
+			return r
+
+	print("not implemented :(")
+	return Rect2(o.global_position, Vector2.ZERO)
+
 # --- nodes ---
 
 func get_level_container(from: Node) -> Node:

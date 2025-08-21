@@ -91,6 +91,10 @@ interact={
 2d_physics/layer_5="door"
 2d_physics/layer_6="interactive"
 
+[physics]
+
+common/physics_interpolation=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

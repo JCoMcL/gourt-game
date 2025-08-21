@@ -10,15 +10,18 @@ class_name SpeechBubble
 			update_size()
 
 @export var speaker: Node2D
+@export_range(0.0, 1.0) var position_goal_strength = 0.7
 @export_tool_button("Step", "Play") var f = anneal_position
 @export var debug_overlays = false
 @export var auto_expire = false:
 	set(value):
 		auto_expire = value
 		if auto_expire:
-			on_done_showing.connect(queue_free)
+			if not on_done_showing.is_connected(queue_free):
+				on_done_showing.connect(queue_free)
 		elif on_done_showing.is_connected(queue_free):
 			on_done_showing.disconnect(queue_free)
+
 
 @onready var label = $Label
 @onready var timer = $Timer
@@ -115,7 +118,7 @@ func keep_ideal_tail_length():
 var position_goals = [
 	Position_Goal.new(antigravity ,1),
 	#Position_Goal.new(near_speaker ,1),
-	Position_Goal.new(on_screen ,50),
+	Position_Goal.new(on_screen ,30),
 	Position_Goal.new(keep_ideal_tail_length ,1)
 	# optimal tail length
 	# away from other actors
@@ -136,16 +139,9 @@ func update_position(delta):
 	if total_weight != 0:
 		target_offset /= total_weight
 
-	velocity += Yute.snap_force(
-		velocity,
-		target_offset,
-		delta,
-		300,
-		0.2
-	)
-	position += velocity * delta
+	position += target_offset * position_goal_strength
 
-func anneal_position(iterations: int = 1, delta=0.5):
+func anneal_position(iterations: int = 1, delta=0.1):
 	for i in range(iterations):
 		update_position(delta)
 

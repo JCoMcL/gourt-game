@@ -1,7 +1,8 @@
 class_name Actor
 extends CharacterBody2D #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
-@export var facing = Direction.LEFT
+enum left_or_right {Left=Direction.LEFT, Right=Direction.RIGHT}
+@export var facing: left_or_right = left_or_right.Left
 @export var reach = 180
 
 @export_category("physics")

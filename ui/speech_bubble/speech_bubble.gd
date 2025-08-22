@@ -11,6 +11,7 @@ class_name SpeechBubble
 
 @export var speaker: Node2D
 @export_range(0.0, 1.0) var position_goal_strength = 0.7
+@export var ideal_tail_length = 70
 @export_tool_button("Step", "Play") var f = update_position
 @export var debug_overlays = false
 @export var auto_expire = false:
@@ -84,6 +85,14 @@ class Position_Goal:
 func antigravity():
 	return global_position + Vector2.UP * size.y * 3
 
+func above():
+	return (
+		Vector2.UP * ideal_tail_length
+		- $Tail.points[0]
+		+ $Tail.points[1]
+		+ global_position
+	)
+
 func near_speaker():
 	if not speaker:
 		return null
@@ -105,7 +114,6 @@ func on_screen():
 	return Yute.nearest_overlapping_position(r, screen_rect)
 
 func keep_ideal_tail_length():
-	var ideal_tail_length = 10
 	# unit vector that points from the tip of the tail to the base
 	var tail_unit_vector = ($Tail.points[0] - $Tail.points[1]).normalized()
 	return (
@@ -115,21 +123,28 @@ func keep_ideal_tail_length():
 		+ global_position # in global coordinates
 	)
 
-var position_goals = [
-	Position_Goal.new(antigravity ,1),
-	#Position_Goal.new(near_speaker ,1),
-	Position_Goal.new(on_screen ,30),
-	Position_Goal.new(keep_ideal_tail_length ,1)
-	# optimal tail length
-	# away from other actors
-	# not overlapping speaker
-	# not overlapping gourts
-]
+func centered_on_tail():
+	return $Tail.points[0] + global_position + Vector2(-size.x/2, size.y)
 
-func update_position():
+func get_position_goals():
+	return [
+		Position_Goal.new(above ,3),
+		Position_Goal.new(antigravity, 0),
+		#Position_Goal.new(near_speaker ,1),
+		Position_Goal.new(on_screen ,30),
+		Position_Goal.new(keep_ideal_tail_length ,2),
+		Position_Goal.new(centered_on_tail, 1)
+		# away from other actors
+		# not overlapping speaker
+		# not overlapping gourts
+	]
+
+func update_position(goal_strength = position_goal_strength):
+	var tail = $Tail
+	tail.update_position()
 	var target_offset = Vector2.ZERO
 	var total_weight = 0
-	for g in position_goals:
+	for g in get_position_goals():
 		var tgt = g.calculate()
 		if tgt is Vector2:
 			target_offset += offset_to(tgt) * g.weight
@@ -138,13 +153,14 @@ func update_position():
 	if total_weight != 0:
 		target_offset /= total_weight
 
-	position += target_offset * position_goal_strength
+	position += target_offset * goal_strength
 
 func anneal_position(iterations: int = 1):
-	# FIXME this stopped working and I can't figure out why
-	global_position = speaker.global_position # a good enough hack in the interim
-	#for i in range(iterations):
-		#update_position(delta)
+	if global_position.distance_squared_to(speaker.global_position) > 2000 ** 2:
+		# saves us from having to anneal with 40+ iteration when the speech bubble spawns really far away
+		global_position = speaker.global_position
+	for i in range(iterations):
+		update_position()
 
 func _process(delta: float) -> void:
 	if debug_overlays:
@@ -165,6 +181,7 @@ func _draw() -> void:
 			Color("red")
 		)
 
+		var position_goals = get_position_goals()
 		for i in range(position_goals.size()):
 			var pg = position_goals[i].calculate()
 			if pg is Vector2:

@@ -16,6 +16,6 @@ func say(speaker: Node2D, words: String) -> SpeechBubble:
 		speaker.add_child(sb)
 		sb.speaker = speaker
 		bubbles[speaker] = sb
-		sb.anneal_position()
+		sb.anneal_position(10)
 		sb.text = words
 	return sb

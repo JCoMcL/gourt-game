@@ -12,7 +12,8 @@ func speaker_local_rect(o: Node) -> Rect2:
 	r.position -= global_position
 	return r
 
-func _process(delta):
+func update_position():
+	assert(position == Vector2.ZERO)
 	if not bubble:
 		return
 	if bubble.speaker:
@@ -25,3 +26,6 @@ func _process(delta):
 		Rect2(Vector2.ZERO, bubble.get_rect().size),
 		get_point_position(1)
 	))
+
+func _process(delta):
+	update_position()

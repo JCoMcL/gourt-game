@@ -35,6 +35,7 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 func _process(delta):
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
 
+func _physics_process(delta: float) -> void:
 	if player_character:
 		player_character.command(get_commands())
 		var track_bounds = player_character.get_global_rect()
@@ -49,6 +50,8 @@ func _process(delta):
 			(error_vectors[0].y - error_vectors[1].y) / view_bounds.size.y
 		) #TODO: this is not 100% correct, you can still see substantuially more with a bigger screen
 		# the goal is to completely abstract out screen size so we never have to worry about it again
+
+		# FIXME smoothing factors don't use delta so smoothing is tick/frame rate dependant
 		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) / position_smoothing
 		zoom = lerp(zoom, Vector2.ONE * zoom_error, 1/zoom_smoothing)
 

@@ -12,9 +12,10 @@ func say(speaker: Node2D, words: String) -> SpeechBubble:
 		sb.add_text(words)
 	else:
 		sb = speech_bubble.instantiate()
+		sb.auto_expire = true
 		speaker.add_child(sb)
 		sb.speaker = speaker
 		bubbles[speaker] = sb
-		sb.anneal_position(50)
+		sb.anneal_position(10)
 		sb.text = words
 	return sb

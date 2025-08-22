@@ -2,7 +2,7 @@
 extends Node
 
 func snap_force(initial:Vector2, direction:Vector2, delta:float, snappiness:float = 300, sharpness:float = 0.3) -> Vector2:
-	return initial.move_toward(direction * sharpness / (delta / Engine.time_scale), snappiness) - initial #TODO refactor
+	return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor
 
 # --- space, shape, and coordinates ---
 
@@ -42,7 +42,7 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 		return inner.position
 
 	# return inner's position plus the offset of the furthest vertex from outer
-	var out = four_corners(inner).filter(func(p):
+	var new_pos = four_corners(inner).filter(func(p):
 		return not outer.has_point(p) #only outside points
 	).map(func(v):
 		return get_nearest_point_on_perimeter(outer, v) - v
@@ -50,10 +50,29 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 		return v if v.length_squared() > longest.length_squared() else longest
 	) * 1.01 + inner.position
 
+	if inner.size.x >= outer.size.x:
+		new_pos.x = outer.position.x - (inner.size.x - outer.size.x) / 2
+	if inner.size.y >= outer.size.y:
+		new_pos.y = outer.position.y - (inner.size.y - outer.size.y) / 2
+
 	#test that it works
-	var new_inner = Rect2(out, inner.size)
-	assert(outer.encloses(new_inner))
-	return out
+	var new_inner = Rect2(new_pos, inner.size)
+	assert(outer.encloses(new_inner) or inner.size.x >= outer.size.x or inner.size.y >= outer.size.y)
+
+	return new_pos
+
+func get_global_rect(o: Node) -> Rect2:
+	if not o:
+		return Rect2(Vector2.ZERO, Vector2.ZERO)
+	if o is not Actor or not Engine.is_editor_hint():
+		if o.has_method("get_global_rect") and o is not InstancePlaceholder:
+			return o.get_global_rect()
+		if o.has_method("get_rect"):
+			var r = o.get_rect()
+			r.position += o.global_position
+			return r
+
+	return Rect2(o.global_position, Vector2.ZERO)
 
 # --- nodes ---
 

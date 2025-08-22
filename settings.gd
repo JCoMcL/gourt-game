@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 var text_speed = 20.0

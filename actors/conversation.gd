@@ -42,11 +42,11 @@ func display_line():
 		else:
 			speech_bubble.reset_text(line.text)
 			speech_bubble.speaker = line.speaker
-		speech_bubble.anneal_position(10)
+		speech_bubble.anneal_position()
 	elif line is Callable:
 		await line.call()
 		display_line()
 
 
 func _ready():
-	display_line()
+	display_line.call_deferred()

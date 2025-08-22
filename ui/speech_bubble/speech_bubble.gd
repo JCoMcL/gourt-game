@@ -10,15 +10,19 @@ class_name SpeechBubble
 			update_size()
 
 @export var speaker: Node2D
-@export_tool_button("Step", "Play") var f = anneal_position
+@export_range(0.0, 1.0) var position_goal_strength = 0.7
+@export var ideal_tail_length = 70
+@export_tool_button("Step", "Play") var f = update_position
 @export var debug_overlays = false
-@export var auto_expire = true:
+@export var auto_expire = false:
 	set(value):
 		auto_expire = value
 		if auto_expire:
-			on_done_showing.connect(queue_free)
-		else:
+			if not on_done_showing.is_connected(queue_free):
+				on_done_showing.connect(queue_free)
+		elif on_done_showing.is_connected(queue_free):
 			on_done_showing.disconnect(queue_free)
+
 
 @onready var label = $Label
 @onready var timer = $Timer
@@ -77,12 +81,19 @@ class Position_Goal:
 	func calculate():
 		return f.call()
 
-var position_goals = [
-	Position_Goal.new(func antigravity():
+# --- Position Goals ---
+func antigravity():
 	return global_position + Vector2.UP * size.y * 3
-	,1),
 
-	Position_Goal.new(func near_speaker():
+func above():
+	return (
+		Vector2.UP * ideal_tail_length
+		- $Tail.points[0]
+		+ $Tail.points[1]
+		+ global_position
+	)
+
+func near_speaker():
 	if not speaker:
 		return null
 	var spk = speaker
@@ -93,28 +104,47 @@ var position_goals = [
 
 	var speaker_rect = spk.get_rect()
 	return centred(speaker_rect.position + spk.global_position + Vector2(speaker_rect.size.x/2, 0))
-	,1),
 
-	Position_Goal.new(func on_screen():
+func on_screen():
 	var r = get_rect().grow(32)
 	r.position = global_position #TODO getting our own global rect reliably is more steps than this
 	var screen_rect = Yute.get_viewport_world_rect(self)
 	if screen_rect.encloses(r):
 		return null #goal is satisfied
 	return Yute.nearest_overlapping_position(r, screen_rect)
-	,50)
 
-	# optimal tail length
-	# away from other actors
-	# not overlapping speaker
-	# not overlapping gourts
-]
+func keep_ideal_tail_length():
+	# unit vector that points from the tip of the tail to the base
+	var tail_unit_vector = ($Tail.points[0] - $Tail.points[1]).normalized()
+	return (
+		tail_unit_vector * ideal_tail_length # tail vector of ideal length
+		+ $Tail.points[1] # from the tip of the tail
+		- $Tail.points[0] # relative to base of the tail
+		+ global_position # in global coordinates
+	)
 
-var velocity = Vector2.ZERO
-func update_position(delta):
+func centered_on_tail():
+	return $Tail.points[0] + global_position + Vector2(-size.x/2, size.y)
+
+func get_position_goals():
+	return [
+		Position_Goal.new(above ,3),
+		Position_Goal.new(antigravity, 0),
+		#Position_Goal.new(near_speaker ,1),
+		Position_Goal.new(on_screen ,30),
+		Position_Goal.new(keep_ideal_tail_length ,2),
+		Position_Goal.new(centered_on_tail, 1)
+		# away from other actors
+		# not overlapping speaker
+		# not overlapping gourts
+	]
+
+func update_position(goal_strength = position_goal_strength):
+	var tail = $Tail
+	tail.update_position()
 	var target_offset = Vector2.ZERO
 	var total_weight = 0
-	for g in position_goals:
+	for g in get_position_goals():
 		var tgt = g.calculate()
 		if tgt is Vector2:
 			target_offset += offset_to(tgt) * g.weight
@@ -123,24 +153,20 @@ func update_position(delta):
 	if total_weight != 0:
 		target_offset /= total_weight
 
-	velocity += Yute.snap_force(
-		velocity,
-		target_offset,
-		delta,
-		300,
-		0.2
-	)
-	position += velocity * delta
+	position += target_offset * goal_strength
 
-func anneal_position(iterations: int = 1, delta=0.5):
+func anneal_position(iterations: int = 1):
+	if global_position.distance_squared_to(speaker.global_position) > 2000 ** 2:
+		# saves us from having to anneal with 40+ iteration when the speech bubble spawns really far away
+		global_position = speaker.global_position
 	for i in range(iterations):
-		update_position(delta)
+		update_position()
 
 func _process(delta: float) -> void:
 	if debug_overlays:
 		queue_redraw()
 	if not Engine.is_editor_hint():
-		update_position(delta)
+		update_position()
 
 func screen_to_world(v):
 	return get_viewport().global_canvas_transform.affine_inverse() * v
@@ -149,12 +175,13 @@ var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): re
 func _draw() -> void:
 	if debug_overlays:
 		draw_polyline(
-			Yute.four_corners(speaker.get_rect()).map(func(p):
-			return p + speaker.global_position - global_position
+			Yute.four_corners(Yute.get_global_rect(speaker)).map(func(p):
+			return p - global_position
 			),
 			Color("red")
 		)
 
+		var position_goals = get_position_goals()
 		for i in range(position_goals.size()):
 			var pg = position_goals[i].calculate()
 			if pg is Vector2:

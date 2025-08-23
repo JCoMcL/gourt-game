@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://dq36wrk1ptree"]
+
+[ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator/elevator.png" id="1_l7h4s"]
+[ext_resource type="Script" uid="uid://c4hp7s8304i5g" path="res://props/button.gd" id="2_cg52m"]
+[ext_resource type="Script" uid="uid://daaq3cl3ltwxc" path="res://props/elevator.gd" id="2_lu5t3"]
+[ext_resource type="Texture2D" uid="uid://clvkx1f3ood66" path="res://props/elevator/interior.png" id="3_1262s"]
+[ext_resource type="Texture2D" uid="uid://cs3r76nlgehb8" path="res://props/elevator/door-left.png" id="4_lu5t3"]
+[ext_resource type="Texture2D" uid="uid://bnt0o4wk7qrjf" path="res://props/elevator/door-right.png" id="5_tegms"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hed7g"]
+
+[sub_resource type="Animation" id="Animation_lhwsh"]
+resource_name = "opening"
+length = 1.3035
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Interior/Door-Left:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1, -0.25, 0, 0.266667, 1, -233, -0.533333, 8, 0.25, 0),
+"times": PackedFloat32Array(0.1, 1.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interior/Door-Right:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 261, -0.5, 4, 0.25, 0),
+"times": PackedFloat32Array(0, 1.3)
+}
+
+[sub_resource type="Animation" id="Animation_h502g"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Interior/Door-Left:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interior/Door-Right:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_28kmh"]
+resource_name = "closing"
+length = 1.3035
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Interior/Door-Left:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-233, -0.25, 0, 0.266667, 1, 0, -0.233333, -12, 0.265, 0),
+"times": PackedFloat32Array(0, 0.633333)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Interior/Door-Right:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(260, -0.25, 0, 0.25, 0, 0, -0.261783, 9, 0.265, 0),
+"times": PackedFloat32Array(0, 0.633333)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k3gsi"]
+_data = {
+&"RESET": SubResource("Animation_h502g"),
+&"closing": SubResource("Animation_28kmh"),
+&"opening": SubResource("Animation_lhwsh")
+}
+
+[node name="Elevator" type="Sprite2D"]
+texture = ExtResource("1_l7h4s")
+script = ExtResource("2_lu5t3")
+
+[node name="Button" type="Area2D" parent="."]
+position = Vector2(-329, -24)
+scale = Vector2(3.42173, 3.4)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("2_cg52m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button"]
+shape = SubResource("CircleShape2D_hed7g")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Button"]
+position = Vector2(3.21475, 31.4706)
+shape = SubResource("CircleShape2D_hed7g")
+
+[node name="Interior" type="Sprite2D" parent="."]
+clip_children = 2
+z_index = -1
+texture = ExtResource("3_1262s")
+
+[node name="Door-Left" type="Sprite2D" parent="Interior"]
+texture = ExtResource("4_lu5t3")
+
+[node name="Door-Right" type="Sprite2D" parent="Interior"]
+texture = ExtResource("5_tegms")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_k3gsi")
+}
+
+[connection signal="on_pressed" from="Button" to="." method="open"]

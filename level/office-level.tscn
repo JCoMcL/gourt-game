@@ -1,10 +1,9 @@
-[gd_scene load_steps=26 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=24 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
-[ext_resource type="Script" uid="uid://c4hp7s8304i5g" path="res://props/button.gd" id="5_1axx8"]
-[ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator/elevator.png" id="9_2sgh0"]
+[ext_resource type="PackedScene" uid="uid://dq36wrk1ptree" path="res://props/elevator.tscn" id="4_twwvs"]
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
@@ -43,8 +42,6 @@ tile_size = Vector2i(256, 256)
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 4
 sources/0 = SubResource("TileSetAtlasSource_ssvay")
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hed7g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4txm"]
 friction = 0.06
@@ -87,23 +84,8 @@ exit = NodePath("../Door2")
 position = Vector2(-585, -1991)
 exit = NodePath("../Door")
 
-[node name="Elevator" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(4698, -283)
-texture = ExtResource("9_2sgh0")
-
-[node name="Button" type="Area2D" parent="TileMapLayer/Elevator"]
-position = Vector2(-329, -24)
-scale = Vector2(3.42173, 3.4)
-collision_layer = 32
-collision_mask = 0
-script = ExtResource("5_1axx8")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Elevator/Button"]
-shape = SubResource("CircleShape2D_hed7g")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/Elevator/Button"]
-position = Vector2(3.21475, 31.4706)
-shape = SubResource("CircleShape2D_hed7g")
+[node name="Elevator" parent="TileMapLayer" instance=ExtResource("4_twwvs")]
+position = Vector2(4706, -275)
 
 [node name="Stroller" type="RigidBody2D" parent="TileMapLayer"]
 position = Vector2(-1741, -180)
@@ -138,7 +120,7 @@ texture = ExtResource("11_6o0x5")
 position = Vector2(-2381, -1886)
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(1268, 206)
+position = Vector2(3926, 268)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]

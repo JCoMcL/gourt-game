@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crff5ur3fg7ig"
-path="res://.godot/imported/filled cup.png-7082a73f42a7e5b0d31b9367ce425338.ctex"
+uid="uid://bhgkaywdcyjl"
+path="res://.godot/imported/cup.png-c85bd7067bc7cab4842b92b3a767f425.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://props/filled cup.png"
-dest_files=["res://.godot/imported/filled cup.png-7082a73f42a7e5b0d31b9367ce425338.ctex"]
+source_file="res://props/water cooler/cup.png"
+dest_files=["res://.godot/imported/cup.png-c85bd7067bc7cab4842b92b3a767f425.ctex"]
 
 [params]
 

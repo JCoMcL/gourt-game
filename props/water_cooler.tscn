@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bbbog68rjtlrb"]
 
-[ext_resource type="Script" uid="uid://crvr0k1g7qv3s" path="res://props/water_coolest.gd" id="2_8vm3n"]
-[ext_resource type="PackedScene" uid="uid://dh5axk4fye6o3" path="res://props/cup.tscn" id="2_sgrtc"]
-[ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler.png" id="3_i5a3f"]
-[ext_resource type="Script" uid="uid://daeo8suka7j7l" path="res://props/cup_filler.gd" id="4_brw10"]
+[ext_resource type="Script" uid="uid://crvr0k1g7qv3s" path="res://props/water cooler/water_coolest.gd" id="2_8vm3n"]
+[ext_resource type="PackedScene" uid="uid://dh5axk4fye6o3" path="res://props/water cooler/cup.tscn" id="2_sgrtc"]
+[ext_resource type="Texture2D" uid="uid://dtcyn475ry0l8" path="res://props/water cooler/water cooler.png" id="3_i5a3f"]
+[ext_resource type="Script" uid="uid://daeo8suka7j7l" path="res://props/water cooler/cup_filler.gd" id="4_brw10"]
 [ext_resource type="Script" uid="uid://508o8hskkytr" path="res://props/dispenser.gd" id="4_y1qp6"]
-[ext_resource type="PackedScene" uid="uid://ct7k4e5ao3m44" path="res://props/filled_cup.tscn" id="5_8vm3n"]
-[ext_resource type="PackedScene" uid="uid://dd5q3dnirvb6v" path="res://props/coolest_filled_cup.tscn" id="7_skyo5"]
+[ext_resource type="PackedScene" uid="uid://ct7k4e5ao3m44" path="res://props/water cooler/filled_cup.tscn" id="5_8vm3n"]
+[ext_resource type="PackedScene" uid="uid://dd5q3dnirvb6v" path="res://props/water cooler/coolest_filled_cup.tscn" id="7_skyo5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8atm"]
 size = Vector2(118, 105)

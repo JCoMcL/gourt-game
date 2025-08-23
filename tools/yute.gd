@@ -65,7 +65,7 @@ func get_global_rect(o: Node) -> Rect2:
 	if not o:
 		return Rect2(Vector2.ZERO, Vector2.ZERO)
 	if o is not Actor or not Engine.is_editor_hint():
-		if o.has_method("get_global_rect") and o is not InstancePlaceholder:
+		if o.has_method("get_global_rect"):
 			return o.get_global_rect()
 		if o.has_method("get_rect"):
 			var r = o.get_rect()

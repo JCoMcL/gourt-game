@@ -17,11 +17,11 @@ func new_tween() -> Tween:
 	current_tween = create_tween()
 	return current_tween
 
-func close(specific_duration = duration) -> Tween:
+func close(specific_duration = duration) -> Signal:
 	var t = new_tween()
 	t.tween_method(set_openness, get_openness(), 0.0, specific_duration * get_openness())
-	return t
-func open(specific_duration = duration) -> Tween:
+	return t.finished
+func open(specific_duration = duration) -> Signal:
 	var t = new_tween()
 	t.tween_method(set_openness, get_openness(), 1.0, specific_duration* (1.0 - get_openness()))
-	return t
+	return t.finished

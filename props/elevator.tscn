@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://defrs38qscb28" path="res://props/elevator/elevator.png" id="1_l7h4s"]
 [ext_resource type="Script" uid="uid://c4hp7s8304i5g" path="res://props/button.gd" id="2_cg52m"]
-[ext_resource type="Script" uid="uid://bkj6k4s8v05ax" path="res://props/elevator/elevator.gd" id="2_lu5t3"]
+[ext_resource type="Script" uid="uid://daaq3cl3ltwxc" path="res://props/elevator/elevator.gd" id="2_lu5t3"]
 [ext_resource type="Texture2D" uid="uid://clvkx1f3ood66" path="res://props/elevator/interior.png" id="3_1262s"]
 [ext_resource type="Texture2D" uid="uid://cs3r76nlgehb8" path="res://props/elevator/door-left.png" id="4_lu5t3"]
 [ext_resource type="Texture2D" uid="uid://bnt0o4wk7qrjf" path="res://props/elevator/door-right.png" id="5_tegms"]

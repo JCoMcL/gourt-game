@@ -1,5 +1,10 @@
 extends Area2D
-var open_state = false
+
+@export var level_to: PackedScene
+@export var entrypoint: NodePath
+
+var open_state = false #TODO work will be needed to allow door to start open
+@onready var waiting_area: Node = $Frame/Interior/Background
 
 func open():
 	if not open_state:
@@ -15,14 +20,28 @@ func close():
 func update_state():
 	collision_layer = Clision.layers["door"] * int(open_state)
 
+func boot_passengers():
+	if waiting_area.get_children():
+		for o in waiting_area.get_children():
+			o.reparent(get_parent())
+		close()
+
 func on_animation_finished(anim_name: StringName):
 	update_state()
+	if anim_name == "closing":
+		var a = waiting_area.get_children()
+		if a:
+			Yute.get_level_container(self).transition_to(level_to, a, entrypoint)
+	if anim_name == "opening":
+		boot_passengers()
 
 func _ready():
 	update_state()
 	$AnimationPlayer.animation_finished.connect(on_animation_finished)
+	if waiting_area.get_children():
+		open()
 
 func interact(operator: Node) -> bool:
-	operator.reparent($Frame/Interior/Background)
+	operator.reparent(waiting_area)
 	close()
 	return true

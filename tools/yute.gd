@@ -64,7 +64,7 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 func get_global_rect(o: Node) -> Rect2:
 	if not o:
 		return Rect2(Vector2.ZERO, Vector2.ZERO)
-	if o is not Actor or not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() or o.get_script().is_tool():
 		if o.has_method("get_global_rect"):
 			return o.get_global_rect()
 		if o.has_method("get_rect"):

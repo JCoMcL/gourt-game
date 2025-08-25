@@ -28,7 +28,6 @@ func transition_to(scn: PackedScene, bring: Array[Node] = [], entrypoint: NodePa
 	var loaded_scene = await load_scene_after_curtains(scn)
 	for n in bring:
 		var n_relative_position = n.position
-		print(n_relative_position)
 		n.owner = null # TODO what is owner exactly? Can it solve some problems here?
 		n.reparent(loaded_scene.get_node(entrypoint))
 		n.position = n_relative_position

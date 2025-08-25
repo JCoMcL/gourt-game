@@ -278,4 +278,3 @@ position = Vector2(1913, -29)
 actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
 
 [editable path="TileMapLayer/Door"]
-[editable path="TileMapLayer/Elevator"]

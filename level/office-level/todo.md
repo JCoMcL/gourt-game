@@ -7,9 +7,9 @@ x:done, -:underway
 -- [ ] Correctly position sunglasses
 - [-] Rigidbody Interaction
 - [ ] Gourt disguise
-- [ ] Elevator
--- [ ] level transition
--- [ ] open when you press the button
+- [-] Elevator
+-- [x] level transition
+-- [x] open when you press the button
 -- [ ] interior
 -- [ ] elevator music
 -- [ ] control panel

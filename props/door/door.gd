@@ -5,4 +5,5 @@ class_name Door
 
 func interact(operator) -> bool:
 	operator.global_position += exit.global_position - global_position
+	operator.reset_physics_interpolation()
 	return true

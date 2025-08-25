@@ -24,6 +24,7 @@ func boot_passengers():
 	if waiting_area.get_children():
 		for o in waiting_area.get_children():
 			o.reparent(get_parent())
+			o.reset_physics_interpolation()
 		close()
 
 func on_animation_finished(anim_name: StringName):
@@ -47,5 +48,6 @@ func _ready():
 
 func interact(operator: Node) -> bool:
 	operator.reparent(waiting_area)
+	operator.reset_physics_interpolation()
 	close()
 	return true

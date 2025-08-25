@@ -31,6 +31,7 @@ func transition_to(scn: PackedScene, bring: Array[Node] = [], entrypoint: NodePa
 		n.owner = null # TODO what is owner exactly? Can it solve some problems here?
 		n.reparent(loaded_scene.get_node(entrypoint))
 		n.position = n_relative_position
+		n.reset_physics_interpolation()
 	cleanup()
 
 func load_scene_after_curtains(scn: PackedScene) -> Node:

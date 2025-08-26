@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct7k4e5ao3m44"]
-
-[ext_resource type="PackedScene" uid="uid://dh5axk4fye6o3" path="res://props/cup.tscn" id="1_3yvlw"]
-[ext_resource type="Texture2D" uid="uid://crff5ur3fg7ig" path="res://props/filled cup.png" id="2_bol60"]
-
-[node name="Filled Cup" instance=ExtResource("1_3yvlw")]
-
-[node name="Sprite" parent="." index="1"]
-texture = ExtResource("2_bol60")

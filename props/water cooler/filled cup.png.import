@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg8514xi46mmo"
-path="res://.godot/imported/npc gourtstack.png-7415c81cd1b67ea4d8dca0f53fe06887.ctex"
+uid="uid://crff5ur3fg7ig"
+path="res://.godot/imported/filled cup.png-b4d7e32128da46e0fae1a6a457795551.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://props/npc gourtstack.png"
-dest_files=["res://.godot/imported/npc gourtstack.png-7415c81cd1b67ea4d8dca0f53fe06887.ctex"]
+source_file="res://props/water cooler/filled cup.png"
+dest_files=["res://.godot/imported/filled cup.png-b4d7e32128da46e0fae1a6a457795551.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cy3lpj00ijf0" path="res://level/level-container.gd" id="1_2bolc"]
 [ext_resource type="PackedScene" uid="uid://b57lobk2dccaj" path="res://level/office-level.tscn" id="2_8r3cm"]
 [ext_resource type="Shader" uid="uid://mqwxsmjr1l7f" path="res://ui/curtains/curtain.gdshader" id="2_ukkco"]
-[ext_resource type="Script" uid="uid://d4nybgrjevcxy" path="res://level/curtain.gd" id="3_8r3cm"]
+[ext_resource type="Script" path="res://ui/curtains/curtain.gd" id="3_8r3cm"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_44x8d"]
 noise_type = 0

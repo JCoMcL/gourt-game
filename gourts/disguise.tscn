@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://w8bqgkgk58k5"]
+
+[ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://disguise.gdshader" id="1_4k3gp"]
+[ext_resource type="Texture2D" uid="uid://0m1n6nxxrtd" path="res://gourts/trenchcoat.png" id="2_vqip1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
+shader = ExtResource("1_4k3gp")
+
+[node name="Line2D" type="Line2D"]
+texture_repeat = 3
+material = SubResource("ShaderMaterial_4gsd2")
+points = PackedVector2Array(24, -28, -129, 437, -436, 960)
+width = 256.0
+texture = ExtResource("2_vqip1")
+texture_mode = 2

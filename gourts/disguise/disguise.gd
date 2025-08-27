@@ -13,7 +13,14 @@ func add_point_from(o: Node2D):
 func _process(delta: float) -> void:
 	if not wearer or not is_instance_valid(wearer):
 		return
-	z_index = wearer.z_index + 1
+
+	if wearer == get_parent():
+		z_index = 0
+		z_as_relative = true
+	else:
+		z_as_relative = false
+		z_index = wearer.z_index + 1 #TODO calculate the wearer's global z_index
+
 	clear_points()
 	add_point_from(wearer.get_node("Perch"))
 	add_point_from(wearer)

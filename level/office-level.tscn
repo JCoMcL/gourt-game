@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=28 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
@@ -8,10 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
+[ext_resource type="PackedScene" uid="uid://w8bqgkgk58k5" path="res://gourts/disguise/disguise.tscn" id="12_4gsd2"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
+[ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://gourts/disguise/disguise.gdshader" id="13_slst7"]
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
@@ -53,6 +55,13 @@ radius = 33.1361
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
+resource_local_to_scene = true
+shader = ExtResource("13_slst7")
+shader_parameter/top_padding_px = 100.0
+shader_parameter/full_length_px = 700.0
+shader_parameter/scale_adjustment_factor = 1.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
 resource_local_to_scene = true
@@ -123,7 +132,7 @@ texture = ExtResource("11_6o0x5")
 position = Vector2(-2381, -1886)
 
 [node name="Gourt Stack" parent="TileMapLayer" node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(3802, 92)
+position = Vector2(-972, 357)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -132,6 +141,13 @@ head_friend = NodePath("../Gourt6")
 [node name="Gourt1" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -600)
 foot_friend = NodePath("../Gourt2")
+
+[node name="Disguise" parent="TileMapLayer/Gourt Stack/Gourt1" node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
+z_index = 1
+material = SubResource("ShaderMaterial_4gsd2")
+position = Vector2(0, 600)
+points = PackedVector2Array(0, -700, 0, -600, 0, -500, 0, -400, 0, -300, 0, -200, 0, -100, 0, 0)
+wearer = NodePath("..")
 
 [node name="Gourt2" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -500)

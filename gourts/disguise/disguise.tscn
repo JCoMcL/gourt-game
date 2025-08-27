@@ -1,17 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://w8bqgkgk58k5"]
+[gd_scene load_steps=5 format=3 uid="uid://w8bqgkgk58k5"]
 
 [ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://gourts/disguise/disguise.gdshader" id="1_4k3gp"]
 [ext_resource type="Texture2D" uid="uid://0m1n6nxxrtd" path="res://gourts/disguise/trenchcoat.png" id="2_vqip1"]
+[ext_resource type="Script" uid="uid://b7src2r8v5c4c" path="res://gourts/disguise/disguise.gd" id="3_vypnn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
 resource_local_to_scene = true
 shader = ExtResource("1_4k3gp")
-shader_parameter/top_padding_px = 0.0
+shader_parameter/top_padding_px = 100.0
+shader_parameter/full_length_px = 700.0
+shader_parameter/scale_adjustment_factor = 1.1
 
-[node name="Line2D" type="Line2D"]
-texture_repeat = 3
+[node name="Disguise" type="Line2D"]
 material = SubResource("ShaderMaterial_4gsd2")
-points = PackedVector2Array(24, -28, -129, 437, -436, 960)
+points = PackedVector2Array(0, 0, 0, 700)
 width = 256.0
 texture = ExtResource("2_vqip1")
 texture_mode = 2
+script = ExtResource("3_vypnn")

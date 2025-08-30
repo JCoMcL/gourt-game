@@ -7,6 +7,8 @@
 
 [node name="speech bubble" type="Panel"]
 top_level = true
+z_index = 100
+z_as_relative = false
 offset_right = 126.48
 offset_bottom = 28.56
 theme = ExtResource("1_pkjfo")
@@ -28,4 +30,5 @@ texture_mode = 2
 script = ExtResource("4_ofsrv")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 1.65
 one_shot = true

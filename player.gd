@@ -9,9 +9,9 @@ class_name Master #TODO: this class should be more generic: player and AI should
 			a.under_new_management(self)
 		player_character = a
 
-@export_range(1, 100) var position_smoothing: float = 10
-@export_range(0, 100) var position_threshold: float = 10
-@export_range(1, 1000) var zoom_smoothing: float = 100
+@export_range(0, 1) var position_smoothing: float = 0.1
+@export_range(0, 500) var position_threshold: float = 50
+@export_range(0, 5) var zoom_smoothing: float = 1
 @export_range(1, 10) var max_zoom: float = 1
 
 func valid_actor(a: Actor) -> bool:
@@ -35,6 +35,9 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 func _process(delta):
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
 
+func smooth(delta: float, smoothing: float):
+	return (delta / smoothing) if smoothing > 0 else 1
+
 func _physics_process(delta: float) -> void:
 	if player_character:
 		player_character.command(get_commands())
@@ -51,9 +54,8 @@ func _physics_process(delta: float) -> void:
 		) #TODO: this is not 100% correct, you can still see substantuially more with a bigger screen
 		# the goal is to completely abstract out screen size so we never have to worry about it again
 
-		# FIXME smoothing factors don't use delta so smoothing is tick/frame rate dependant
-		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) / position_smoothing
-		zoom = lerp(zoom, Vector2.ONE * zoom_error, 1/zoom_smoothing)
+		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
+		zoom = lerp(zoom, Vector2.ONE * zoom_error, smooth(delta, zoom_smoothing))
 
 func event_position(ev: InputEvent) -> Vector2:
 	if ev is InputEventMouse or ev is InputEventScreenTouch:

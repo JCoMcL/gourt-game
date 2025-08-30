@@ -41,6 +41,7 @@ func _process(delta: float) -> void:
 	if wearer == get_parent():
 		z_index = plus_z
 		z_as_relative = true
+		transform.x = wearer.transform.x # Hack to unflip self if parent flips
 	else:
 		z_as_relative = false
 		z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index

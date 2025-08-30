@@ -784,6 +784,7 @@ sprite_frames = SubResource("SpriteFrames_2ny44")
 animation = &"I_pensive"
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(0, 4)
 sprite_frames = SubResource("SpriteFrames_lri5v")
 animation = &"I_aboundless"
 autoplay = "I_penniless"
@@ -797,8 +798,11 @@ position = Vector2(-70, 27)
 [node name="HandSlot2" type="Node2D" parent="Body"]
 position = Vector2(48, 36)
 
+[node name="HeadSlot" type="Node2D" parent="Body"]
+position = Vector2(-12, -52)
+
 [node name="Perch" type="Node2D" parent="."]
-position = Vector2(0, -100)
+position = Vector2(0, -88)
 
 [node name="DeathSFX" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_jxtsl")

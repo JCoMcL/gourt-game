@@ -73,7 +73,7 @@ shader_parameter/handle = Vector2(0, 0)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
 resource_local_to_scene = true
 shader = ExtResource("13_slst7")
-shader_parameter/top_padding_px = 113.015
+shader_parameter/top_padding_px = 100.0
 shader_parameter/full_length_px = 688.0
 shader_parameter/scale_adjustment_factor = 1.1
 
@@ -190,14 +190,13 @@ foot_friend = NodePath("../Gourt2")
 [node name="Disguise" parent="Gourt Stack/Gourt1" node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
 z_index = 4
 material = SubResource("ShaderMaterial_4gsd2")
-position = Vector2(-3, 0)
-points = PackedVector2Array(4, -88, 3, 0, 3, 100, 3, 200, 3, 300, 3, 400, 3, 500, 3, 600)
+points = PackedVector2Array(0, -88, 0, 0, 0, 100, 0, 200, 0, 300, 0, 400, 0, 500, 0, 600)
 wearer = NodePath("..")
 
 [node name="Hat" type="Area2D" parent="Gourt Stack/Gourt1"]
-z_index = 2
-position = Vector2(-3, -69)
-collision_layer = 32
+z_index = 4
+position = Vector2(-3, -60)
+collision_layer = 0
 collision_mask = 0
 script = ExtResource("21_5y8te")
 

@@ -5,7 +5,7 @@ uniform float full_length_px = 730.0;
 uniform float scale_adjustment_factor = 1.1;
 
 void vertex() {
-	UV = vec2(UV.y, UV.x);
+	UV = vec2(1.0 - UV.y, UV.x);
 	UV.y *= full_length_px * TEXTURE_PIXEL_SIZE.y * scale_adjustment_factor;
 	//VERTEX.y -= top_padding_px / scale_adjustment_factor;
 	// Called for every vertex the material is visible on.

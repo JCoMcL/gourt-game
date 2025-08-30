@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=31 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
@@ -8,15 +8,19 @@
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
+[ext_resource type="PackedScene" uid="uid://w8bqgkgk58k5" path="res://gourts/disguise/disguise.tscn" id="12_4gsd2"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
+[ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://gourts/disguise/disguise.gdshader" id="13_slst7"]
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
 [ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="15_1axx8"]
+[ext_resource type="Texture2D" uid="uid://cadovxw7bb1cl" path="res://gourts/disguise/hat.png" id="20_03e6b"]
+[ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="21_5y8te"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -66,7 +70,18 @@ shader = ExtResource("14_1axx8")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
+resource_local_to_scene = true
+shader = ExtResource("13_slst7")
+shader_parameter/top_padding_px = 100.0
+shader_parameter/full_length_px = 688.0
+shader_parameter/scale_adjustment_factor = 1.1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03e6b"]
+size = Vector2(84, 62)
+
 [node name="Node2D" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
@@ -122,46 +137,100 @@ texture = ExtResource("11_6o0x5")
 [node name="WaterCooler2" parent="TileMapLayer" instance=ExtResource("10_1slrw")]
 position = Vector2(-2381, -1886)
 
-[node name="Gourt Stack" parent="TileMapLayer" node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(3802, 92)
+[node name="Poster" type="Sprite2D" parent="TileMapLayer"]
+position = Vector2(274, -1953)
+texture = ExtResource("13_1slrw")
+
+[node name="Always" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-39, -212)
+scale = Vector2(-9.85821, 3.72495)
+
+[node name="Hit" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(41, -176)
+scale = Vector2(-6.09284, 4.20244)
+
+[node name="Target" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-12, 135)
+scale = Vector2(-10.0539, 2.93887)
+
+[node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
+script = ExtResource("14_b2cyw")
+player_character = NodePath("../Gourt Stack/Gourt1")
+metadata/_custom_type_script = "uid://cdsy208jbfkdj"
+
+[node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+material = SubResource("ShaderMaterial_twwvs")
+position = Vector2(2203, 49)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
+material = SubResource("ShaderMaterial_1axx8")
+position = Vector2(1691, 36)
+collision_layer = 2
+collision_mask = 5
+facing = 3
+
+[node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
+position = Vector2(1913, -29)
+actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
+
+[node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
+y_sort_enabled = true
+position = Vector2(-876, 529)
 root_child = NodePath("Gourt0")
 
-[node name="Gourt0" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
 head_friend = NodePath("../Gourt6")
 
-[node name="Gourt1" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -600)
 foot_friend = NodePath("../Gourt2")
 
-[node name="Gourt2" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Disguise" parent="Gourt Stack/Gourt1" node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
+z_index = 4
+material = SubResource("ShaderMaterial_4gsd2")
+points = PackedVector2Array(0, -88, 0, 0, 0, 100, 0, 200, 0, 300, 0, 400, 0, 500, 0, 600)
+wearer = NodePath("..")
+
+[node name="Hat" type="Area2D" parent="Gourt Stack/Gourt1"]
+z_index = 4
+position = Vector2(-3, -60)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("21_5y8te")
+
+[node name="Sprite2D" type="Sprite2D" parent="Gourt Stack/Gourt1/Hat"]
+texture = ExtResource("20_03e6b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gourt Stack/Gourt1/Hat"]
+position = Vector2(1, -10)
+shape = SubResource("RectangleShape2D_03e6b")
+
+[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -500)
 head_friend = NodePath("../Gourt1")
 foot_friend = NodePath("../Gourt3")
 
-[node name="Gourt3" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -400)
 head_friend = NodePath("../Gourt2")
 foot_friend = NodePath("../Gourt4")
 
-[node name="Gourt4" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -300)
 head_friend = NodePath("../Gourt3")
 foot_friend = NodePath("../Gourt5")
 
-[node name="Gourt5" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -200)
 head_friend = NodePath("../Gourt4")
 foot_friend = NodePath("../Gourt6")
 
-[node name="Gourt6" parent="TileMapLayer/Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -100)
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
-
-[node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
-script = ExtResource("14_b2cyw")
-player_character = NodePath("../TileMapLayer/Gourt Stack/Gourt1")
-metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
 [node name="Gourt Stack2" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 position = Vector2(388, 520)
@@ -244,37 +313,5 @@ position = Vector2(0, -100)
 head_friend = NodePath("../Gourt14")
 foot_friend = NodePath("../Gourt0")
 
-[node name="Poster" type="Sprite2D" parent="."]
-position = Vector2(370, -1781)
-texture = ExtResource("13_1slrw")
-
-[node name="Always" parent="Poster" instance=ExtResource("14_rh3h7")]
-position = Vector2(-39, -212)
-scale = Vector2(-9.85821, 3.72495)
-
-[node name="Hit" parent="Poster" instance=ExtResource("14_rh3h7")]
-position = Vector2(41, -176)
-scale = Vector2(-6.09284, 4.20244)
-
-[node name="Target" parent="Poster" instance=ExtResource("14_rh3h7")]
-position = Vector2(-12, 135)
-scale = Vector2(-10.0539, 2.93887)
-
-[node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
-material = SubResource("ShaderMaterial_twwvs")
-position = Vector2(2203, 49)
-collision_layer = 2
-collision_mask = 5
-
-[node name="Inspectors" parent="." instance=ExtResource("13_gt2um")]
-material = SubResource("ShaderMaterial_1axx8")
-position = Vector2(1691, 36)
-collision_layer = 2
-collision_mask = 5
-facing = 3
-
-[node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
-position = Vector2(1913, -29)
-actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
-
 [editable path="TileMapLayer/Door"]
+[editable path="Gourt Stack"]

@@ -8,6 +8,8 @@
 # Bug Magnets
 ## BM1: Gourt Neighbour References
 Gourts keep track of their neighbours in the stack, however there no gaurentee that these references are correct and if they are not correct it could cause all manner if weird behaviour inlcuding startup crashes
+## BM2: Z-Index Nonsense
+Gourts set their z-indexes based on their neighbours to get the stack to render-correctly. This can result in arbitrarily high z-indexes which breaks pretty much all assurances godot offers about correct ordering of things.
 
 # Misc.
 addd gourts looking at things
@@ -16,12 +18,6 @@ twitch integtation
 
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
-
-[` return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor`](./tools/yute.gd)
-
-[` var text_size = text_line.get_size() * 1.02 #FIXME calculation is slightly undersized.`](./ui/speech_bubble/speech_bubble.gd)
-
-[` r.position = global_position #TODO getting our own global rect reliably is more steps than this`](./ui/speech_bubble/speech_bubble.gd)
 
 [` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
 
@@ -33,7 +29,21 @@ twitch integtation
 
 [` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
 
-[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
+[` return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor`](./tools/yute.gd)
+
+[` var text_size = text_line.get_size() * 1.02 #FIXME calculation is slightly undersized.`](./ui/speech_bubble/speech_bubble.gd)
+
+[` r.position = global_position #TODO getting our own global rect reliably is more steps than this`](./ui/speech_bubble/speech_bubble.gd)
+
+[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
+
+[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./actor.gd)
+
+[` target = null #TODO this this pretty naive since commands are issued every frame`](./actor.gd)
+
+[` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't physically accurate`](./actor.gd)
+
+[` $Sprite2D.rotation = 0 #FIXME Gourts don't have Sprite2D, really need to unify sprite logic somewhere`](./actor.gd)
 
 [` extends Actor #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./gourts/gourt.gd)
 
@@ -49,15 +59,13 @@ twitch integtation
 
 [` func can_reach(o) -> bool  #TODO more reliable test would check if we can reach any part, not just the center`](./gourts/gourt.gd)
 
+[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
+
+[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
+
+[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
+
 [` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)
 
-[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
-
-[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./actor.gd)
-
-[` target = null #TODO this this pretty naive since commands are issued every frame`](./actor.gd)
-
-[` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't physically accurate`](./actor.gd)
-
-[` $Sprite2D.rotation = 0 #FIXME Gourts don't have Sprite2D, really need to unify sprite logic somewhere`](./actor.gd)
+[` var open_state = false #TODO work will be needed to allow door to start open`](./props/elevator/elevator.gd)
 

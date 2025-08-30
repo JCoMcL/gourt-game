@@ -8,6 +8,8 @@
 # Bug Magnets
 ## BM1: Gourt Neighbour References
 Gourts keep track of their neighbours in the stack, however there no gaurentee that these references are correct and if they are not correct it could cause all manner if weird behaviour inlcuding startup crashes
+## BM2: Z-Index Nonsense
+Gourts set their z-indexes based on their neighbours to get the stack to render-correctly. This can result in arbitrarily high z-indexes which breaks pretty much all assurances godot offers about correct ordering of things.
 
 # Misc.
 addd gourts looking at things

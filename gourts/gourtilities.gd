@@ -78,6 +78,9 @@ func stack_count(g: Gourt) -> int:
 func get_stack_tip(g: Gourt) -> Gourt:
 	return list_head_friends(g)[-1] if g.head_friend else g
 
+func get_stack_base(g: Gourt) -> Gourt:
+	return list_foot_friends(g)[-1] if g.foot_friend else g
+
 func in_same_stack(a: Gourt, b: Gourt) -> bool:
 	return a and b and b in list_stack_members(a)
 

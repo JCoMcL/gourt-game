@@ -6,7 +6,7 @@ x:done, -:underway
 -- [ ] Proper item holding for animations
 -- [ ] Correctly position sunglasses
 - [-] Rigidbody Interaction
-- [ ] Gourt disguise
+- [x] Gourt disguise
 - [-] Elevator
 -- [x] level transition
 -- [x] open when you press the button

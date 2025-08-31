@@ -33,10 +33,9 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 	return c
 
 func _process(delta):
+	if player_character:
+		player_character.command(get_commands())
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
-
-func smooth(delta: float, smoothing: float):
-	return (delta / smoothing) if smoothing > 0 else 1
 
 class TrackingError:
 	var position_error: Vector2
@@ -58,24 +57,20 @@ func get_tracking_error(track_bounds: Rect2, track_target: Rect2) -> TrackingErr
 		)
 	)
 
-func correct_rect(r: Rect2, error: TrackingError):
-	return Rect2(
-		(r.position - r.get_center()) * error.zoom_error + r.get_center() + error.position_error,
-		r.size / error.zoom_error 
-	)
+func smooth(delta: float, smoothing: float):
+	return (delta / smoothing) if smoothing > 0 else 1
 
-var corrected_rect: Rect2
 func _physics_process(delta: float) -> void:
 	if player_character:
-		player_character.command(get_commands())
-		var viewport_rect = Yute.get_viewport_world_rect(self)
+		var track_rects: Array[Rect2] = [Yute.get_global_rect(player_character)]
+
+		for a: Area2D in $ActivationZone.get_overlapping_areas():
+			track_rects.append(Yute.get_global_rect(a))
+
 		var t_err = get_tracking_error(
-			viewport_rect,
-			player_character.get_global_rect(),
+			Yute.get_viewport_world_rect(self),
+			Yute.union_rect(track_rects),
 		)
-		corrected_rect = correct_rect(viewport_rect, t_err)
-		corrected_rect.position -= position
-		queue_redraw()
 		global_position += t_err.position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
 		zoom = lerp(zoom, Vector2.ONE * t_err.zoom_error, smooth(delta, zoom_smoothing))
 
@@ -150,7 +145,3 @@ func nominate(a: Actor) -> bool:
 		return false
 	player_character = a
 	return player_character == a
-
-func _draw():
-	if corrected_rect:
-		draw_rect(corrected_rect, Color("red"), false, 100)

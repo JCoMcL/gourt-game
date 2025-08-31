@@ -61,6 +61,20 @@ func nearest_overlapping_position(inner: Rect2, outer: Rect2) -> Vector2:
 
 	return new_pos
 
+func union_rect(a: Array[Rect2]) -> Rect2:
+	if not a:
+		return Rect2()
+
+	var top_left = a[0].position
+	var bottom_right = a[0].end
+	for r in a:
+		top_left.x = r.position.x if r.position.x < top_left.x else top_left.x
+		top_left.y = r.position.y if r.position.y > top_left.y else top_left.y
+		bottom_right.x = r.end.x if r.end.x > bottom_right.x else bottom_right.x
+		bottom_right.y = r.end.y if r.end.y < bottom_right.y else bottom_right.y
+
+	return Rect2(top_left, bottom_right - top_left)
+
 func get_global_rect(o: Node) -> Rect2:
 	if not o:
 		return Rect2(Vector2.ZERO, Vector2.ZERO)
@@ -71,6 +85,13 @@ func get_global_rect(o: Node) -> Rect2:
 			var r = o.get_rect()
 			r.position += o.global_position
 			return r
+	if o is CollisionShape2D and o.shape:
+		var r = o.shape.get_rect()
+		r.position += o.global_position
+	if o is Area2D:
+		for child in o.get_children():
+			if child is CollisionShape2D and child.shape:
+				return get_global_rect(child)
 
 	return Rect2(o.global_position, Vector2.ZERO)
 

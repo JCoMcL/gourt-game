@@ -38,24 +38,46 @@ func _process(delta):
 func smooth(delta: float, smoothing: float):
 	return (delta / smoothing) if smoothing > 0 else 1
 
+class TrackingError:
+	var position_error: Vector2
+	var zoom_error: float
+	func _init(position_error: Vector2, zoom_error: float):
+		self.position_error = position_error
+		self.zoom_error = zoom_error
+
+func get_tracking_error(track_bounds: Rect2, track_target: Rect2) -> TrackingError:
+	var error_vectors = [
+		track_target.position - track_bounds.position,
+		track_target.end - track_bounds.end
+	]
+	return TrackingError.new(
+		(error_vectors[0] + error_vectors[1]) / 2,
+		min(
+			(error_vectors[0].x - error_vectors[1].x) / track_bounds.size.x,
+			(error_vectors[0].y - error_vectors[1].y) / track_bounds.size.y
+		)
+	)
+
+func correct_rect(r: Rect2, error: TrackingError):
+	return Rect2(
+		(r.position - r.get_center()) * error.zoom_error + r.get_center() + error.position_error,
+		r.size / error.zoom_error 
+	)
+
+var corrected_rect: Rect2
 func _physics_process(delta: float) -> void:
 	if player_character:
 		player_character.command(get_commands())
-		var track_bounds = player_character.get_global_rect()
-		var view_bounds = Yute.get_viewport_world_rect(self)
-		var error_vectors = [
-			track_bounds.position - view_bounds.position,
-			track_bounds.end - view_bounds.end
-		]
-		var position_error = (error_vectors[0] + error_vectors[1]) / 2
-		var zoom_error = min(
-			(error_vectors[0].x - error_vectors[1].x) / view_bounds.size.x,
-			(error_vectors[0].y - error_vectors[1].y) / view_bounds.size.y
-		) #TODO: this is not 100% correct, you can still see substantuially more with a bigger screen
-		# the goal is to completely abstract out screen size so we never have to worry about it again
-
-		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
-		zoom = lerp(zoom, Vector2.ONE * zoom_error, smooth(delta, zoom_smoothing))
+		var viewport_rect = Yute.get_viewport_world_rect(self)
+		var t_err = get_tracking_error(
+			viewport_rect,
+			player_character.get_global_rect(),
+		)
+		corrected_rect = correct_rect(viewport_rect, t_err)
+		corrected_rect.position -= position
+		queue_redraw()
+		global_position += t_err.position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
+		zoom = lerp(zoom, Vector2.ONE * t_err.zoom_error, smooth(delta, zoom_smoothing))
 
 func event_position(ev: InputEvent) -> Vector2:
 	if ev is InputEventMouse or ev is InputEventScreenTouch:
@@ -128,3 +150,7 @@ func nominate(a: Actor) -> bool:
 		return false
 	player_character = a
 	return player_character == a
+
+func _draw():
+	if corrected_rect:
+		draw_rect(corrected_rect, Color("red"), false, 100)

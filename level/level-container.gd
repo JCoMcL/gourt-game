@@ -39,4 +39,5 @@ func load_scene_after_curtains(scn: PackedScene) -> Node:
 	return load_scene(scn)
 
 func reset_level():
-	load_scene_after_curtains(current_level_scene)
+	await load_scene_after_curtains(current_level_scene)
+	cleanup()

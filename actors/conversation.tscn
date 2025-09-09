@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cnvx1nc2i330f" path="res://actors/conversation.gd" id="1_h5wgq"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_twwvs"]
-size = Vector2(825, 730)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3vaa"]
+resource_local_to_scene = true
 
 [node name="Conversation" type="Area2D"]
+collision_layer = 8
+collision_mask = 128
 script = ExtResource("1_h5wgq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_twwvs")
+shape = SubResource("RectangleShape2D_c3vaa")

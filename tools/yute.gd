@@ -88,6 +88,7 @@ func get_global_rect(o: Node) -> Rect2:
 	if o is CollisionShape2D and o.shape:
 		var r = o.shape.get_rect()
 		r.position += o.global_position
+		return r
 	if o is Area2D:
 		for child in o.get_children():
 			if child is CollisionShape2D and child.shape:

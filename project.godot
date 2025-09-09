@@ -90,6 +90,7 @@ interact={
 2d_physics/layer_4="camera zone"
 2d_physics/layer_5="door"
 2d_physics/layer_6="interactive"
+2d_physics/layer_8="camera activator"
 
 [physics]
 

@@ -33,6 +33,7 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 	return c
 
 func _process(delta):
+	queue_redraw()
 	if player_character:
 		player_character.command(get_commands())
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
@@ -63,6 +64,7 @@ func smooth(delta: float, smoothing: float):
 func _physics_process(delta: float) -> void:
 	if player_character:
 		var track_rects: Array[Rect2] = [Yute.get_global_rect(player_character)]
+		$ActivationZone.global_position = Yute.union_rect(track_rects).get_center()
 
 		for a: Area2D in $ActivationZone.get_overlapping_areas():
 			track_rects.append(Yute.get_global_rect(a))
@@ -71,6 +73,7 @@ func _physics_process(delta: float) -> void:
 			Yute.get_viewport_world_rect(self),
 			Yute.union_rect(track_rects),
 		)
+		# TODO additional zones should have different smoothing settings than the player:
 		global_position += t_err.position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
 		zoom = lerp(zoom, Vector2.ONE * t_err.zoom_error, smooth(delta, zoom_smoothing))
 
@@ -145,3 +148,8 @@ func nominate(a: Actor) -> bool:
 		return false
 	player_character = a
 	return player_character == a
+
+func _draw():
+	var r = Yute.get_global_rect($ActivationZone)
+	r.position -= position
+	draw_rect(r, Color("red", 0.5))

@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var actors: Array[Actor]
+@export var autostart = false
 
 class Line:
 	var text: String
@@ -47,6 +48,26 @@ func display_line():
 		await line.call()
 		display_line()
 
+func _process(delta):
+	queue_redraw()
+
+func _draw():
+	var r = Yute.get_global_rect(self)
+	r.position -= position
+	draw_rect(r, Color("blue", 0.5))
+
+var started = false
+func start():
+	if started:
+		return
+	started = true
+	display_line.call_deferred()
+
+func on_activation_zone_entered(area: Area2D):
+	start()
 
 func _ready():
-	display_line.call_deferred()
+	if autostart:
+		start()
+	else:
+		area_entered.connect(on_activation_zone_entered)

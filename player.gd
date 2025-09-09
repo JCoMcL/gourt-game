@@ -63,8 +63,15 @@ func smooth(delta: float, smoothing: float):
 
 func _physics_process(delta: float) -> void:
 	if player_character:
-		var track_rects: Array[Rect2] = [Yute.get_global_rect(player_character)]
-		$ActivationZone.global_position = Yute.union_rect(track_rects).get_center()
+		var track_rects: Array[Rect2]
+		if player_character is Gourt:
+			for g in Gourtilities.list_stack_members(player_character):
+				track_rects.append(Yute.get_global_rect(g))
+		else:
+			track_rects = [Yute.get_global_rect(player_character)]
+		var primary_track_rect = Yute.union_rect(track_rects)
+		$ActivationZone.global_position = primary_track_rect.get_center()
+		$ActivationZone.encompass(primary_track_rect)
 
 		for a: Area2D in $ActivationZone.get_overlapping_areas():
 			track_rects.append(Yute.get_global_rect(a))

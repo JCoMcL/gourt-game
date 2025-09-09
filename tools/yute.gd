@@ -69,9 +69,9 @@ func union_rect(a: Array[Rect2]) -> Rect2:
 	var bottom_right = a[0].end
 	for r in a:
 		top_left.x = r.position.x if r.position.x < top_left.x else top_left.x
-		top_left.y = r.position.y if r.position.y > top_left.y else top_left.y
+		top_left.y = r.position.y if r.position.y < top_left.y else top_left.y
 		bottom_right.x = r.end.x if r.end.x > bottom_right.x else bottom_right.x
-		bottom_right.y = r.end.y if r.end.y < bottom_right.y else bottom_right.y
+		bottom_right.y = r.end.y if r.end.y > bottom_right.y else bottom_right.y
 
 	return Rect2(top_left, bottom_right - top_left)
 

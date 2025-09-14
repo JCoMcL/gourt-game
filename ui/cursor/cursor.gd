@@ -62,7 +62,6 @@ func _process(delta):
 	if frame_time_acc >= frametime:
 		frame_time_acc -= frametime
 		add_xy(0,1)
-		print(get_xy())
 		update_cursor()
 
 	angle = get_viewport().get_visible_rect().get_center().angle_to_point(get_viewport().get_mouse_position())

@@ -3,7 +3,7 @@ extends Node
 var bubbles = {}
 @export var speech_bubble: PackedScene
 func _ready():
-	speech_bubble = load("%s/speech_bubble.tscn" % get_script().get_path().get_base_dir())
+	speech_bubble = load("res://ui/speech_bubble.tscn")
 
 func say(speaker: Node2D, words: String) -> SpeechBubble:
 	var sb: SpeechBubble

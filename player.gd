@@ -33,7 +33,6 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 	return c
 
 func _process(delta):
-	queue_redraw()
 	if player_character:
 		player_character.command(get_commands())
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
@@ -155,8 +154,3 @@ func nominate(a: Actor) -> bool:
 		return false
 	player_character = a
 	return player_character == a
-
-func _draw():
-	var r = Yute.get_global_rect($ActivationZone)
-	r.position -= position
-	draw_rect(r, Color("red", 0.5))

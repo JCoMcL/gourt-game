@@ -48,14 +48,6 @@ func display_line():
 		await line.call()
 		display_line()
 
-func _process(delta):
-	queue_redraw()
-
-func _draw():
-	var r = Yute.get_global_rect(self)
-	r.position -= position
-	draw_rect(r, Color("blue", 0.5))
-
 var started = false
 func start():
 	if started:

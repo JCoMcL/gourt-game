@@ -23,7 +23,7 @@ x:done, -:underway
 -- [x] inter-gourt-action
 - [ ] Level Triggers
 -- [ ] Invisible wall
--- [ ] Camera Focus Zone
+-- [x] Camera Focus Zone
 - [ ] Unstacking
 -- [x] low ceiling
 -- [ ] orphan gourt behaviours
@@ -37,7 +37,7 @@ x:done, -:underway
 -- [x] Movement / action
 - [-] Camera
 -- [x] Focus on player character
--- [ ] Focus in additional objects
+-- [x] Focus in additional objects
 -- [ ] Manual override for cutscenes
 - [ ] Cursor
 - [x] Game Over

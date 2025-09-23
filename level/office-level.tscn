@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=34 format=4 uid="uid://b57lobk2dccaj"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
 [ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
 [ext_resource type="PackedScene" uid="uid://w8bqgkgk58k5" path="res://gourts/disguise/disguise.tscn" id="12_4gsd2"]
+[ext_resource type="Script" uid="uid://6foq1gufj00l" path="res://level/activation_zone.gd" id="12_5y8te"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
@@ -58,6 +59,9 @@ radius = 33.1361
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
 radius = 26.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5y8te"]
+size = Vector2(1154, 640)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
 resource_local_to_scene = true
 shader = ExtResource("14_1axx8")
@@ -69,6 +73,10 @@ resource_local_to_scene = true
 shader = ExtResource("14_1axx8")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ybge"]
+resource_local_to_scene = true
+size = Vector2(1620, 654)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
 resource_local_to_scene = true
@@ -158,6 +166,14 @@ script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
+[node name="ActivationZone" type="Area2D" parent="Master"]
+collision_layer = 128
+collision_mask = 8
+script = ExtResource("12_5y8te")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Master/ActivationZone"]
+shape = SubResource("RectangleShape2D_5y8te")
+
 [node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
 material = SubResource("ShaderMaterial_twwvs")
 position = Vector2(2203, 49)
@@ -172,12 +188,16 @@ collision_mask = 5
 facing = 3
 
 [node name="Conversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
-position = Vector2(1913, -29)
-actors = [NodePath("../Inspectors"), NodePath("../Janitor")]
+position = Vector2(1960, -29)
+actors = [NodePath("../Inspectors"), NodePath("../Janitor"), NodePath("../Gourt Stack/Gourt0")]
+
+[node name="CollisionShape2D" parent="Conversation" index="0"]
+position = Vector2(61, 31)
+shape = SubResource("RectangleShape2D_5ybge")
 
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 y_sort_enabled = true
-position = Vector2(-876, 529)
+position = Vector2(-978, 402)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -314,4 +334,5 @@ head_friend = NodePath("../Gourt14")
 foot_friend = NodePath("../Gourt0")
 
 [editable path="TileMapLayer/Door"]
+[editable path="Conversation"]
 [editable path="Gourt Stack"]

@@ -1,5 +1,6 @@
-[gd_scene load_steps=34 format=4 uid="uid://b57lobk2dccaj"]
+[gd_scene load_steps=35 format=4 uid="uid://b57lobk2dccaj"]
 
+[ext_resource type="PackedScene" uid="uid://cvcc3ghe4ysjk" path="res://ui/cursor.tscn" id="1_5ybge"]
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
@@ -14,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
 [ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
 [ext_resource type="PackedScene" uid="uid://cdheulpodhk4e" path="res://actors/cast/inspectors.tscn" id="13_gt2um"]
-[ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://gourts/disguise/disguise.gdshader" id="13_slst7"]
+[ext_resource type="Shader" path="res://gourts/disguise/disguise.gdshader" id="13_slst7"]
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
@@ -90,6 +91,10 @@ size = Vector2(84, 62)
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
+
+[node name="Cursor" parent="." instance=ExtResource("1_5ybge")]
+passive_frametime = 0.6
+pointive_frametime = 0.3
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)

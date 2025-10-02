@@ -60,7 +60,8 @@ class AnimatedCursor:
 
 	func update():
 		if Input.get_current_cursor_shape() == cursor_type:
-			Input.set_custom_mouse_cursor(null, cursor_type, anchor_point) #TODO Whether or not this is required may be platform dependent
+			if Platform.current.requires_cursor_wangling:
+				Input.set_custom_mouse_cursor(null, cursor_type, anchor_point)
 			Input.set_custom_mouse_cursor(tex, cursor_type, anchor_point)
 
 	var angle_index: int = -1
@@ -92,8 +93,15 @@ class AnimatedCursor:
 			update()
 
 var current_cursor_type: Input.CursorShape = Input.CURSOR_ARROW
+var time_accum = 0.0
 func _process(delta):
+	time_accum += delta
+	if time_accum < Platform.current.min_cursor_update_delay:
+		return
+	time_accum = 0.0
+
 	angle = get_viewport().get_visible_rect().get_center().angle_to_point(get_viewport().get_mouse_position())
+
 	for c in cursors:
 		if c.cursor_type == Input.get_current_cursor_shape():
 			c.set_angle(angle)

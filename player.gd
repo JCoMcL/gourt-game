@@ -9,9 +9,9 @@ class_name Master #TODO: this class should be more generic: player and AI should
 			a.under_new_management(self)
 		player_character = a
 
-@export_range(1, 100) var position_smoothing: float = 10
-@export_range(0, 100) var position_threshold: float = 10
-@export_range(1, 1000) var zoom_smoothing: float = 100
+@export_range(0, 1) var position_smoothing: float = 0.1
+@export_range(0, 500) var position_threshold: float = 50
+@export_range(0, 5) var zoom_smoothing: float = 1
 @export_range(1, 10) var max_zoom: float = 1
 
 func valid_actor(a: Actor) -> bool:
@@ -33,27 +33,55 @@ func get_commands(c: Actor.Commands = null) -> Actor.Commands:
 	return c
 
 func _process(delta):
+	if player_character:
+		player_character.command(get_commands())
 	Engine.time_scale = 0.1 if Input.is_action_pressed("slomo") else 1.0
+
+class TrackingError:
+	var position_error: Vector2
+	var zoom_error: float
+	func _init(position_error: Vector2, zoom_error: float):
+		self.position_error = position_error
+		self.zoom_error = zoom_error
+
+func get_tracking_error(track_bounds: Rect2, track_target: Rect2) -> TrackingError:
+	var error_vectors = [
+		track_target.position - track_bounds.position,
+		track_target.end - track_bounds.end
+	]
+	return TrackingError.new(
+		(error_vectors[0] + error_vectors[1]) / 2,
+		min(
+			(error_vectors[0].x - error_vectors[1].x) / track_bounds.size.x,
+			(error_vectors[0].y - error_vectors[1].y) / track_bounds.size.y
+		)
+	)
+
+func smooth(delta: float, smoothing: float):
+	return (delta / smoothing) if smoothing > 0 else 1
 
 func _physics_process(delta: float) -> void:
 	if player_character:
-		player_character.command(get_commands())
-		var track_bounds = player_character.get_global_rect()
-		var view_bounds = Yute.get_viewport_world_rect(self)
-		var error_vectors = [
-			track_bounds.position - view_bounds.position,
-			track_bounds.end - view_bounds.end
-		]
-		var position_error = (error_vectors[0] + error_vectors[1]) / 2
-		var zoom_error = min(
-			(error_vectors[0].x - error_vectors[1].x) / view_bounds.size.x,
-			(error_vectors[0].y - error_vectors[1].y) / view_bounds.size.y
-		) #TODO: this is not 100% correct, you can still see substantuially more with a bigger screen
-		# the goal is to completely abstract out screen size so we never have to worry about it again
+		var track_rects: Array[Rect2]
+		if player_character is Gourt:
+			for g in Gourtilities.list_stack_members(player_character):
+				track_rects.append(Yute.get_global_rect(g))
+		else:
+			track_rects = [Yute.get_global_rect(player_character)]
+		var primary_track_rect = Yute.union_rect(track_rects)
+		$ActivationZone.global_position = primary_track_rect.get_center()
+		$ActivationZone.encompass(primary_track_rect)
 
-		# FIXME smoothing factors don't use delta so smoothing is tick/frame rate dependant
-		global_position += position_error.move_toward(Vector2.ZERO, position_threshold) / position_smoothing
-		zoom = lerp(zoom, Vector2.ONE * zoom_error, 1/zoom_smoothing)
+		for a: Area2D in $ActivationZone.get_overlapping_areas():
+			track_rects.append(Yute.get_global_rect(a))
+
+		var t_err = get_tracking_error(
+			Yute.get_viewport_world_rect(self),
+			Yute.union_rect(track_rects),
+		)
+		# TODO additional zones should have different smoothing settings than the player:
+		global_position += t_err.position_error.move_toward(Vector2.ZERO, position_threshold) * smooth(delta, position_smoothing)
+		zoom = lerp(zoom, Vector2.ONE * t_err.zoom_error, smooth(delta, zoom_smoothing))
 
 func event_position(ev: InputEvent) -> Vector2:
 	if ev is InputEventMouse or ev is InputEventScreenTouch:

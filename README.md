@@ -23,8 +23,6 @@ twitch integtation
 
 [` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
 
-[` ) #TODO  this is not 100% correct, you can still see substantuially more with a bigger screen`](./player.gd)
-
 [` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
 
 [` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
@@ -35,21 +33,15 @@ twitch integtation
 
 [` r.position = global_position #TODO getting our own global rect reliably is more steps than this`](./ui/speech_bubble/speech_bubble.gd)
 
-[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
+[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
 
-[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./actor.gd)
+[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
 
-[` target = null #TODO this this pretty naive since commands are issued every frame`](./actor.gd)
-
-[` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't physically accurate`](./actor.gd)
-
-[` $Sprite2D.rotation = 0 #FIXME Gourts don't have Sprite2D, really need to unify sprite logic somewhere`](./actor.gd)
+[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
 
 [` extends Actor #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./gourts/gourt.gd)
 
 [` @export var stack_elasticity = 0.5 #FIXME  setting this above 0.5 results in infinte-energy.`](./gourts/gourt.gd)
-
-[` #TODO reimplement to be less guesswork-oriented `](./gourts/gourt.gd)
 
 [` foot_friend.head_friend = null #BM1`](./gourts/gourt.gd)
 
@@ -59,13 +51,17 @@ twitch integtation
 
 [` func can_reach(o) -> bool  #TODO more reliable test would check if we can reach any part, not just the center`](./gourts/gourt.gd)
 
-[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
-
-[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
-
-[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
-
 [` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)
 
 [` var open_state = false #TODO work will be needed to allow door to start open`](./props/elevator/elevator.gd)
+
+[` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
+
+[` var bounds_size = 60 #TODO this is the gourt's size, and it's a guess`](./actor.gd)
+
+[` target = null #TODO this this pretty naive since commands are issued every frame`](./actor.gd)
+
+[` func apply_friction(factor  Vector2, label="friction")  #FIXME I think this isn't physically accurate`](./actor.gd)
+
+[` $Sprite2D.rotation = 0 #FIXME Gourts don't have Sprite2D, really need to unify sprite logic somewhere`](./actor.gd)
 

@@ -10,8 +10,8 @@ class_name Cursor
 var anchor_point = Vector2i(anchor_point_offset, anchor_point_offset)
 
 @export_group("Settings")
-@export var passive_frametime = 0.3 #seconds
-@export var pointive_frametime = 0.1 #seconds
+@export var passive_frametime = 0.6 #seconds
+@export var pointive_frametime = 0.3 #seconds
 @export_range(0, TAU) var angle = PI * 1.5:
 	set(val):
 		while val < 0:
@@ -59,11 +59,9 @@ class AnimatedCursor:
 		update()
 
 	func update():
-		Input.set_custom_mouse_cursor(null, 0)
-		Input.set_custom_mouse_cursor(tex, 0, anchor_point)
-		#FIXME setting cursor type doesn't to work
-		#Input.set_custom_mouse_cursor(null, cursor_type)
-		#Input.set_custom_mouse_cursor(tex, cursor_type, anchor_point)
+		if Input.get_current_cursor_shape() == cursor_type:
+			Input.set_custom_mouse_cursor(null, cursor_type, anchor_point) #TODO Whether or not this is required may be platform dependent
+			Input.set_custom_mouse_cursor(tex, cursor_type, anchor_point)
 
 	var angle_index: int = -1
 	func set_angle(angle: float):
@@ -97,7 +95,7 @@ var current_cursor_type: Input.CursorShape = Input.CURSOR_ARROW
 func _process(delta):
 	angle = get_viewport().get_visible_rect().get_center().angle_to_point(get_viewport().get_mouse_position())
 	for c in cursors:
-		if c.cursor_type == current_cursor_type:
+		if c.cursor_type == Input.get_current_cursor_shape():
 			c.set_angle(angle)
 			c.add_time(delta)
 
@@ -108,8 +106,6 @@ func _physics_process(delta: float) -> void:
 	)
 
 	if interactables_under_cursor:
-		current_cursor_type = Input.CURSOR_POINTING_HAND
-		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND) #This doesn't seem to do anything
+		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 	else:
-		current_cursor_type = Input.CURSOR_ARROW
 		Input.set_default_cursor_shape()

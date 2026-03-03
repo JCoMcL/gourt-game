@@ -1,0 +1,243 @@
+[gd_scene load_steps=32 format=4 uid="uid://utjwrxh8abbp"]
+
+[ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
+[ext_resource type="Texture2D" uid="uid://cjtyjk8bt6r4d" path="res://level/office-level/hottiles.png" id="2_rwpfl"]
+[ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
+[ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
+[ext_resource type="PackedScene" uid="uid://dq36wrk1ptree" path="res://props/elevator.tscn" id="4_twwvs"]
+[ext_resource type="PackedScene" uid="uid://xfpwui2ygbps" path="res://level/ld-empty.tscn" id="5_1axx8"]
+[ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
+[ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
+[ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
+[ext_resource type="PackedScene" uid="uid://w8bqgkgk58k5" path="res://gourts/disguise/disguise.tscn" id="12_4gsd2"]
+[ext_resource type="Script" uid="uid://6foq1gufj00l" path="res://level/activation_zone.gd" id="12_5y8te"]
+[ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
+[ext_resource type="Texture2D" uid="uid://bcuiskm22h53j" path="res://props/poster.png" id="13_1slrw"]
+[ext_resource type="PackedScene" uid="uid://bdhee0fbyvgae" path="res://gourts/gourt.tscn" id="13_ax68m"]
+[ext_resource type="Shader" uid="uid://b0p5lo6uum44i" path="res://gourts/disguise/disguise.gdshader" id="13_slst7"]
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="14_1axx8"]
+[ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
+[ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
+[ext_resource type="Texture2D" uid="uid://cadovxw7bb1cl" path="res://gourts/disguise/hat.png" id="20_03e6b"]
+[ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="21_5y8te"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
+texture = ExtResource("1_wxgj7")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, -25.6, -128, -25.6, 128, -128, 128)
+1:0/0 = 0
+1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-128, 51.2, 128, 51.2, 128, 128, -128, 128)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, 128, 128, -128, -128, -128, -128, 128)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -128, -25.6, -128, -25.6, 25.6, 128, 25.6, 128, 128)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, 25.6, 128, 25.6, 128, 128)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, 128, 128, -128, 51.2, -128, 25.6, -76.8, -25.6, -76.8, -51.2, -25.6, -102.4, -25.6, -128, 25.6, -128, 128)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -102.4, 76.8, -51.2, 76.8, -25.6, 25.6, 128, 25.6, 128, 128)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, 128, 128, -128, -128, -128, -128, 128)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lfn1i"]
+texture = ExtResource("2_rwpfl")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_mdp56"]
+tile_size = Vector2i(256, 256)
+physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 4
+sources/0 = SubResource("TileSetAtlasSource_ssvay")
+sources/1 = SubResource("TileSetAtlasSource_lfn1i")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4txm"]
+friction = 0.06
+bounce = 0.44
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pxtkg"]
+radius = 33.1361
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
+radius = 26.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5y8te"]
+size = Vector2(1154, 640)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
+resource_local_to_scene = true
+shader = ExtResource("13_slst7")
+shader_parameter/top_padding_px = 100.0
+shader_parameter/full_length_px = 688.0
+shader_parameter/scale_adjustment_factor = 1.1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03e6b"]
+size = Vector2(84, 62)
+
+[node name="Node2D" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(96, 172)
+tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAQABAAEAAAAMAAAAAQABAAEAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAQABAAEAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAQABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///n/AAABAAEAAAAOAP//AQABAAAAAAANAP//AQAAAAAAAAAMAP//AQABAAAAAAALAP//AQAAAAAAAAA=")
+tile_set = SubResource("TileSet_mdp56")
+
+[node name="Sunglasses" parent="TileMapLayer" instance=ExtResource("3_rh3h7")]
+position = Vector2(-2020, -1849)
+scale = Vector2(0.8, 0.8)
+
+[node name="Door" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
+position = Vector2(-16, 61)
+exit = NodePath("../Door2")
+
+[node name="Door2" parent="TileMapLayer" node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
+position = Vector2(-585, -1991)
+exit = NodePath("../Door")
+
+[node name="Elevator" parent="TileMapLayer" instance=ExtResource("4_twwvs")]
+position = Vector2(4706, -275)
+level_to = ExtResource("5_1axx8")
+entrypoint = NodePath("Elevator/Frame/Interior/Background")
+
+[node name="Stroller" type="RigidBody2D" parent="TileMapLayer"]
+position = Vector2(-1741, -180)
+physics_material_override = SubResource("PhysicsMaterial_j4txm")
+
+[node name="Stroller" type="Sprite2D" parent="TileMapLayer/Stroller"]
+texture = ExtResource("10_yl1fq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/Stroller"]
+position = Vector2(146, 139)
+polygon = PackedVector2Array(-126, -94, 18, -105, -16, -206, 73, -190, 119, -97, 109, -35, -125, -24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Stroller"]
+position = Vector2(63, 221)
+shape = SubResource("CircleShape2D_pxtkg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/Stroller"]
+position = Vector2(226, 222)
+shape = SubResource("CircleShape2D_w4oyg")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="TileMapLayer"]
+position = Vector2(-1782, -1771)
+center_of_mass_mode = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/RigidBody2D"]
+polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 102, 136, -76, 131, -14, 101, -5, -113, -225, -109)
+
+[node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D"]
+texture = ExtResource("11_6o0x5")
+
+[node name="WaterCooler2" parent="TileMapLayer" instance=ExtResource("10_1slrw")]
+position = Vector2(-2381, -1886)
+
+[node name="Poster" type="Sprite2D" parent="TileMapLayer"]
+position = Vector2(274, -1953)
+texture = ExtResource("13_1slrw")
+
+[node name="Always" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-39, -212)
+scale = Vector2(-9.85821, 3.72495)
+
+[node name="Hit" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(41, -176)
+scale = Vector2(-6.09284, 4.20244)
+
+[node name="Target" parent="TileMapLayer/Poster" instance=ExtResource("14_rh3h7")]
+position = Vector2(-12, 135)
+scale = Vector2(-10.0539, 2.93887)
+
+[node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
+script = ExtResource("14_b2cyw")
+player_character = NodePath("../Gourt Stack/Gourt1")
+metadata/_custom_type_script = "uid://cdsy208jbfkdj"
+
+[node name="ActivationZone" type="Area2D" parent="Master"]
+collision_layer = 128
+collision_mask = 8
+script = ExtResource("12_5y8te")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Master/ActivationZone"]
+shape = SubResource("RectangleShape2D_5y8te")
+
+[node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+material = SubResource("ShaderMaterial_twwvs")
+position = Vector2(2203, 49)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
+y_sort_enabled = true
+position = Vector2(4166, 191)
+root_child = NodePath("Gourt0")
+
+[node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
+head_friend = NodePath("../Gourt6")
+
+[node name="Gourt1" parent="Gourt Stack" node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -600)
+foot_friend = NodePath("../Gourt2")
+
+[node name="Disguise" parent="Gourt Stack/Gourt1" node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
+z_index = 4
+material = SubResource("ShaderMaterial_4gsd2")
+points = PackedVector2Array(0, -88, 0, 0, 0, 100, 0, 200, 0, 300, 0, 400, 0, 500, 0, 600)
+wearer = NodePath("..")
+
+[node name="Hat" type="Area2D" parent="Gourt Stack/Gourt1"]
+z_index = 4
+position = Vector2(-3, -60)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("21_5y8te")
+
+[node name="Sprite2D" type="Sprite2D" parent="Gourt Stack/Gourt1/Hat"]
+texture = ExtResource("20_03e6b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gourt Stack/Gourt1/Hat"]
+position = Vector2(1, -10)
+shape = SubResource("RectangleShape2D_03e6b")
+
+[node name="Gourt2" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -500)
+head_friend = NodePath("../Gourt1")
+foot_friend = NodePath("../Gourt3")
+
+[node name="Gourt3" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -400)
+head_friend = NodePath("../Gourt2")
+foot_friend = NodePath("../Gourt4")
+
+[node name="Gourt4" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -300)
+head_friend = NodePath("../Gourt3")
+foot_friend = NodePath("../Gourt5")
+
+[node name="Gourt5" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -200)
+head_friend = NodePath("../Gourt4")
+foot_friend = NodePath("../Gourt6")
+
+[node name="Gourt6" parent="Gourt Stack" node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -100)
+head_friend = NodePath("../Gourt5")
+foot_friend = NodePath("../Gourt0")
+
+[editable path="TileMapLayer/Door"]
+[editable path="Gourt Stack"]

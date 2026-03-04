@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://utjwrxh8abbp"]
+[gd_scene load_steps=37 format=4 uid="uid://utjwrxh8abbp"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Texture2D" uid="uid://cjtyjk8bt6r4d" path="res://level/office-level/hottiles.png" id="2_rwpfl"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="21_5y8te"]
 [ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="22_5y8te"]
 [ext_resource type="Script" uid="uid://c6d0opjjjt103" path="res://actors/gavin_conversation.gd" id="23_5y8te"]
+[ext_resource type="PackedScene" path="res://actors/anti_light.tscn" id="25_le4on"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -209,10 +210,10 @@ position = Vector2(0, -2045.95)
 enabled = false
 
 [node name="Speak Hole" parent="Gavin/Sprite2D/Handle" index="0"]
-offset_left = -144.936
-offset_top = 1204.13
-offset_right = -97.4056
-offset_bottom = 1273.32
+offset_left = -72.4682
+offset_top = 1281.39
+offset_right = -24.9382
+offset_bottom = 1350.58
 
 [node name="GavinConversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("22_5y8te")]
 position = Vector2(12313, 200)
@@ -275,6 +276,10 @@ foot_friend = NodePath("../Gourt6")
 position = Vector2(0, -100)
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
+
+[node name="AntiLight" parent="." instance=ExtResource("25_le4on")]
+position = Vector2(8989, 121)
+scale = Vector2(9.25373, -27.3348)
 
 [editable path="TileMapLayer/Door"]
 [editable path="Gavin"]

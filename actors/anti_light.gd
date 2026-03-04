@@ -4,13 +4,7 @@ extends Light2D
 @export var radius: float = 100.0
 
 func _ready():
-	# Set up the light as a subtractive light for darkness effect
-	blend_mode = Light2D.BLEND_MODE_SUB
-	energy = darkness_strength
-	texture_scale = radius / 64.0  # Assuming default texture size, adjust as needed
-	
-	# Use a simple radial gradient texture for the light shape
-	# In Godot, you might need to assign a texture in the editor or create one programmatically
+	# All properties are set in the scene file/editor. Nothing to override here.
 	pass
 
 func _process(delta):

@@ -5,7 +5,7 @@ extends Light2D
 
 func _ready():
 	# Set up the light as a subtractive light for darkness effect
-	mode = Light2D.MODE_SUB
+	blend_mode = Light2D.BLEND_MODE_SUB
 	energy = darkness_strength
 	texture_scale = radius / 64.0  # Assuming default texture size, adjust as needed
 	

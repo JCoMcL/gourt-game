@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://utjwrxh8abbp"]
+[gd_scene load_steps=36 format=4 uid="uid://utjwrxh8abbp"]
 
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
 [ext_resource type="Texture2D" uid="uid://cjtyjk8bt6r4d" path="res://level/office-level/hottiles.png" id="2_rwpfl"]
@@ -19,8 +19,11 @@
 [ext_resource type="Script" uid="uid://cdsy208jbfkdj" path="res://player.gd" id="14_b2cyw"]
 [ext_resource type="PackedScene" uid="uid://cksv3ygujpwxe" path="res://props/words.tscn" id="14_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="14_twwvs"]
+[ext_resource type="Texture2D" uid="uid://rgqe4u05a5pk" path="res://actors/cast/gavin.png" id="16_5f3tm"]
 [ext_resource type="Texture2D" uid="uid://cadovxw7bb1cl" path="res://gourts/disguise/hat.png" id="20_03e6b"]
 [ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="21_5y8te"]
+[ext_resource type="PackedScene" uid="uid://bpyqi3nxqposm" path="res://actors/conversation.tscn" id="22_5y8te"]
+[ext_resource type="Script" uid="uid://c6d0opjjjt103" path="res://actors/gavin_conversation.gd" id="23_5y8te"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
 texture = ExtResource("1_wxgj7")
@@ -50,7 +53,10 @@ texture_region_size = Vector2i(256, 256)
 2:0/0 = 0
 3:0/0 = 0
 0:1/0 = 0
+1:1/next_alternative_id = 2
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 53.3533, 128, 53.3533, 128, 128, -128, 128)
+1:1/1 = 1
 2:1/0 = 0
 3:1/0 = 0
 
@@ -77,8 +83,14 @@ size = Vector2(1154, 640)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twwvs"]
 resource_local_to_scene = true
 shader = ExtResource("14_1axx8")
-shader_parameter/grow = 0.0
-shader_parameter/handle = Vector2(0, 0)
+shader_parameter/grow = -0.0671081
+shader_parameter/handle = Vector2(-29.5796, -63.1337)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5f3tm"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = -0.200857
+shader_parameter/handle = Vector2(-37.3321, -137.761)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4gsd2"]
 resource_local_to_scene = true
@@ -95,7 +107,8 @@ y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(96, 172)
-tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAQABAAEAAAAMAAAAAQABAAEAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAQABAAEAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAQABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///n/AAABAAEAAAAOAP//AQABAAAAAAANAP//AQAAAAAAAAAMAP//AQABAAAAAAALAP//AQAAAAAAAAA=")
+scale = Vector2(2.8, 2.8)
+tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAQABAAEAAAAMAAAAAQABAAEAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAQABAAEAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAQABAAEAAAAPAAAAAQABAAEAAAAQAAAAAQABAAEAAAARAAAAAQABAAEAAAASAAAAAQABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAQABAAEAAAD///n/AAABAAEAAAAOAP//AQABAAAAAAANAP//AQACAAAAAAAMAP//AQABAAAAAAALAP//AQACAAAAAAAQAP//AQABAAAAAAASAP//AQABAAAAAAAPAP//AQACAAAAAAARAP//AQACAAAAAAATAP//AQACAAAAAAA=")
 tile_set = SubResource("TileSet_mdp56")
 
 [node name="Sunglasses" parent="TileMapLayer" instance=ExtResource("3_rh3h7")]
@@ -111,7 +124,9 @@ position = Vector2(-585, -1991)
 exit = NodePath("../Door")
 
 [node name="Elevator" parent="TileMapLayer" instance=ExtResource("4_twwvs")]
-position = Vector2(4706, -275)
+z_index = 2
+position = Vector2(4716.43, -82.8571)
+scale = Vector2(0.516328, 0.552843)
 level_to = ExtResource("5_1axx8")
 entrypoint = NodePath("Elevator/Frame/Interior/Background")
 
@@ -166,6 +181,7 @@ scale = Vector2(-10.0539, 2.93887)
 [node name="Master" type="Camera2D" parent="." node_paths=PackedStringArray("player_character")]
 script = ExtResource("14_b2cyw")
 player_character = NodePath("../Gourt Stack/Gourt1")
+zoom_smoothing = 0
 metadata/_custom_type_script = "uid://cdsy208jbfkdj"
 
 [node name="ActivationZone" type="Area2D" parent="Master"]
@@ -176,15 +192,36 @@ script = ExtResource("12_5y8te")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Master/ActivationZone"]
 shape = SubResource("RectangleShape2D_5y8te")
 
-[node name="Janitor" parent="." instance=ExtResource("14_twwvs")]
+[node name="Gavin" parent="." instance=ExtResource("14_twwvs")]
 material = SubResource("ShaderMaterial_twwvs")
-position = Vector2(2203, 49)
+position = Vector2(12313, 371)
 collision_layer = 2
 collision_mask = 5
 
+[node name="Sprite2D" parent="Gavin" index="0"]
+material = SubResource("ShaderMaterial_5f3tm")
+scale = Vector2(0.455372, 0.375375)
+texture = ExtResource("16_5f3tm")
+
+[node name="Handle" parent="Gavin/Sprite2D" index="0"]
+process_mode = 4
+position = Vector2(0, -2045.95)
+enabled = false
+
+[node name="Speak Hole" parent="Gavin/Sprite2D/Handle" index="0"]
+offset_left = -20.3358
+offset_top = -217.506
+offset_right = 27.1942
+offset_bottom = -148.316
+
+[node name="GavinConversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("22_5y8te")]
+position = Vector2(12313, 200)
+script = ExtResource("23_5y8te")
+actors = [NodePath("../Gavin")]
+
 [node name="Gourt Stack" parent="." node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 y_sort_enabled = true
-position = Vector2(4166, 191)
+position = Vector2(13350, 496)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
@@ -240,4 +277,5 @@ head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [editable path="TileMapLayer/Door"]
+[editable path="Gavin"]
 [editable path="Gourt Stack"]

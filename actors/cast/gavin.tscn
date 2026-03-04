@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi7ls8srlm83b"]
+
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="1_al66v"]
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="2_25vio"]
+[ext_resource type="Texture2D" uid="uid://rgqe4u05a5pk" path="res://actors/cast/gavin.png" id="3_al66v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3yob7"]
+resource_local_to_scene = true
+shader = ExtResource("2_25vio")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[node name="Gavin" instance=ExtResource("1_al66v")]
+material = SubResource("ShaderMaterial_3yob7")
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_3yob7")
+scale = Vector2(0.455372, 0.375375)
+texture = ExtResource("3_al66v")
+
+[node name="Handle" parent="Sprite2D" index="0"]
+position = Vector2(0, -2045.95)
+
+[node name="Speak Hole" parent="Sprite2D/Handle" index="0"]
+offset_left = -21.9601
+offset_top = -222.801
+offset_right = 25.5699
+offset_bottom = -153.611

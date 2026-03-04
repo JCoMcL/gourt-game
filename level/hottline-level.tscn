@@ -209,10 +209,10 @@ position = Vector2(0, -2045.95)
 enabled = false
 
 [node name="Speak Hole" parent="Gavin/Sprite2D/Handle" index="0"]
-offset_left = -20.3358
-offset_top = -217.506
-offset_right = 27.1942
-offset_bottom = -148.316
+offset_left = -144.936
+offset_top = 1204.13
+offset_right = -97.4056
+offset_bottom = 1273.32
 
 [node name="GavinConversation" parent="." node_paths=PackedStringArray("actors") instance=ExtResource("22_5y8te")]
 position = Vector2(12313, 200)

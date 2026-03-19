@@ -1,10 +1,7 @@
 x:done, -:underway
 - [ ] Opening Cutscene
 - [x] Death Animation
-- [ ] Traverse spike floor
-- [ ] Annotated Animated Sprite2D
--- [ ] Proper item holding for animations
--- [ ] Correctly position sunglasses
+- [x] Traverse spike floor
 - [-] Rigidbody Interaction
 - [x] Gourt disguise
 - [-] Elevator
@@ -39,5 +36,5 @@ x:done, -:underway
 -- [x] Focus on player character
 -- [x] Focus in additional objects
 -- [ ] Manual override for cutscenes
-- [ ] Cursor
+- [x] Cursor
 - [x] Game Over

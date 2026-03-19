@@ -22,4 +22,3 @@ func _ready():
 		"Windows":
 			current = Windows.new()
 	#print(DisplayServer.get_name())
-

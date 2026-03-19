@@ -19,25 +19,13 @@ twitch integtation
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
 
-[` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
+[` var open_state = false #TODO work will be needed to allow door to start open`](./props/elevator/elevator.gd)
 
-[` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
-
-[` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
-
-[` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
-
-[` return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor`](./tools/yute.gd)
+[` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)
 
 [` var text_size = text_line.get_size() * 1.02 #FIXME calculation is slightly undersized.`](./ui/speech_bubble/speech_bubble.gd)
 
 [` r.position = global_position #TODO getting our own global rect reliably is more steps than this`](./ui/speech_bubble/speech_bubble.gd)
-
-[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
-
-[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
-
-[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
 
 [` extends Actor #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./gourts/gourt.gd)
 
@@ -51,9 +39,21 @@ twitch integtation
 
 [` func can_reach(o) -> bool  #TODO more reliable test would check if we can reach any part, not just the center`](./gourts/gourt.gd)
 
-[` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)
+[` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
 
-[` var open_state = false #TODO work will be needed to allow door to start open`](./props/elevator/elevator.gd)
+[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
+
+[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
+
+[` return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor`](./tools/yute.gd)
+
+[` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
+
+[` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
+
+[` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
+
+[` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
 
 [` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
 

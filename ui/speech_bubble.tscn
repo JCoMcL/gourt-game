@@ -1,32 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuy1mgrdlirmk"]
+[gd_scene format=3 uid="uid://cuy1mgrdlirmk"]
 
-[ext_resource type="Theme" uid="uid://cbdsnwv4lfswa" path="res://ui/theme.tres" id="1_uc8e1"]
+[ext_resource type="Theme" uid="uid://b7wx02lu4syvx" path="res://ui/theme.tres" id="1_uc8e1"]
 [ext_resource type="Script" uid="uid://ccrqgcbvxoa1s" path="res://ui/speech_bubble/speech_bubble.gd" id="2_svcvy"]
+[ext_resource type="Texture2D" uid="uid://wfgxqy8vtlp" path="res://ui/speech_bubble/speech_bubble_0000.png" id="3_2ijsq"]
 [ext_resource type="Texture2D" uid="uid://b81bso44qcpnx" path="res://ui/speech_bubble/tail.png" id="3_scv7b"]
 [ext_resource type="Script" uid="uid://cyksg1xd3x3v4" path="res://ui/speech_bubble/tail.gd" id="4_2ijsq"]
+[ext_resource type="Texture2D" uid="uid://c6hcf3726fkwp" path="res://ui/speech_bubble/speech_bubble_0001.png" id="4_s8lrc"]
+[ext_resource type="Texture2D" uid="uid://dfpe4ljx18inf" path="res://ui/speech_bubble/speech_bubble_0002.png" id="5_yixp8"]
 
-[node name="speech bubble" type="Panel"]
+[node name="speech bubble" type="Panel" unique_id=2130899540]
 top_level = true
-offset_right = 126.48
-offset_bottom = 28.56
+offset_right = 105.06
+offset_bottom = 23.46
 theme = ExtResource("1_uc8e1")
 script = ExtResource("2_svcvy")
+textures = Array[Texture2D]([ExtResource("3_2ijsq"), ExtResource("4_s8lrc"), ExtResource("5_yixp8")])
 
-[node name="Label" type="RichTextLabel" parent="."]
+[node name="Label" type="RichTextLabel" parent="." unique_id=768432692]
 layout_mode = 1
-offset_right = 126.48
-offset_bottom = 28.56
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Hello, World!"
 scroll_active = false
 
-[node name="Tail" type="Line2D" parent="."]
-points = PackedVector2Array(90, 28.56, 90, 76)
+[node name="Tail" type="Line2D" parent="." unique_id=1704526210]
+points = PackedVector2Array(90, 23.46, 90, 76)
 width = 45.0
 texture = ExtResource("3_scv7b")
 texture_mode = 2
 script = ExtResource("4_2ijsq")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=214467783]
 wait_time = 1.65
 one_shot = true

@@ -162,11 +162,32 @@ func anneal_position(iterations: int = 1):
 	for i in range(iterations):
 		update_position()
 
+const update_position_rate=60
+var _update_position_accum:float
+const animate_rate=1.2
+var _animate_accum:float
+
+@export var textures:Array[Texture2D]
+var tex_i = 0
+func change_frame():
+	assert(theme.get_stylebox(&"panel", &"Panel"))
+	if not Engine.is_editor_hint():
+		tex_i += 1
+		theme.get_stylebox(&"panel", &"Panel").texture = textures[tex_i % textures.size()]
+
 func _process(delta: float) -> void:
 	if debug_overlays:
 		queue_redraw()
-	if not Engine.is_editor_hint():
+
+	_update_position_accum += delta
+	while not Engine.is_editor_hint() and _update_position_accum > 1.0/update_position_rate:
 		update_position()
+		_update_position_accum -= 1.0/update_position_rate
+
+	_animate_accum += delta
+	while _animate_accum > 1.0/animate_rate:
+		change_frame()
+		_animate_accum -= 1.0/animate_rate
 
 func screen_to_world(v):
 	return get_viewport().global_canvas_transform.affine_inverse() * v

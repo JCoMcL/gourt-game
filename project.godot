@@ -29,6 +29,12 @@ SpeechTherapist="*res://ui/speech_bubble/SpeechTherapist.gd"
 Settings="*res://settings.gd"
 Platform="*res://platform.gd"
 
+[editor]
+
+movie_writer/video_quality=1.0
+movie_writer/ogv/encoding_speed=3
+movie_writer/movie_file="videos/guort-dev.ogv"
+
 [input]
 
 "go right"={

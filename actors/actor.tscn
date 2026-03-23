@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnuqy2f8bhgk3"]
+[gd_scene format=3 uid="uid://cnuqy2f8bhgk3"]
 
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="1_0kmga"]
 [ext_resource type="Texture2D" uid="uid://o17u11s8w1d2" path="res://actors/janitor.png" id="2_jiomh"]
@@ -14,22 +14,24 @@ shader_parameter/handle = Vector2(0, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4hdp"]
 size = Vector2(378, 583)
 
-[node name="Actor" type="CharacterBody2D"]
+[node name="Actor" type="CharacterBody2D" unique_id=1223829275]
 material = SubResource("ShaderMaterial_4r7ot")
+collision_layer = 34
+collision_mask = 5
 script = ExtResource("2_y4hdp")
 walk_speed = 300
 walk_accel = 15
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=824274135]
 material = SubResource("ShaderMaterial_4r7ot")
 texture = ExtResource("2_jiomh")
 
-[node name="Handle" type="Node2D" parent="Sprite2D"]
+[node name="Handle" type="Node2D" parent="Sprite2D" unique_id=454969162]
 position = Vector2(0, -303.5)
 script = ExtResource("3_jiomh")
 enabled = true
 
-[node name="Speak Hole" type="Control" parent="Sprite2D/Handle"]
+[node name="Speak Hole" type="Control" parent="Sprite2D/Handle" unique_id=1681256293]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -20.0
@@ -37,5 +39,5 @@ offset_top = 21.5
 offset_right = 27.53
 offset_bottom = 90.69
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=367172346]
 shape = SubResource("RectangleShape2D_y4hdp")

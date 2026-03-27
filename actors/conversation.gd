@@ -10,16 +10,21 @@ class Line:
 		self.text = text
 		self.speaker = speaker
 
-@onready var lines = [ Line.new("Look at that.", actors[0]),
-	Line.new("This a seems like a violation of workplace safety code.", actors[0]),
-	Line.new("29 CFR 1910.212", actors[0]),
-	Line.new("Not to mention 1910.36(b)(1).", actors[0]),
-	Line.new("So true!", actors[0]),
-	Line.new("Oh my! That does sound quite unsafe.", actors[1]),
-	Line.new("We'll need to bring this finding to the owner the building at once.", actors[0]),
-	Line.new("The Boss. His office is that way.", actors[1]),
-	Line.new("Thank you for your cooperation", actors[0]),
-	actors[0].exit_stage_right
+@onready var keith=actors[0]
+@onready var janet=actors[1]
+@onready var janny=actors[2]
+
+@onready var lines = [ Line.new("Look at that.", janet),
+	Line.new("This a seems like a violation of workplace safety code.", janet),
+	Line.new("29 CFR 1910.212", keith),
+	Line.new("Not to mention 1910.36(b)(1).", janet),
+	Line.new("So true!", keith),
+	Line.new("Oh my! That does sound quite unsafe.", janny),
+	Line.new("We'll need to bring this finding to the owner the building at once.", janet),
+	Line.new("The Boss. His office is that way.", janny),
+	Line.new("Thank you for your cooperation", keith),
+	keith.exit_stage_right,
+	janet.exit_stage_right
 ]
 
 var counter = 0
@@ -44,6 +49,8 @@ func display_line():
 			speech_bubble.reset_text(line.text)
 			speech_bubble.speaker = line.speaker
 		speech_bubble.anneal_position()
+		line.speaker.begin_speaking.call_deferred()
+		speech_bubble.on_done_showing.connect(line.speaker.stop_speaking, Node.CONNECT_ONE_SHOT)
 	elif line is Callable:
 		await line.call()
 		display_line()

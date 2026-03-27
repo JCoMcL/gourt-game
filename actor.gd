@@ -168,6 +168,15 @@ func _physics_process(delta: float) -> void:
 		handle_collision(get_slide_collision(i))
 
 # --- Apearance ---
+func begin_speaking():
+	var n = get_node_or_null("Sprite2D/Handle")
+	if n and n is ActorHandle:
+		n.talking=true
+
+func stop_speaking():
+	var n = get_node_or_null("Sprite2D/Handle")
+	if n and n is ActorHandle:
+		n.talking=false
 
 func _process(delta):
 	set_facing(Direction.get_x(walk_target))

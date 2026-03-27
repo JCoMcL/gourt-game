@@ -14,7 +14,7 @@ extends Node2D
 @onready var height_vec = Vector2(0, -sprite.get_rect().size.y / 2)
 
 func set_offset(v:Vector2):
-	global_position = sprite.global_position + height_vec + v
+	global_position = sprite.global_position + height_vec + v * global_scale
 
 func _ready() -> void:
 	set_offset(Vector2.ZERO)

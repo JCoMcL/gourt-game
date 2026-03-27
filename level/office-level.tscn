@@ -64,29 +64,11 @@ radius = 26.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5y8te"]
 size = Vector2(1154, 640)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jh3jc"]
-resource_local_to_scene = true
-shader = ExtResource("14_1axx8")
-shader_parameter/grow = 0.10116671752929687
-shader_parameter/handle = Vector2(0, 50.58336)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oub6b"]
-resource_local_to_scene = true
-shader = ExtResource("14_1axx8")
-shader_parameter/grow = 0.09216668701171875
-shader_parameter/handle = Vector2(0, 46.083344)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1cl5"]
-resource_local_to_scene = true
-shader = ExtResource("14_1axx8")
-shader_parameter/grow = 0.1033333740234375
-shader_parameter/handle = Vector2(0, 51.666687)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmmnh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jh3jc"]
 resource_local_to_scene = true
 size = Vector2(1620, 654)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_no4ag"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oub6b"]
 resource_local_to_scene = true
 shader = ExtResource("13_slst7")
 shader_parameter/top_padding_px = 100.0
@@ -95,6 +77,24 @@ shader_parameter/scale_adjustment_factor = 1.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03e6b"]
 size = Vector2(84, 62)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1cl5"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmmnh"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no4ag"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
 
 [node name="Node2D" type="Node2D" unique_id=1056077683]
 y_sort_enabled = true
@@ -184,28 +184,13 @@ script = ExtResource("12_5y8te")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Master/ActivationZone" unique_id=366572946]
 shape = SubResource("RectangleShape2D_5y8te")
 
-[node name="Janitor" parent="." unique_id=1405030622 instance=ExtResource("14_twwvs")]
-material = SubResource("ShaderMaterial_jh3jc")
-position = Vector2(2238, -29.000004)
-scale = Vector2(1.2, 1.2)
-
-[node name="Inspector Janet" parent="." unique_id=268609533 instance=ExtResource("16_jh3jc")]
-material = SubResource("ShaderMaterial_oub6b")
-position = Vector2(1499, 1)
-scale = Vector2(1.2, 1.2)
-
-[node name="Inspector Keith" parent="." unique_id=581965157 instance=ExtResource("24_oub6b")]
-material = SubResource("ShaderMaterial_v1cl5")
-position = Vector2(1731.0001, -7)
-scale = Vector2(1.2, 1.2)
-
 [node name="Conversation" parent="." unique_id=424987862 node_paths=PackedStringArray("actors") instance=ExtResource("15_1axx8")]
 position = Vector2(1960, -30)
-actors = [NodePath("../Inspector Janet"), NodePath("../Inspector Keith"), NodePath("../Janitor")]
+actors = [NodePath("../Inspector Keith"), NodePath("../Inspector Janet"), NodePath("../Janitor")]
 
 [node name="CollisionShape2D" parent="Conversation" index="0"]
 position = Vector2(61, 31)
-shape = SubResource("RectangleShape2D_hmmnh")
+shape = SubResource("RectangleShape2D_jh3jc")
 
 [node name="Gourt Stack" parent="." unique_id=157017166 node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 y_sort_enabled = true
@@ -221,7 +206,7 @@ foot_friend = NodePath("../Gourt2")
 
 [node name="Disguise" parent="Gourt Stack/Gourt1" unique_id=2037089645 node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
 z_index = 4
-material = SubResource("ShaderMaterial_no4ag")
+material = SubResource("ShaderMaterial_oub6b")
 points = PackedVector2Array(0, -88, 0, 0, 0, 100, 0, 200, 0, 300, 0, 400, 0, 500, 0, 600)
 wearer = NodePath("..")
 
@@ -344,6 +329,22 @@ foot_friend = NodePath("../Gourt15")
 position = Vector2(0, -100)
 head_friend = NodePath("../Gourt14")
 foot_friend = NodePath("../Gourt0")
+
+[node name="Janitor" parent="." unique_id=1223829275 instance=ExtResource("14_twwvs")]
+material = SubResource("ShaderMaterial_v1cl5")
+position = Vector2(2252, -23)
+scale = Vector2(1.2, 1.2)
+
+[node name="Inspector Keith" parent="." unique_id=268609533 instance=ExtResource("24_oub6b")]
+material = SubResource("ShaderMaterial_hmmnh")
+position = Vector2(1611.0001, -9)
+scale = Vector2(1.2, 1.2)
+facing = 3
+
+[node name="Inspector Janet" parent="." unique_id=180320558 instance=ExtResource("16_jh3jc")]
+material = SubResource("ShaderMaterial_no4ag")
+position = Vector2(1367, -7)
+scale = Vector2(1.2, 1.2)
 
 [editable path="TileMapLayer/Door"]
 [editable path="Conversation"]

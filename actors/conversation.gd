@@ -10,17 +10,17 @@ class Line:
 		self.text = text
 		self.speaker = speaker
 
-@onready var janet=actors[0]
-@onready var keith=actors[1]
+@onready var keith=actors[0]
+@onready var janet=actors[1]
 @onready var janny=actors[2]
 
-@onready var lines = [ Line.new("Look at that.", keith),
-	Line.new("This a seems like a violation of workplace safety code.", keith),
-	Line.new("29 CFR 1910.212", janet),
-	Line.new("Not to mention 1910.36(b)(1).", keith),
-	Line.new("So true!",janet),
+@onready var lines = [ Line.new("Look at that.", janet),
+	Line.new("This a seems like a violation of workplace safety code.", janet),
+	Line.new("29 CFR 1910.212", keith),
+	Line.new("Not to mention 1910.36(b)(1).", janet),
+	Line.new("So true!", keith),
 	Line.new("Oh my! That does sound quite unsafe.", janny),
-	Line.new("We'll need to bring this finding to the owner the building at once.", keith),
+	Line.new("We'll need to bring this finding to the owner the building at once.", janet),
 	Line.new("The Boss. His office is that way.", janny),
 	Line.new("Thank you for your cooperation", keith),
 	keith.exit_stage_right,

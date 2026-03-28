@@ -56,10 +56,10 @@ friction = 0.06
 bounce = 0.44
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pxtkg"]
-radius = 33.1361
+radius = 41.4367
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w4oyg"]
-radius = 26.0
+radius = 33.13608
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5y8te"]
 size = Vector2(1154, 640)
@@ -124,22 +124,25 @@ level_to = ExtResource("5_1axx8")
 entrypoint = NodePath("Elevator/Frame/Interior/Background")
 
 [node name="Stroller" type="RigidBody2D" parent="TileMapLayer" unique_id=1215647202]
-position = Vector2(-1741, -180)
+position = Vector2(-2405, -49)
+collision_layer = 35
 physics_material_override = SubResource("PhysicsMaterial_j4txm")
 
 [node name="Stroller" type="Sprite2D" parent="TileMapLayer/Stroller" unique_id=165230086]
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("10_yl1fq")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/Stroller" unique_id=1592558146]
-position = Vector2(146, 139)
+position = Vector2(177, 167)
+scale = Vector2(1.2, 1.2)
 polygon = PackedVector2Array(-126, -94, 18, -105, -16, -206, 73, -190, 119, -97, 109, -35, -125, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Stroller" unique_id=630847526]
-position = Vector2(63, 221)
+position = Vector2(73, 266)
 shape = SubResource("CircleShape2D_pxtkg")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/Stroller" unique_id=586456254]
-position = Vector2(226, 222)
+position = Vector2(271, 266)
 shape = SubResource("CircleShape2D_w4oyg")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="TileMapLayer" unique_id=1211448890]
@@ -250,84 +253,44 @@ head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Gourt Stack2" parent="." unique_id=439593787 node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(388, 520)
+position = Vector2(467, 503)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack2" unique_id=896493618 node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
-head_friend = NodePath("../Gourt15")
-
-[node name="Gourt1" parent="Gourt Stack2" unique_id=219362346 node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1500)
-foot_friend = NodePath("../Gourt2")
-
-[node name="Gourt2" parent="Gourt Stack2" unique_id=1673097438 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1400)
-head_friend = NodePath("../Gourt1")
-foot_friend = NodePath("../Gourt3")
-
-[node name="Gourt3" parent="Gourt Stack2" unique_id=640785179 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1300)
-head_friend = NodePath("../Gourt2")
-foot_friend = NodePath("../Gourt4")
-
-[node name="Gourt4" parent="Gourt Stack2" unique_id=2107288271 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1200)
-head_friend = NodePath("../Gourt3")
-foot_friend = NodePath("../Gourt5")
-
-[node name="Gourt5" parent="Gourt Stack2" unique_id=277297220 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1100)
-head_friend = NodePath("../Gourt4")
-foot_friend = NodePath("../Gourt6")
-
-[node name="Gourt6" parent="Gourt Stack2" unique_id=551950066 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -1000)
-head_friend = NodePath("../Gourt5")
-foot_friend = NodePath("../Gourt7")
-
-[node name="Gourt7" parent="Gourt Stack2" unique_id=1417605869 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -900)
-head_friend = NodePath("../Gourt6")
-foot_friend = NodePath("../Gourt8")
-
-[node name="Gourt8" parent="Gourt Stack2" unique_id=506746909 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -800)
 head_friend = NodePath("../Gourt7")
-foot_friend = NodePath("../Gourt9")
 
-[node name="Gourt9" parent="Gourt Stack2" unique_id=1776042320 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -700)
-head_friend = NodePath("../Gourt8")
-foot_friend = NodePath("../Gourt10")
-
-[node name="Gourt10" parent="Gourt Stack2" unique_id=1754193550 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -600)
-head_friend = NodePath("../Gourt9")
+[node name="Gourt10" parent="Gourt Stack2" unique_id=1754193550 node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -616)
 foot_friend = NodePath("../Gourt11")
 
 [node name="Gourt11" parent="Gourt Stack2" unique_id=149754562 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -500)
+position = Vector2(0, -528)
 head_friend = NodePath("../Gourt10")
 foot_friend = NodePath("../Gourt12")
 
 [node name="Gourt12" parent="Gourt Stack2" unique_id=91425286 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -400)
+position = Vector2(0, -440)
 head_friend = NodePath("../Gourt11")
 foot_friend = NodePath("../Gourt13")
 
 [node name="Gourt13" parent="Gourt Stack2" unique_id=611568207 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -300)
+position = Vector2(0, -352)
 head_friend = NodePath("../Gourt12")
 foot_friend = NodePath("../Gourt14")
 
 [node name="Gourt14" parent="Gourt Stack2" unique_id=521177802 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -200)
+position = Vector2(0, -264)
 head_friend = NodePath("../Gourt13")
 foot_friend = NodePath("../Gourt15")
 
 [node name="Gourt15" parent="Gourt Stack2" unique_id=746262192 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
-position = Vector2(0, -100)
+position = Vector2(0, -176)
 head_friend = NodePath("../Gourt14")
+foot_friend = NodePath("../Gourt7")
+
+[node name="Gourt7" parent="Gourt Stack2" unique_id=1204838239 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+position = Vector2(0, -88)
+head_friend = NodePath("../Gourt15")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Janitor" parent="." unique_id=1223829275 instance=ExtResource("14_twwvs")]

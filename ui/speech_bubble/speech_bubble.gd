@@ -128,11 +128,11 @@ func centered_on_tail():
 
 func get_position_goals():
 	return [
-		Position_Goal.new(above ,3),
+		Position_Goal.new(above ,5),
 		Position_Goal.new(antigravity, 0),
 		#Position_Goal.new(near_speaker ,1),
 		Position_Goal.new(on_screen ,30),
-		Position_Goal.new(keep_ideal_tail_length ,2),
+		Position_Goal.new(keep_ideal_tail_length ,3),
 		Position_Goal.new(centered_on_tail, 1)
 		# away from other actors
 		# not overlapping speaker

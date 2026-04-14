@@ -4,3 +4,5 @@
 *~
 *-autosave.kra
 .vscode/
+videos/
+!videos/.gdignore

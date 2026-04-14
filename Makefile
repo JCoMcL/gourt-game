@@ -6,3 +6,6 @@ README.md:
 
 %_atlas.png: %_0000.png %_0001.png %_0002.png
 	montage $^ -tile $(words $^)x1 -background transparent -geometry +0+0 $@
+
+crop_cast_pngs:
+	for f in actors/cast/*.png; do convert "$$f" -trim "$$f"; done

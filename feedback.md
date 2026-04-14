@@ -1,0 +1,3 @@
+- speech bubble shouldn't move around so much
+- text too small
+- story too easy to ignore

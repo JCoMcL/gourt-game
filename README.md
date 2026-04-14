@@ -19,6 +19,8 @@ twitch integtation
 # See Also (auto-generated)
 [office-level/todo.md](./level/office-level/todo.md)
 
+[./feedback.md](./feedback.md)
+
 [` var open_state = false #TODO work will be needed to allow door to start open`](./props/elevator/elevator.gd)
 
 [` target_slot = operator.get_node("Body/HandSlot1") #TODO think about left/right hands/legs`](./props/equipable.gd)

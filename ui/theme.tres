@@ -22,3 +22,4 @@ default_font_size = 32
 Button/colors/font_color = Color(0.13333334, 0.1254902, 0.20392157, 1)
 Label/colors/font_color = Color(0.13333334, 0.1254902, 0.20392157, 1)
 Panel/styles/panel = SubResource("StyleBoxTexture_3fgq6")
+RichTextLabel/colors/default_color = Color(0.13333334, 0.1254902, 0.20392157, 1)

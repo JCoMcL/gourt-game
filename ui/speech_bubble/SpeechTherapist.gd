@@ -18,4 +18,5 @@ func say(speaker: Node2D, words: String) -> SpeechBubble:
 		bubbles[speaker] = sb
 		sb.anneal_position(10)
 		sb.text = words
+	sb.z_index = max(sb.z_index, speaker.z_index + 10)
 	return sb

@@ -15,7 +15,7 @@ func open():
 func close():
 	if open_state:
 		open_state = false
-		$AnimationPlayer.play("closing")
+		$AnimationPlayer.play_backwards("opening")
 
 func update_state():
 	collision_layer = Clision.layers["door"] * int(open_state)
@@ -29,7 +29,7 @@ func boot_passengers():
 
 func on_animation_finished(anim_name: StringName):
 	update_state()
-	if anim_name == "closing":
+	if not open_state:
 		var a = waiting_area.get_children()
 		for o in a:
 			if o is Actor and o.master:
@@ -37,7 +37,7 @@ func on_animation_finished(anim_name: StringName):
 		if a:
 			# TODO it should be the player who triggers the level transition, not the door. This allows NPCs to use the elevator and softlock the game
 			Yute.get_level_container(self).transition_to(level_to, a, entrypoint)
-	if anim_name == "opening":
+	else:
 		boot_passengers()
 
 func _ready():

@@ -4,21 +4,21 @@
 [ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="2_a52p5"]
 [ext_resource type="Texture2D" uid="uid://dncxohma1jvwn" path="res://actors/cast/inspector keith.png" id="3_fnoyk"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wj527"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjodw"]
 resource_local_to_scene = true
 shader = ExtResource("2_a52p5")
 shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ayrtw"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a52p5"]
 resource_local_to_scene = true
 size = Vector2(240, 583)
 
 [node name="Inspector Keith" unique_id=268609533 instance=ExtResource("1_cjodw")]
-material = SubResource("ShaderMaterial_wj527")
+material = SubResource("ShaderMaterial_cjodw")
 
 [node name="Sprite2D" parent="." index="0" unique_id=824274135]
-material = SubResource("ShaderMaterial_wj527")
+material = SubResource("ShaderMaterial_cjodw")
 texture = ExtResource("3_fnoyk")
 
 [node name="Handle" parent="Sprite2D" index="0" unique_id=454969162]
@@ -31,5 +31,4 @@ offset_right = -3.4700012
 offset_bottom = 121.19
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=367172346]
-position = Vector2(-2, 2)
-shape = SubResource("RectangleShape2D_ayrtw")
+shape = SubResource("RectangleShape2D_a52p5")

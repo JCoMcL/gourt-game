@@ -48,17 +48,11 @@ twitch integtation
 
 [` back.z_index = Gourtilities.get_stack_base(get_wearer()).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
 
-[` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
-
 [` return initial.move_toward(direction * sharpness / delta, snappiness) - initial #TODO refactor`](./tools/yute.gd)
 
 [` class_name Master #TODO  this class should be more generic  player and AI should inheret from it`](./player.gd)
 
 [` #TODO how does input priority work exactly? Does it make this reording unneccesary?`](./player.gd)
-
-[` var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results`](./player.gd)
-
-[` player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element`](./player.gd)
 
 [` extends CharacterBody2D #TODO  I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)`](./actor.gd)
 

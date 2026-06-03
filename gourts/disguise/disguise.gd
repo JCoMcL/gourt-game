@@ -80,7 +80,7 @@ func _process(delta: float) -> void:
 		transform.x = wearer.transform.x # Hack to unflip self if parent flips
 	else:
 		z_as_relative = false
-		z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index
+		z_index = Yute.get_canvas_item_global_z(wearer) + plus_z
 
 	clear_points()
 	add_point_from(wearer.get_node("Perch"))

@@ -28,7 +28,7 @@ func interact(operator) -> bool:
 			reparent(target_slot)
 		else:
 			target_slot.add_child(self)
-	position = Vector2.ZERO
+	transform = Transform2D.IDENTITY
 	return true
 
 func rigor_mortis():

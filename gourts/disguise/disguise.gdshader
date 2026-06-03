@@ -3,6 +3,8 @@ shader_type canvas_item;
 uniform float top_padding_px = 0.0;
 uniform float full_length_px = 730.0;
 uniform float scale_adjustment_factor = 1.1;
+uniform vec2 peephole_center = vec2(-1.0, -1.0);
+uniform float peephole_radius = 60.0;
 
 void vertex() {
 	UV = vec2(1.0 - UV.y, UV.x);
@@ -22,7 +24,9 @@ void fragment() {
 	COLOR.rg = UV;
 	//COLOR.a = 1.0;
 	COLOR = texture(TEXTURE, _UV);
-	// Called for every pixel the material is visible on.
+	if (distance(FRAGCOORD.xy, peephole_center) < peephole_radius) {
+		COLOR.a = 0.0;
+	}
 }
 
 //void light() {

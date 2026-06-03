@@ -82,6 +82,7 @@ func _process(delta: float) -> void:
 		z_as_relative = false
 		z_index = Yute.get_canvas_item_global_z(wearer) + plus_z
 
+	material.set_shader_parameter("peephole_center", get_viewport().get_mouse_position())
 	clear_points()
 	add_point_from(wearer.get_node("Perch"))
 	add_point_from(wearer)

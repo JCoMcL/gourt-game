@@ -1,18 +1,18 @@
 extends Camera2D
 class_name Master #TODO: this class should be more generic: player and AI should inheret from it
 
-@export var player_character: Actor:
-	set(a):
-		if valid_actor(player_character):
-			player_character.under_new_management(null)
-		if valid_actor(a):
-			a.under_new_management(self)
-		player_character = a
-
+@export var player_character: Actor
 @export_range(0, 1) var position_smoothing: float = 0.1
 @export_range(0, 500) var position_threshold: float = 50
 @export_range(0, 5) var zoom_smoothing: float = 1
 @export_range(1, 10) var max_zoom: float = 1
+
+func _set_player_character(a: Actor):
+	if valid_actor(player_character):
+		player_character.under_new_management(null)
+	if valid_actor(a):
+		a.under_new_management(self)
+	player_character = a
 
 func valid_actor(a: Actor) -> bool:
 	return a and is_instance_valid(a) and a is Actor

@@ -74,6 +74,14 @@ func command(c: Commands) -> void:
 	else:
 		super(c)
 
+func under_new_management(m: Master):
+	super(m)
+	for g in Gourtilities.list_stack_members(self):
+		if m:
+			g.collision_mask |= Clision.layers["player_wall"]
+		else:
+			g.collision_mask &= ~Clision.layers["player_wall"]
+
 func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds one match, so fails with overlapping gourts. Perhaps intersect_point would be better?
 	var result = get_world_2d().direct_space_state.intersect_ray(
 		PhysicsRayQueryParameters2D.create(

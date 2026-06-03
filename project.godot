@@ -91,6 +91,7 @@ interact={
 2d_physics/layer_6="interactive"
 2d_physics/layer_7="gourt"
 2d_physics/layer_8="camera activator"
+2d_physics/layer_9="player_wall"
 
 [physics]
 

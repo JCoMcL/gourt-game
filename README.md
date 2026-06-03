@@ -4,15 +4,16 @@
 3. `.tscn` and `.gd` should generally not be sorted away since they need to be more retrievable than other assets like sprites.
 4. `.tscn` and `.gd` files should have descriptive names, and should have the same name if relating to the same object.
 5. File names should not contain redundant information that can be communicated by the name of their parent folder, except when observing rule no. 4
-
 # Bug Magnets
 ## BM1: Gourt Neighbour References
-Gourts keep track of their neighbours in the stack, however there no gaurentee that these references are correct and if they are not correct it could cause all manner if weird behaviour inlcuding startup crashes
+Gourts keep track of their neighbours in the stack, however there is no gaurentee that these references are correct and if they are not correct it could cause all manner if weird behaviour inlcuding startup crashes
 ## BM2: Z-Index Nonsense
 Gourts set their z-indexes based on their neighbours to get the stack to render-correctly. This can result in arbitrarily high z-indexes which breaks pretty much all assurances godot offers about correct ordering of things.
+## BM3: Player attach and detach
+Certain things need to be set up when an actor (Gourt) in controlled by the player. For a single actors this is manageable enough but for a whole stack of Gourts, setting and unsetting this stuff is a nightmare
 
 # Misc.
-addd gourts looking at things
+add gourts looking at things
 twitch integtation
 - chatters control NPCs
 
@@ -39,11 +40,13 @@ twitch integtation
 
 [` if result and result.collider is Gourt and not result.collider.head_friend  #BM1`](./gourts/gourt.gd)
 
+[` #TODO We really need 2-way communication between master and actor so the master can handle this`](./gourts/gourt.gd)
+
 [` func can_reach(o) -> bool  #TODO more reliable test would check if we can reach any part, not just the center`](./gourts/gourt.gd)
 
 [` func stack(g  Gourt, onto  Gourt)  #BM1`](./gourts/gourtilities.gd)
 
-[` back.z_index = Gourtilities.get_stack_base(wearer).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
+[` back.z_index = Gourtilities.get_stack_base(get_wearer()).z_index -plus_z #BM2`](./gourts/disguise/disguise.gd)
 
 [` z_index = wearer.z_index + plus_z #TODO calculate the wearer's global z_index`](./gourts/disguise/disguise.gd)
 

@@ -61,14 +61,19 @@ func _ready():
 	setup_back()
 	_on_foiled_changed.call_deferred()
 
-var persona_offset = Vector2(0, 60)
+const persona_offset = Vector2(0, 60)
+func _physics_process(delta:float):
+	var wearer = get_wearer()
+	if not wearer or not is_instance_valid(wearer):
+		return
+	if not foiled and persona and wearer:
+		persona.position = Gourtilities.get_stack_base(wearer).position + persona_offset
+
 func _process(delta: float) -> void:
 	var wearer = get_wearer()
 	if not wearer or not is_instance_valid(wearer):
 		return
 
-	if not foiled and persona and wearer:
-		persona.position = Gourtilities.get_stack_base(wearer).position + persona_offset
 	if wearer == get_parent():
 		z_index = plus_z
 		z_as_relative = true

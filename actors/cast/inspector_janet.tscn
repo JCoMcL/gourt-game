@@ -19,8 +19,8 @@ facing = 3
 
 [node name="Sprite2D" parent="." index="0" unique_id=824274135]
 material = SubResource("ShaderMaterial_14mff")
+position = Vector2(0, -264)
 texture = ExtResource("3_r8o1e")
-offset = Vector2(0, -261.185)
 
 [node name="Handle" parent="Sprite2D" index="0" unique_id=454969162]
 position = Vector2(0, -276.5)

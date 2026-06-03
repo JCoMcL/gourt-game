@@ -84,7 +84,15 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 	)
 	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
 		identify(["just stacked to %s" % result.collider.name])
+		var new_foot_friend = result.collider
+		# Hack to foil disguise.
+		#TODO We really need 2-way communication between master and actor so the master can handle this
+		for g in Gourtilities.list_stack_members(new_foot_friend):
+			for n in g.get_children():
+				if n is Disguise:
+					n.foiled = true
 		Gourtilities.stack(self, result.collider)
+
 
 func interact(operator: Node) -> bool:
 	var o = get_equipped_item()

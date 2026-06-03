@@ -80,7 +80,9 @@ func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds on
 	var result = get_world_2d().direct_space_state.intersect_ray(
 		PhysicsRayQueryParameters2D.create(
 			global_position,
-			global_position + Vector2.DOWN * distance)
+			global_position + Vector2.DOWN * distance,
+			Clision.layers["gourt"]
+		)
 	)
 	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
 		identify(["just stacked to %s" % result.collider.name])

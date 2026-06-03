@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ddimwbhyn068e"]
+
+[ext_resource type="PackedScene" uid="uid://cnuqy2f8bhgk3" path="res://actors/actor.tscn" id="1_d25gp"]
+[ext_resource type="Shader" uid="uid://dv5u4k7v7wyed" path="res://actors/animated.gdshader" id="2_s2wio"]
+[ext_resource type="Texture2D" uid="uid://c0u7qvls5qpho" path="res://actors/cast/thirsty guy.png" id="3_cg3qy"]
+[ext_resource type="Script" uid="uid://c4qa3jat54ahi" path="res://actors/cast/thirsty_guy.gd" id="3_s2wio"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2wio"]
+resource_local_to_scene = true
+shader = ExtResource("2_s2wio")
+shader_parameter/grow = 0.0
+shader_parameter/handle = Vector2(0, 0)
+
+[node name="Thirsty Guy" unique_id=1223829275 instance=ExtResource("1_d25gp")]
+material = SubResource("ShaderMaterial_s2wio")
+collision_mask = 1
+script = ExtResource("3_s2wio")
+
+[node name="Sprite2D" parent="." index="0" unique_id=824274135]
+material = SubResource("ShaderMaterial_s2wio")
+texture = ExtResource("3_cg3qy")
+
+[node name="Handle" parent="Sprite2D" index="0" unique_id=454969162]
+position = Vector2(0, -320.5)
+
+[node name="Speak Hole" parent="Sprite2D/Handle" index="0" unique_id=1681256293]
+offset_left = -14.0
+offset_top = 32.5
+offset_right = 33.53
+offset_bottom = 101.69
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=367172346]
+position = Vector2(3, -301.75)

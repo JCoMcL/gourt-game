@@ -1,7 +1,6 @@
 class_name Gourt
 extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
-
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
 
@@ -10,7 +9,6 @@ extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if w
 
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
-
 
 func identify(lines = []):
 	super([
@@ -45,7 +43,7 @@ func die():
 	super()
 	abdicate()
 	if head_friend:
-		head_friend.velocity.y = -200
+		head_friend.velocity.y = -900
 		head_friend.velocity.x *= 0.6
 
 	if foot_friend:

@@ -43,20 +43,20 @@ func call_all(g: Gourt, f: Callable):
 
 # list
 func list_head_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
-	if g.head_friend:
+	if g is Gourt and g.head_friend:
 		acc.append(g.head_friend)
 		return list_head_friends(g.head_friend, acc)
 	return acc
 
 func list_foot_friends(g: Gourt, acc: Array[Gourt] = []) -> Array[Gourt]:
-	if g.foot_friend:
+	if g is Gourt and g.foot_friend:
 		acc.append(g.foot_friend)
 		return list_foot_friends(g.foot_friend, acc)
 	return acc
 
 func list_stack_members(g: Gourt):
 	## note that the returned list is in no particular order
-	return list_foot_friends(g) + [g] + list_head_friends(g)
+	return list_foot_friends(g) + ([g] if g is Gourt else []) + list_head_friends(g)
 
 # --- Recursive functions ---
 

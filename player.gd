@@ -1,18 +1,18 @@
 extends Camera2D
 class_name Master #TODO: this class should be more generic: player and AI should inheret from it
 
-@export var player_character: Actor:
-	set(a):
-		if valid_actor(player_character):
-			player_character.under_new_management(null)
-		if valid_actor(a):
-			a.under_new_management(self)
-		player_character = a
-
+@export var player_character: Actor
 @export_range(0, 1) var position_smoothing: float = 0.1
 @export_range(0, 500) var position_threshold: float = 50
 @export_range(0, 5) var zoom_smoothing: float = 1
 @export_range(1, 10) var max_zoom: float = 1
+
+func _set_player_character(a: Actor):
+	if valid_actor(player_character):
+		player_character.under_new_management(null)
+	if valid_actor(a):
+		a.under_new_management(self)
+	player_character = a
 
 func valid_actor(a: Actor) -> bool:
 	return a and is_instance_valid(a) and a is Actor
@@ -109,15 +109,31 @@ func quick_move_item(item: Node, direction: int):
 		if _selected_gourt:
 			_selected_item = _selected_gourt.move_equipment(direction, item)
 
+func most_eligible_interactable(items: Array, point: Vector2) -> Node:
+	var visible_items = items.filter(func(i): return not i is CanvasItem or i.is_visible_in_tree())
+	if visible_items.is_empty():
+		return null
+	return visible_items.reduce(func(best, candidate):
+		var zb = Yute.get_canvas_item_global_z(best) if best is CanvasItem else 0
+		var zc = Yute.get_canvas_item_global_z(candidate) if candidate is CanvasItem else 0
+		if zc != zb:
+			return candidate if zc > zb else best
+		var db = best.global_position.distance_squared_to(point) if best is Node2D else INF
+		var dc = candidate.global_position.distance_squared_to(point) if candidate is Node2D else INF
+		return candidate if dc < db else best
+	)
+
 func try_quick_move_item(ev: InputEvent, direction: int):
-	var items = Clision.get_objects_at(event_position(ev), "interactive") #TODO sort this list for more consisten results
+	var ev_pos = event_position(ev)
+	var items = Clision.get_objects_at(ev_pos, "interactive")
 	if _selected_gourt not in items:
 		_selected_gourt = null
 
-	if items:
-		var item_gourt = items[0] if items[0] is Gourt else Gourtilities.get_equipment_owner(items[0])
+	var top = most_eligible_interactable(items, ev_pos)
+	if top:
+		var item_gourt = top if top is Gourt else Gourtilities.get_equipment_owner(top)
 		if Gourtilities.in_same_stack(player_character, item_gourt):
-			quick_move_item(items[0], direction)
+			quick_move_item(top, direction)
 			return
 	if _selected_item:
 		if Gourtilities.in_same_stack(player_character, Gourtilities.get_equipment_owner(_selected_item)):
@@ -134,8 +150,9 @@ func _input(ev: InputEvent):
 	if ev.is_action_pressed("interact"):
 		var ev_pos = event_position(ev)
 		var interactables = Clision.get_objects_at(ev_pos, "interactive")
-		if interactables:
-			player_character._interact(interactables[0], ev_pos) #TODO we should try to handle the whole array not just whatever is arbitrarily the first element
+		var top = most_eligible_interactable(interactables, ev_pos)
+		if top:
+			player_character._interact(top, ev_pos)
 	elif ev.is_action_pressed("move equipment up"):
 		try_quick_move_item(ev, Direction.UP)
 	elif ev.is_action_pressed("move equipment down"):

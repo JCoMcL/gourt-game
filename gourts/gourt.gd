@@ -1,7 +1,6 @@
 class_name Gourt
 extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if we want more than just CharacterBody2D to be controllable)
 
-
 @export var head_friend: CharacterBody2D
 @export var foot_friend: CharacterBody2D
 
@@ -10,7 +9,6 @@ extends Actor #TODO: I HATE OOP I HATE OOP (inheritence need to be reworked if w
 
 @onready var BODY: AnimatedSprite2D = $Body
 @onready var FACE: AnimatedSprite2D = $Body/Face
-
 
 func identify(lines = []):
 	super([
@@ -45,7 +43,7 @@ func die():
 	super()
 	abdicate()
 	if head_friend:
-		head_friend.velocity.y = -200
+		head_friend.velocity.y = -900
 		head_friend.velocity.x *= 0.6
 
 	if foot_friend:
@@ -76,15 +74,33 @@ func command(c: Commands) -> void:
 	else:
 		super(c)
 
+func under_new_management(m: Master):
+	super(m)
+	for g in Gourtilities.list_stack_members(self):
+		if m:
+			g.collision_mask |= Clision.layers["player_wall"]
+		else:
+			g.collision_mask &= ~Clision.layers["player_wall"]
+
 func scan_for_perch(distance: float = snap_distance): #FIXME, this only finds one match, so fails with overlapping gourts. Perhaps intersect_point would be better?
 	var result = get_world_2d().direct_space_state.intersect_ray(
 		PhysicsRayQueryParameters2D.create(
 			global_position,
-			global_position + Vector2.DOWN * distance)
+			global_position + Vector2.DOWN * distance,
+			Clision.layers["gourt"]
+		)
 	)
 	if result and result.collider is Gourt and not result.collider.head_friend: #BM1
 		identify(["just stacked to %s" % result.collider.name])
+		var new_foot_friend = result.collider
+		# Hack to foil disguise.
+		#TODO We really need 2-way communication between master and actor so the master can handle this
+		for g in Gourtilities.list_stack_members(new_foot_friend):
+			for n in g.get_children():
+				if n is Disguise:
+					n.foiled = true
 		Gourtilities.stack(self, result.collider)
+
 
 func interact(operator: Node) -> bool:
 	var o = get_equipped_item()

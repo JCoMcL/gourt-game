@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://oxj30cuen50p"]
+
+[ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="1_h3d66"]
+[ext_resource type="Script" uid="uid://dgsl12cho7sd8" path="res://props/pushable.gd" id="1_p84df"]
+
+[node name="Table" type="RigidBody2D" unique_id=2146024424]
+center_of_mass_mode = 1
+script = ExtResource("1_p84df")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1207168476]
+polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 102, 136, -76, 131, -14, 101, -5, -113, -225, -109)
+
+[node name="Table" type="Sprite2D" parent="." unique_id=996099373]
+texture = ExtResource("1_h3d66")

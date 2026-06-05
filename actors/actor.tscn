@@ -12,7 +12,7 @@ shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4hdp"]
-size = Vector2(378, 583)
+size = Vector2(221, 583)
 
 [node name="Actor" type="CharacterBody2D" unique_id=1223829275]
 material = SubResource("ShaderMaterial_4r7ot")
@@ -24,6 +24,7 @@ walk_accel = 15
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=824274135]
 material = SubResource("ShaderMaterial_4r7ot")
+position = Vector2(0, -290)
 texture = ExtResource("2_jiomh")
 
 [node name="Handle" type="Node2D" parent="Sprite2D" unique_id=454969162]
@@ -40,4 +41,5 @@ offset_right = 27.53
 offset_bottom = 90.69
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=367172346]
+position = Vector2(20.5, -290)
 shape = SubResource("RectangleShape2D_y4hdp")

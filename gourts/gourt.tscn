@@ -1,4 +1,4 @@
-[gd_scene load_steps=144 format=3 uid="uid://bdhee0fbyvgae"]
+[gd_scene format=3 uid="uid://bdhee0fbyvgae"]
 
 [ext_resource type="Script" uid="uid://d2jc10mybkqtt" path="res://gourts/gourt.gd" id="1_wkvig"]
 [ext_resource type="Texture2D" uid="uid://cq1kakogmn7t6" path="res://gourts/gourt/bodies/body0006.png" id="2_3k4ux"]
@@ -767,43 +767,43 @@ stream_12/stream = ExtResource("116_tuagc")
 stream_13/stream = ExtResource("117_7ri2k")
 stream_14/stream = ExtResource("118_ntppp")
 
-[node name="Gourt" type="CharacterBody2D"]
-collision_layer = 34
+[node name="Gourt" type="CharacterBody2D" unique_id=322665038]
+collision_layer = 98
 collision_mask = 5
 input_pickable = true
 floor_max_angle = 1.39626
 platform_on_leave = 2
 script = ExtResource("1_wkvig")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2040107901]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_q10vy")
 
-[node name="Body" type="AnimatedSprite2D" parent="."]
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=101539335]
 sprite_frames = SubResource("SpriteFrames_2ny44")
 animation = &"I_pensive"
 
-[node name="Face" type="AnimatedSprite2D" parent="Body"]
+[node name="Face" type="AnimatedSprite2D" parent="Body" unique_id=622370550]
 position = Vector2(0, 4)
 sprite_frames = SubResource("SpriteFrames_lri5v")
 animation = &"I_aboundless"
 autoplay = "I_penniless"
 
-[node name="EyesSlot" type="Node2D" parent="Body/Face"]
+[node name="EyesSlot" type="Node2D" parent="Body/Face" unique_id=1564474250]
 position = Vector2(6, -31)
 
-[node name="HandSlot1" type="Node2D" parent="Body"]
+[node name="HandSlot1" type="Node2D" parent="Body" unique_id=894182949]
 position = Vector2(-70, 27)
 
-[node name="HandSlot2" type="Node2D" parent="Body"]
+[node name="HandSlot2" type="Node2D" parent="Body" unique_id=1018728737]
 position = Vector2(48, 36)
 
-[node name="HeadSlot" type="Node2D" parent="Body"]
+[node name="HeadSlot" type="Node2D" parent="Body" unique_id=433061996]
 position = Vector2(-12, -52)
 
-[node name="Perch" type="Node2D" parent="."]
+[node name="Perch" type="Node2D" parent="." unique_id=510096944]
 position = Vector2(0, -88)
 
-[node name="DeathSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="DeathSFX" type="AudioStreamPlayer2D" parent="." unique_id=1769731057]
 stream = SubResource("AudioStreamRandomizer_jxtsl")
 bus = &"Gastor"

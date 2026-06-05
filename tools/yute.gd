@@ -75,6 +75,14 @@ func union_rect(a: Array[Rect2]) -> Rect2:
 
 	return Rect2(top_left, bottom_right - top_left)
 
+func get_canvas_item_global_z(node: CanvasItem) -> int:
+	if not node.z_as_relative:
+		return node.z_index
+	var parent = node.get_parent()
+	if parent is CanvasItem:
+		return node.z_index + get_canvas_item_global_z(parent)
+	return node.z_index
+
 func get_global_rect(o: Node) -> Rect2:
 	if not o:
 		return Rect2(Vector2.ZERO, Vector2.ZERO)

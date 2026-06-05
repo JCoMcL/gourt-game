@@ -113,6 +113,11 @@ func command(c: Commands) -> void:
 var master: Master
 func under_new_management(m: Master):
 	master = m
+	if m:
+		collision_mask |= Clision.layers["player_wall"]
+	else:
+		collision_mask &= ~Clision.layers["player_wall"]
+
 
 # --- Faux Physics ---
 

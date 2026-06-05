@@ -2,13 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cvcc3ghe4ysjk" path="res://ui/cursor.tscn" id="1_5ybge"]
 [ext_resource type="Texture2D" uid="uid://clphjaysvxh82" path="res://level/office-level/tiles.png" id="1_wxgj7"]
-[ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="3_rh3h7"]
 [ext_resource type="PackedScene" uid="uid://j35m20jp18rk" path="res://props/door.tscn" id="4_1slrw"]
 [ext_resource type="PackedScene" uid="uid://dq36wrk1ptree" path="res://props/elevator.tscn" id="4_twwvs"]
 [ext_resource type="PackedScene" uid="uid://xfpwui2ygbps" path="res://level/ld-empty.tscn" id="5_1axx8"]
+[ext_resource type="PackedScene" uid="uid://oxj30cuen50p" path="res://props/table.tscn" id="8_oub6b"]
 [ext_resource type="PackedScene" uid="uid://bbbog68rjtlrb" path="res://props/water_cooler.tscn" id="10_1slrw"]
 [ext_resource type="Texture2D" uid="uid://bbimgxq3cdac" path="res://props/stroller.png" id="10_yl1fq"]
-[ext_resource type="Texture2D" uid="uid://c2yk215wr6t2u" path="res://props/table.png" id="11_6o0x5"]
 [ext_resource type="PackedScene" uid="uid://w8bqgkgk58k5" path="res://gourts/disguise/disguise.tscn" id="12_4gsd2"]
 [ext_resource type="Script" uid="uid://6foq1gufj00l" path="res://level/activation_zone.gd" id="12_5y8te"]
 [ext_resource type="PackedScene" uid="uid://cji7qwgt0f3t8" path="res://gourts/stack.tscn" id="12_utg4x"]
@@ -23,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bwdai2qrkjsgg" path="res://actors/cast/inspector_janet.tscn" id="16_jh3jc"]
 [ext_resource type="Texture2D" uid="uid://cadovxw7bb1cl" path="res://gourts/disguise/hat.png" id="20_03e6b"]
 [ext_resource type="Script" uid="uid://dmhdhawvwlfs8" path="res://props/equipable.gd" id="21_5y8te"]
+[ext_resource type="PackedScene" uid="uid://ddimwbhyn068e" path="res://actors/cast/thirsty_guy.tscn" id="21_oub6b"]
 [ext_resource type="PackedScene" uid="uid://bpnntc7kfp7aj" path="res://actors/cast/inspector_keith.tscn" id="24_oub6b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ssvay"]
@@ -74,15 +74,20 @@ shader = ExtResource("13_slst7")
 shader_parameter/top_padding_px = 100.0
 shader_parameter/full_length_px = 688.0
 shader_parameter/scale_adjustment_factor = 1.1
+shader_parameter/peephole_center = Vector2(5883.2256, -4616.6675)
+shader_parameter/peephole_radius = 60.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03e6b"]
 size = Vector2(84, 62)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v1cl5"]
 resource_local_to_scene = true
-shader = ExtResource("14_1axx8")
-shader_parameter/grow = 0.0
-shader_parameter/handle = Vector2(0, 0)
+shader = ExtResource("13_slst7")
+shader_parameter/top_padding_px = 100.0
+shader_parameter/full_length_px = 704.0
+shader_parameter/scale_adjustment_factor = 1.1
+shader_parameter/peephole_center = Vector2(5883.2256, -4616.6675)
+shader_parameter/peephole_radius = 60.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hmmnh"]
 resource_local_to_scene = true
@@ -91,6 +96,12 @@ shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_no4ag"]
+resource_local_to_scene = true
+shader = ExtResource("14_1axx8")
+shader_parameter/grow = 6.103515625e-08
+shader_parameter/handle = Vector2(0, 3.0517578e-05)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jl1g1"]
 resource_local_to_scene = true
 shader = ExtResource("14_1axx8")
 shader_parameter/grow = 0.0
@@ -103,12 +114,8 @@ y_sort_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=789614591]
 position = Vector2(96, 172)
-tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAAABAAAAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAAAAAEAAAD1//j/AAAAAAAAAAD1//f/AAAAAAAAAAD1//b/AAAAAAAAAAD1//X/AAAAAAAAAAD1//T/AAAAAAAAAAD1//P/AAAAAAAAAAD1//L/AAAAAAAAAAD1//r/AAACAAAAAAD0//L/AAACAAAAAAD0//P/AAACAAAAAAD0//T/AAACAAAAAAD0//X/AAACAAAAAAD0//b/AAACAAAAAAD0//f/AAACAAAAAAD0//j/AAACAAAAAAD0//n/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///n/AAABAAEAAAA=")
+tile_map_data = PackedByteArray("AAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAGAAEAAAACAAAAAAAGAAIAAAACAAAAAAAHAAEAAAACAAAAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAHAAIAAAACAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAAJAAEAAAACAAAAAAAKAAEAAAACAAAAAAALAAEAAAACAAAAAAAMAAEAAAACAAAAAAAJAAIAAAACAAAAAAAKAAIAAAACAAAAAAALAAIAAAACAAAAAAAMAAIAAAACAAAAAAANAAAAAAABAAAAAAANAAEAAAACAAAAAAANAAIAAAACAAAAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAOAAEAAAACAAAAAAAPAAEAAAACAAAAAAAQAAEAAAACAAAAAAARAAEAAAACAAAAAAASAAEAAAACAAAAAAASAAIAAAACAAAAAAARAAIAAAACAAAAAAAQAAIAAAACAAAAAAAPAAIAAAACAAAAAAAOAAIAAAACAAAAAAD5/wEAAAABAAEAAAD6/wEAAAABAAEAAAD7/wEAAAABAAEAAAD8/wEAAAABAAEAAAD9/wEAAAABAAEAAAD+/wEAAAABAAEAAAD//wEAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAEAAAADAAEAAAACAAAAAAAEAAEAAAACAAAAAAAFAAEAAAACAAAAAAD3/wIAAAACAAAAAAD4/wIAAAACAAAAAAD5/wIAAAACAAAAAAD6/wIAAAACAAAAAAD7/wIAAAACAAAAAAD8/wIAAAACAAAAAAD9/wIAAAACAAAAAAD+/wIAAAACAAAAAAD//wIAAAACAAAAAAAAAAIAAAACAAAAAAABAAIAAAACAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAFAAIAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAACAAEAAAACAAEAAAD3//r/AAAAAAEAACD3//v/AAAAAAAAAAD3//z/AAAAAAAAAAD4//r/AAADAAAAADD3//n/AAABAAEAAAD4//n/AAABAAEAAAD5//n/AAABAAEAAAD6//n/AAABAAEAAAD7//n/AAABAAEAAAD8//n/AAABAAEAAAD9//n/AAABAAEAAAD+//n/AAABAAEAAAD2//n/AAABAAEAAAD2//r/AAACAAAAAAD2//v/AAACAAAAAAD2//z/AAACAAAAAAD2/wEAAAADAAEAAAD2/wIAAAACAAAAAAD1//n/AAABAAEAAAD1//r/AAACAAAAAAD0//r/AAACAAAAAAD0//v/AAACAAAAAAD1//v/AAACAAAAAAD1//z/AAACAAAAAAD0//z/AAACAAAAAAD0/wEAAAADAAEAAAD0/wIAAAACAAAAAAD1/wEAAAADAAEAAAD1/wIAAAACAAAAAAD2//3/AAADAAEAADD1//3/AAADAAEAADD0//3/AAADAAEAADD3//3/AAAAAAAAAAD3/wEAAAADAAEAAAD4/wEAAAACAAEAABATAAEAAAACAAAAAAATAAIAAAACAAAAAAATAAAAAAABAAEAAAD///n/AAABAAEAAADz//n/AAACAAAAAADz//j/AAACAAAAAADz//f/AAACAAAAAADz//b/AAACAAAAAADz//X/AAACAAAAAADz//T/AAACAAAAAADz//P/AAACAAAAAADz//L/AAACAAAAAAD0//n/AAAAAAEAAAD0//j/AAAAAAAAAAD0//f/AAAAAAAAAAD0//b/AAAAAAAAAAD0//X/AAAAAAAAAAD0//T/AAAAAAAAAAD0//P/AAAAAAAAAAD0//L/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_mdp56")
-
-[node name="Sunglasses" parent="TileMapLayer" unique_id=385014790 instance=ExtResource("3_rh3h7")]
-position = Vector2(-2020, -1849)
-scale = Vector2(0.8, 0.8)
 
 [node name="Door" parent="TileMapLayer" unique_id=1065746689 node_paths=PackedStringArray("exit") instance=ExtResource("4_1slrw")]
 position = Vector2(-16, 61)
@@ -145,17 +152,10 @@ shape = SubResource("CircleShape2D_pxtkg")
 position = Vector2(271, 266)
 shape = SubResource("CircleShape2D_w4oyg")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="TileMapLayer" unique_id=1211448890]
+[node name="Table" parent="TileMapLayer" unique_id=2146024424 instance=ExtResource("8_oub6b")]
 position = Vector2(-1782, -1771)
-center_of_mass_mode = 1
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileMapLayer/RigidBody2D" unique_id=129885747]
-polygon = PackedVector2Array(-231, -142, 220, -142, 222, -97, 33, -107, 29, 93, 102, 136, -76, 131, -14, 101, -5, -113, -225, -109)
-
-[node name="Table" type="Sprite2D" parent="TileMapLayer/RigidBody2D" unique_id=1601263976]
-texture = ExtResource("11_6o0x5")
-
-[node name="WaterCooler2" parent="TileMapLayer" unique_id=1766845369 instance=ExtResource("10_1slrw")]
+[node name="WaterCooler" parent="TileMapLayer" unique_id=1766845369 instance=ExtResource("10_1slrw")]
 position = Vector2(-2381, -1886)
 
 [node name="Poster" type="Sprite2D" parent="TileMapLayer" unique_id=1875546639]
@@ -197,21 +197,23 @@ shape = SubResource("RectangleShape2D_jh3jc")
 
 [node name="Gourt Stack" parent="." unique_id=157017166 node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
 y_sort_enabled = true
-position = Vector2(-1060, 534)
+position = Vector2(-931, -1569)
 root_child = NodePath("Gourt0")
 
 [node name="Gourt0" parent="Gourt Stack" unique_id=1078441272 node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
+platform_on_leave = 0
 head_friend = NodePath("../Gourt6")
 
 [node name="Gourt1" parent="Gourt Stack" unique_id=1966362384 node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -600)
+platform_on_leave = 0
 foot_friend = NodePath("../Gourt2")
 
-[node name="Disguise" parent="Gourt Stack/Gourt1" unique_id=2037089645 node_paths=PackedStringArray("wearer") instance=ExtResource("12_4gsd2")]
+[node name="Disguise" parent="Gourt Stack/Gourt1" unique_id=2037089645 instance=ExtResource("12_4gsd2")]
 z_index = 4
 material = SubResource("ShaderMaterial_oub6b")
 points = PackedVector2Array(0, -88, 0, 0, 0, 100, 0, 200, 0, 300, 0, 400, 0, 500, 0, 600)
-wearer = NodePath("..")
+foiled = true
 
 [node name="Hat" type="Area2D" parent="Gourt Stack/Gourt1" unique_id=2010833198]
 z_index = 4
@@ -229,84 +231,112 @@ shape = SubResource("RectangleShape2D_03e6b")
 
 [node name="Gourt2" parent="Gourt Stack" unique_id=756487726 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -500)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt1")
 foot_friend = NodePath("../Gourt3")
 
 [node name="Gourt3" parent="Gourt Stack" unique_id=1974706942 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -400)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt2")
 foot_friend = NodePath("../Gourt4")
 
 [node name="Gourt4" parent="Gourt Stack" unique_id=1713146586 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -300)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt3")
 foot_friend = NodePath("../Gourt5")
 
 [node name="Gourt5" parent="Gourt Stack" unique_id=634929303 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -200)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt4")
 foot_friend = NodePath("../Gourt6")
 
 [node name="Gourt6" parent="Gourt Stack" unique_id=599054766 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
 position = Vector2(0, -100)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt5")
 foot_friend = NodePath("../Gourt0")
 
-[node name="Gourt Stack2" parent="." unique_id=439593787 node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
-position = Vector2(467, 503)
+[node name="Thirsty Guy" parent="." unique_id=439593787 node_paths=PackedStringArray("root_child") instance=ExtResource("12_utg4x")]
+position = Vector2(-72, -1520)
 root_child = NodePath("Gourt0")
 
-[node name="Gourt0" parent="Gourt Stack2" unique_id=896493618 node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt0" parent="Thirsty Guy" unique_id=896493618 node_paths=PackedStringArray("head_friend") instance=ExtResource("13_ax68m")]
+visible = false
+platform_on_leave = 0
 head_friend = NodePath("../Gourt7")
 
-[node name="Gourt10" parent="Gourt Stack2" unique_id=1754193550 node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt10" parent="Thirsty Guy" unique_id=1754193550 node_paths=PackedStringArray("foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -616)
+platform_on_leave = 0
 foot_friend = NodePath("../Gourt11")
 
-[node name="Gourt11" parent="Gourt Stack2" unique_id=149754562 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Disguise" parent="Thirsty Guy/Gourt10" unique_id=1739371494 instance=ExtResource("12_4gsd2")]
+z_index = 4
+material = SubResource("ShaderMaterial_v1cl5")
+position = Vector2(0, 616)
+points = PackedVector2Array(0, -704, 0, -616, 0, -528, 0, -440, 0, -352, 0, -264, 0, -176, 0, -88, 0, 0)
+persona_actor = ExtResource("21_oub6b")
+
+[node name="Gourt11" parent="Thirsty Guy" unique_id=149754562 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -528)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt10")
 foot_friend = NodePath("../Gourt12")
 
-[node name="Gourt12" parent="Gourt Stack2" unique_id=91425286 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt12" parent="Thirsty Guy" unique_id=91425286 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -440)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt11")
 foot_friend = NodePath("../Gourt13")
 
-[node name="Gourt13" parent="Gourt Stack2" unique_id=611568207 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt13" parent="Thirsty Guy" unique_id=611568207 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -352)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt12")
 foot_friend = NodePath("../Gourt14")
 
-[node name="Gourt14" parent="Gourt Stack2" unique_id=521177802 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt14" parent="Thirsty Guy" unique_id=521177802 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -264)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt13")
 foot_friend = NodePath("../Gourt15")
 
-[node name="Gourt15" parent="Gourt Stack2" unique_id=746262192 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt15" parent="Thirsty Guy" unique_id=746262192 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -176)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt14")
 foot_friend = NodePath("../Gourt7")
 
-[node name="Gourt7" parent="Gourt Stack2" unique_id=1204838239 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+[node name="Gourt7" parent="Thirsty Guy" unique_id=1204838239 node_paths=PackedStringArray("head_friend", "foot_friend") instance=ExtResource("13_ax68m")]
+visible = false
 position = Vector2(0, -88)
+platform_on_leave = 0
 head_friend = NodePath("../Gourt15")
 foot_friend = NodePath("../Gourt0")
 
 [node name="Janitor" parent="." unique_id=1223829275 instance=ExtResource("14_twwvs")]
-material = SubResource("ShaderMaterial_v1cl5")
-position = Vector2(2252, -23)
+material = SubResource("ShaderMaterial_hmmnh")
+position = Vector2(2252, 321)
 scale = Vector2(1.2, 1.2)
 
 [node name="Inspector Keith" parent="." unique_id=268609533 instance=ExtResource("24_oub6b")]
-material = SubResource("ShaderMaterial_hmmnh")
-position = Vector2(1611.0001, -9)
+material = SubResource("ShaderMaterial_no4ag")
+position = Vector2(1611, 335)
 scale = Vector2(1.2, 1.2)
 facing = 3
 
 [node name="Inspector Janet" parent="." unique_id=180320558 instance=ExtResource("16_jh3jc")]
-material = SubResource("ShaderMaterial_no4ag")
-position = Vector2(1367, -7)
+material = SubResource("ShaderMaterial_jl1g1")
+position = Vector2(1367, 337)
 scale = Vector2(1.2, 1.2)
 
 [editable path="TileMapLayer/Door"]

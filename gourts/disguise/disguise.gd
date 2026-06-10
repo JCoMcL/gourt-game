@@ -52,7 +52,7 @@ func setup_back():
 		add_child(back)
 	back.width = width
 	back.texture = back_texture
-	back.material = material
+	back.material = material.duplicate()
 	back.points = points
 	if get_wearer():
 		back.z_index = Gourtilities.get_stack_base(get_wearer()).z_index -plus_z #BM2
@@ -93,4 +93,5 @@ func _process(delta: float) -> void:
 		back.z_index = -Gourtilities.stack_count(wearer) - plus_z
 
 func _draw() -> void:
-	material.set_shader_parameter("full_length_px", abs(points[0].y - points[-1].y))
+	for m in [material, back.material]:
+		m.set_shader_parameter("full_length_px", abs(points[0].y - points[-1].y))

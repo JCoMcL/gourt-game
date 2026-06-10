@@ -3,6 +3,7 @@
 /android/
 *~
 *-autosave.kra
+*~*.kra
 .vscode/
 videos/
 !videos/.gdignore

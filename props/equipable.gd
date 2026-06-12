@@ -2,6 +2,8 @@ extends Area2D
 
 class_name Equippable
 
+signal interacted_with(operator:Node2D)
+
 enum EquippableType { HEAD, EYES, HAND, FOOT }
 
 @export_enum("HEAD", "EYES", "HAND", "FOOT")
@@ -29,6 +31,7 @@ func interact(operator) -> bool:
 		else:
 			target_slot.add_child(self)
 	transform = Transform2D.IDENTITY
+	interacted_with.emit(operator)
 	return true
 
 func rigor_mortis():
@@ -41,7 +44,6 @@ func rigor_mortis():
 			parent.add_child(rb) # TODO: should add to the scene and shouldn't be connected to gourt
 			rb.global_position = global_position
 			reparent(rb)
-			get_tree().create_timer(2.0).timeout.connect(rb.queue_free)
 			return
 
 func set_selected(is_selected: bool):
@@ -52,7 +54,7 @@ func set_selected(is_selected: bool):
 
 func flash():
 	if tween:
-		tween.kill()		
+		tween.kill()
 	tween = get_tree().create_tween()
 	tween.bind_node(self)
 	tween.set_loops()

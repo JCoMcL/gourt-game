@@ -53,7 +53,7 @@ func reset_text(s: String):
 	## set text and restart timer
 	text = s
 	reset_timer()
-	
+
 func update_size():
 	if ! label:
 		print("tried to call update_size too early!")
@@ -191,7 +191,7 @@ func _process(delta: float) -> void:
 
 func screen_to_world(v):
 	return get_viewport().global_canvas_transform.affine_inverse() * v
-			
+
 var colors = [0xce4b46, 0x477571, 0xd692a8, 0x77729d, 0x6585a0].map(func (i): return Color(i))
 func _draw() -> void:
 	if debug_overlays:

@@ -5,4 +5,3 @@ signal on_pressed
 func interact(operator) -> bool:
 	on_pressed.emit()
 	return true
-	

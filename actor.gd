@@ -11,6 +11,8 @@ enum left_or_right {Left=Direction.LEFT, Right=Direction.RIGHT}
 @export var mass = 20
 @export var walk_friction = 0.6 #this could be a puzzle mechanic
 
+@export var interactive_items: Array[StringName]
+
 var angular_velocity: float = 0
 var walk_target: float: # where we walkin' as a proportion of our speed
 	set(f):
@@ -57,7 +59,10 @@ func die():
 	angular_velocity += Yute.triangular_distribution(-5,5)
 
 func say(s: String):
-	SpeechTherapist.say(self, s)
+	begin_speaking()
+	var sig:Signal = SpeechTherapist.say(self, s).on_done_showing
+	if not sig.is_connected(stop_speaking):
+		sig.connect(stop_speaking, CONNECT_ONE_SHOT)
 
 func identify(lines = []):
 	for s in [

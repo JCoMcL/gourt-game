@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://c4qa3jat54ahi" path="res://actors/cast/thirsty_guy.gd" id="3_s2wio"]
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="5_cg3qy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2wio"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cg3qy"]
 resource_local_to_scene = true
 shader = ExtResource("2_s2wio")
 shader_parameter/grow = 0.0
@@ -16,12 +16,12 @@ shader_parameter/handle = Vector2(0, 0)
 size = Vector2(88, 544)
 
 [node name="Thirsty Guy" unique_id=1223829275 instance=ExtResource("1_d25gp")]
-material = SubResource("ShaderMaterial_s2wio")
+material = SubResource("ShaderMaterial_cg3qy")
 collision_mask = 1
 script = ExtResource("3_s2wio")
 
 [node name="Sprite2D" parent="." index="0" unique_id=824274135]
-material = SubResource("ShaderMaterial_s2wio")
+material = SubResource("ShaderMaterial_cg3qy")
 position = Vector2(1.9999999, -264.00003)
 scale = Vector2(0.915, 0.915)
 texture = ExtResource("3_cg3qy")
@@ -35,10 +35,11 @@ offset_top = 32.5
 offset_right = 33.53
 offset_bottom = 101.69
 
-[node name="Sunglasses" parent="Sprite2D" index="1" unique_id=52238508 instance=ExtResource("5_cg3qy")]
-position = Vector2(13.114752, -246.99449)
-rotation = 0.28378794
-scale = Vector2(0.48231608, 0.5582207)
+[node name="Sunglasses" parent="Sprite2D/Handle" index="1" unique_id=52238508 instance=ExtResource("5_cg3qy")]
+unique_name_in_owner = true
+position = Vector2(13.11475, 73.50549)
+rotation = 0.28378797
+scale = Vector2(0.48231605, 0.5582205)
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=367172346]
 position = Vector2(7, -272)

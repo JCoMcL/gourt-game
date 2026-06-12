@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh5axk4fye6o3"]
+[gd_scene format=3 uid="uid://dh5axk4fye6o3"]
 
 [ext_resource type="PackedScene" uid="uid://c6a0ra2cd2h4g" path="res://props/sunglasses.tscn" id="1_4os5k"]
 [ext_resource type="Texture2D" uid="uid://bhgkaywdcyjl" path="res://props/water cooler/cup.png" id="2_befga"]
 
-[node name="Cup" instance=ExtResource("1_4os5k")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0eih"]
+size = Vector2(55.800034, 63.8125)
+
+[node name="Cup" unique_id=2114985312 instance=ExtResource("1_4os5k")]
 equippable_type = 2
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_i0eih")
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource("2_befga")

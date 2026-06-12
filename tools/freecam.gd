@@ -4,4 +4,4 @@ extends Camera2D
 
 func _process(delta):
 	position += Input.get_last_mouse_velocity() * sensitivity
-	
+

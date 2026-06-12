@@ -110,6 +110,19 @@ func quick_move_item(item: Node, direction: int):
 			_selected_item = _selected_gourt.move_equipment(direction, item)
 
 func most_eligible_interactable(items: Array, point: Vector2) -> Node:
+	var best_dist:float = -1
+	var best_item:Node
+
+	for item:Node in items:
+		if not item.visible:
+			continue
+		var sqr_dist = item.global_position.distance_squared_to(point)
+		if sqr_dist < best_dist or best_dist < 0:
+			best_dist = sqr_dist
+			best_item = item
+
+	return best_item
+
 	var visible_items = items.filter(func(i): return not i is CanvasItem or i.is_visible_in_tree())
 	if visible_items.is_empty():
 		return null

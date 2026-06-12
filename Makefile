@@ -1,4 +1,3 @@
-.PHONY: README.md
 README.md:
 	sed -i '/# See Also/q' $@
 	find -not -path './README.md'  -name '*.md' | awk -F '/' '{printf "[%s/%s](%s)\n\n",$$(NF-1), $$NF, $$0 }' >> $@
@@ -9,3 +8,11 @@ README.md:
 
 crop_cast_pngs:
 	for f in actors/cast/*.png; do convert "$$f" -trim "$$f"; done
+
+fix_nulls:
+	find -name '*.tscn' | xargs -d'\n' grep null
+
+trim-whitespace:
+	find -name '*.gd' | xargs -d'\n' sed -Ei 's/[ 	]+$$//'
+
+.PHONY: README.md fix_nulls trim-whitespace

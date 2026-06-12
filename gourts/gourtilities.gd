@@ -1,7 +1,7 @@
 @tool
 extends Node
 
-func perch_position(o: Node2D) -> Vector2: 
+func perch_position(o: Node2D) -> Vector2:
 	var p = o.get_node_or_null("Perch")
 	return o.position + (p.position if p else Vector2.UP * 100)
 

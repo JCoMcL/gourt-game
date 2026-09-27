@@ -13,7 +13,7 @@ shader_parameter/grow = 0.0
 shader_parameter/handle = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cg3qy"]
-size = Vector2(88, 544)
+size = Vector2(88, 453)
 
 [node name="Thirsty Guy" unique_id=1223829275 instance=ExtResource("1_d25gp")]
 material = SubResource("ShaderMaterial_cg3qy")
@@ -42,5 +42,5 @@ rotation = 0.28378797
 scale = Vector2(0.48231605, 0.5582205)
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=367172346]
-position = Vector2(7, -272)
+position = Vector2(7, -226.5)
 shape = SubResource("RectangleShape2D_cg3qy")
